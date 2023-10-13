@@ -1,5 +1,9 @@
 import React from 'react'
+import {useContext} from "react"
 import ReactDOM from 'react-dom/client'
+import {ThemeProvider} from "styled-components"
+import { CurrencyColorProvider,CurrencyColorContext } from './contexts/CurrencyColorProvider/CurrencyColorProvider';
+import "./index.css"
 
 
 import {
@@ -26,7 +30,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
+
   <React.StrictMode>
+    <CurrencyColorProvider>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+    </CurrencyColorProvider>
+  </React.StrictMode>
+  
 )
