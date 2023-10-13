@@ -1,6 +1,7 @@
 import {ThemeProvider} from "styled-components"
 import {Container} from "./Portfolio.styles"
 import Navbar from "../Navbar/Navbar"
+import Layout from "../Layout/Layout"
 
 
 
@@ -8,13 +9,13 @@ import Navbar from "../Navbar/Navbar"
 
 const Portfolio = () => {
     return(
-        <ThemeProvider theme={{red:"violet"}}>
+      <Layout>
         <Container>
           <Navbar />
           <h1>In future you will see your portfolio here</h1>
     
         </Container>
-        </ThemeProvider>
+        </Layout>
     )
 }
 
