@@ -1,5 +1,4 @@
 import {useState, useContext} from "react"
-import { NavLink } from "react-router-dom";
 import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import {NavbarContainer, RightNavbar,SearchWrapper,ThemeChangeWrapper,CurrencyChangeWrapper,SearchInput,CurrencyChanger,NavLinkWrapper,StyledLink} from "./Navbar.styles"
 import DarkTheme from "../../assets/dark-theme.svg"
@@ -12,7 +11,7 @@ import BitcoinSign from "../../assets/btc-sign.svg"
 import EthereumSign from "../../assets/eth-sign.svg"
 import MagnyfingGlassDark from "../../assets/magnifying-glass-dark.svg"
 import MagnyfingGlassLight from "../../assets/magnifying-glass-light.svg"
-import Layout from "../Layout/Layout";
+
 
 
 const Navbar = () => {
@@ -40,20 +39,19 @@ const Navbar = () => {
     setCurrency(e.target.value)
   }
   return (
-    <Layout>
     <NavbarContainer>
       <NavLinkWrapper>
-      <StyledLink bgcolor={colorMode === "dark" ? "#2c2f36" : "#EDEFF2"} textcolor={colorMode === "dark" ? "#f6f6f6" : "black"} to="/">Coins</StyledLink>
-      <StyledLink bgcolor={colorMode === "dark" ? "#2c2f36" : "#EDEFF2"}  textcolor={colorMode === "dark" ? "#f6f6f6" : "black"}to="/portfolio">Portfolio</StyledLink>
+      <StyledLink to="/">Coins</StyledLink>
+      <StyledLink to="/portfolio">Portfolio</StyledLink>
       </NavLinkWrapper>
           <RightNavbar>
-            <SearchWrapper bgcolor={colorMode === "dark" ? "#2c2f36" : "#EDEFF2"} >
+            <SearchWrapper>
               <img src={colorMode === "dark" ? MagnyfingGlassLight : MagnyfingGlassDark}></img>
-              <SearchInput placeholder="Search..." textcolor={colorMode === "dark" ? "#f6f6f6" : "black"}/>
+              <SearchInput placeholder="Search..."/>
             </SearchWrapper >
-            <CurrencyChangeWrapper bgcolor={colorMode === "dark" ? "#2c2f36" : "#EDEFF2"}>
+            <CurrencyChangeWrapper>
               <CurrencySymbol currency={CurrencyLogo[currency]} />
-              <CurrencyChanger onChange={handleCurrencyChange} name="currency" value={currency} bgcolor={colorMode === "dark" ? "#2c2f36" : "#EDEFF2"} textcolor={colorMode === "dark" ? "#f6f6f6" : "black"}>
+              <CurrencyChanger onChange={handleCurrencyChange} name="currency" value={currency}>
                 <option value="USD">USD</option>
                 <option value="GBP">GBP</option>
                 <option value="EUR">EUR</option>
@@ -61,12 +59,11 @@ const Navbar = () => {
                 <option value="ETH">ETH</option>
               </CurrencyChanger>
             </CurrencyChangeWrapper>
-            <ThemeChangeWrapper bgcolor={colorMode === "dark" ? "#2c2f36" : "#EDEFF2"}>
+            <ThemeChangeWrapper>
             <img onClick={handleColorModeChange} style={{width: "25px"}} src={colorMode === "dark" ? LightTheme : DarkTheme}></img>
             </ThemeChangeWrapper>
           </RightNavbar>
           </NavbarContainer>
-          </Layout>
   );
 };
 
