@@ -5,7 +5,7 @@ export const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: #191b1f; */
+  background-color: ${(props) => props.theme.background.primary};
   border-radius: 10px 10px 0 0;
   padding: 10px;
   font-weight: 500;
@@ -22,8 +22,8 @@ export const NavLinkWrapper = styled.div`
 `;
 
 export const StyledLink = styled(NavLink)`
-  color: ${(props) => props.textcolor};
-  background-color: ${(props) => props.bgcolor};
+  color: ${(props) => props.theme.background.secondary};
+  background-color: ${(props) => props.theme.background.componentBackground};
   text-decoration: none;
   padding: 0.7rem 3rem;
   border-radius: 10px;
@@ -37,7 +37,8 @@ export const RightNavbar = styled.div`
 `;
 
 export const SearchWrapper = styled.div`
-  background-color: ${(props) => props.bgcolor};
+  color: ${(props) => props.theme.background.secondary};
+  background-color: ${(props) => props.theme.background.componentBackground};
   padding: 0.7rem;
   padding-left: 1.4rem;
   display: flex;
@@ -46,7 +47,7 @@ export const SearchWrapper = styled.div`
 `;
 
 export const ThemeChangeWrapper = styled.div`
-  background-color: ${(props) => props.bgcolor};
+  background-color: ${(props) => props.theme.background.componentBackground};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +57,7 @@ export const ThemeChangeWrapper = styled.div`
 `;
 
 export const CurrencyChangeWrapper = styled.div`
-  background-color: ${(props) => props.bgcolor};
+  background-color: ${(props) => props.theme.background.componentBackground};
   border-radius: 10px;
   padding: 0.45rem;
   display: flex;
@@ -66,8 +67,8 @@ export const CurrencyChangeWrapper = styled.div`
 `;
 
 export const CurrencyChanger = styled.select`
-  background-color: ${(props) => props.bgcolor};
-  color: ${(props) => props.textcolor};
+  background-color: ${(props) => props.theme.background.componentBackground};
+  color: ${(props) => props.theme.background.secondary};
   border: none;
   font-size: 17px;
   font-weight: 500;
@@ -81,16 +82,16 @@ export const SearchInput = styled.input`
   background-color: transparent;
   border: none;
   width: 100%;
-  color: ${(props) => props.textcolor};
+  color: ${(props) => props.theme.background.secondary};
   padding-left: 0.7rem;
   &::placeholder {
-    color: ${(props) => props.textcolor};
+    color: ${(props) => props.theme.background.secondary};
     font-weight: 500;
   }
 
   &:focus {
     outline: none;
     font-weight: 500;
-    color: ${(props) => props.textcolor};
+    color: ${(props) => props.theme.background.secondary};
   }
 `;

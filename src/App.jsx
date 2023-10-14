@@ -1,22 +1,60 @@
 import {ThemeProvider} from "styled-components"
 import {Container} from "./App.styles"
-import Navbar from "./components/Navbar/Navbar"
-import Layout from "./components/Layout/Layout"
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Portfolio from "./pages/Portfolio/Portfolio";
+import Coinspage from "./pages/Coinspage/Coinspage";
+import {CurrencyColorProvider, CurrencyColorContext} from "./contexts/CurrencyColorProvider/CurrencyColorProvider"
+import { useContext } from "react";
 
 
 
 
 function App() {
 
-  return (
-    <Layout>
-    <Container>
-      <Navbar />
-      <h1>Here you will see a list of the coins</h1>
+  const {currency, setCurrency, colorMode, setColorMode} = useContext(CurrencyColorContext)
 
-    </Container>
-    </Layout>
+  const darkTheme = {
+    primary: "#191B1F",
+    secondary: "#F6F6F6",
+    componentBackground: "#2C2F36"
+  }
+
+  const lightTheme = {
+    primary: "#F6F6F6",
+    secondary: "black",
+    componentBackground: "#EDEFF2"
+  }
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: 
+        <Coinspage/>
+    },
+    {
+      path: "/portfolio",
+      element:
+        <Portfolio />
+  
+    }
+  ]);
+
+
+  
+
+  return (
+      <ThemeProvider theme={{background: colorMode === "dark" ? darkTheme : lightTheme}}>
+      <Container>
+        <RouterProvider router={router} />
+        </Container>
+      </ThemeProvider> 
   )
 }
+
+
+
 
 export default App
