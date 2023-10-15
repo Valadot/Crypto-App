@@ -6,7 +6,6 @@ export const NavbarContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.theme.background.primary};
-  border-radius: 10px 10px 0 0;
   padding: 10px;
   font-weight: 500;
 
