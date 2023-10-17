@@ -5,9 +5,11 @@ export const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1300px;
+  padding: 10px 0;
   background-color: ${(props) => props.theme.background.primary};
-  padding: 10px;
   font-weight: 500;
+  margin: 0 auto;
 
   * {
     box-sizing: border-box;

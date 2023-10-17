@@ -13,8 +13,9 @@ import {
 import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
+import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
 import {Container,
-    ChartWrapper} from "./TopChart.styles"
+    ChartWrapper,Chart,Headline, ChartDescription,PriceData} from "./TopChart.styles"
 
 
 ChartJS.register(
@@ -27,11 +28,12 @@ ChartJS.register(
     Filler
 )
 
-const TopChart =() => {
+const TopChart =({price}) => {
  const [priceData, setPriceData] = useState([]);
  const [volumeData, setVolumeData] = useState([]);
+ const [todayDate, setTodayDate] = useState(new Date());
 
- const {colorMode} = useContext(CurrencyColorContext);
+ const {colorMode, currency} = useContext(CurrencyColorContext);
 
     const getChartData = async( ) => {
         try {
@@ -60,11 +62,10 @@ startDate.setDate(startDate.getDate() - 29);
 let currentDate = new Date(startDate);
 
 while (currentDate <= new Date()) {
-  dateLabels.push(currentDate.getDate());
-  fullDateLabels.push(currentDate.toISOString().split('T')[0]); 
-  currentDate.setDate(currentDate.getDate() + 2); 
-}
-
+  dateLabels.push(currentDate.getDate()); // Full date for x-axis
+  fullDateLabels.push(currentDate.toISOString().split('T')[0]); // Full date for tooltips
+  currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1 day
+  }
 
     const data={
         labels: dateLabels,
@@ -95,13 +96,15 @@ while (currentDate <= new Date()) {
 
     const options = {
         scales: {
-          x: {
+          x:{
             display: true,
             grid: {
                 display: false,
             },
             ticks: {
               stepSize: 1,
+              minRotation: 0,
+              maxRotation: 0,
             },
           },
           y: {
@@ -115,16 +118,19 @@ while (currentDate <= new Date()) {
           tooltip: {
             callbacks: {
               title: (tooltipItem) => fullDateLabels[tooltipItem[0].dataIndex],
-              label: (context) => `Price: ${priceData[context.dataIndex].toFixed(2)}`
+              label: (context) => `Price: ${priceData[context.dataIndex].toLocaleString()}`
             },
           },
         },
+        aspectRatio: undefined,
+        responsive: true,
+  maintainAspectRatio: true,
         layout: {
             padding:{
                 left: 10,
                 right: 10,
                 top: 10,
-                bottopm: 10,
+                bottom: 10,
             }
         }
       };
@@ -181,7 +187,7 @@ while (BardataIndex < BardataPoints.length) {
           y: {
             display: false,
             grid: {
-                display: false,
+            display: false,
             },
           },
         },
@@ -189,37 +195,61 @@ while (BardataIndex < BardataPoints.length) {
           tooltip: {
             callbacks: {
                 title: (tooltipItem) => BarFullDateLabels[tooltipItem[0].dataIndex],
-              label: (context) => `Volume: ${volumeData[context.dataIndex].toFixed(2)}`
+              label: (context) => `Volume: ${volumeData[context.dataIndex].toLocaleString()}`
             },
           },
         },
+        aspectRatio: undefined,
+        responsive: true,
+  maintainAspectRatio: true,
         layout: {
             padding:{
                 left: 10,
                 right: 10,
                 top: 10,
-                bottopm: 10,
+                bottom: 10,
             }
         }
       };
 
+      const {coinList, coinIcon} = useContext(CoinDataContext)
+ 
+      
     return(
+      <>
+      <Headline>
+      <h1>Your overview</h1>
+      </Headline>
         <Container>
-                <ChartWrapper>
+
+        <ChartWrapper>
+                <ChartDescription>
+            <h1>BTC</h1>
+            {coinIcon && coinList[0] && <PriceData>{coinIcon} {coinList[0].current_price.toLocaleString()}</PriceData>}
+              <h1>{todayDate.toDateString()}</h1>
+          </ChartDescription>
             <Line
                 data = {data}
                 options = {options}>
+                  
 
             </Line>
             </ChartWrapper>
             <ChartWrapper>
+              <ChartDescription>
+            <h1>Volume 24h</h1>
+            {coinIcon && coinList[0] && <PriceData>{coinIcon} {coinList[0].total_volume.toLocaleString()}</PriceData>}
+              <h1>{todayDate.toDateString()}</h1>
+          </ChartDescription>
             <Bar
+            
                 data = {Bardata}
                 options = {Baroptions}
             >
             </Bar>
             </ChartWrapper>
         </Container>
+        </>
     )
 }
 

@@ -9,14 +9,15 @@ function Coinspage() {
 
   
     return (
+      <>
+      <Navbar />
       <Container>
-        <Navbar />
-        <h2>Your overview</h2>
         <TopChart />
 
         <CoinsList/>
   
       </Container>
+      </>
     )
   }
   
