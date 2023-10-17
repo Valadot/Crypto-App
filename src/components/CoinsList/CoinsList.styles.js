@@ -3,8 +3,15 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  margin: 3rem auto 0 auto;
+  background-color: ${(props) => props.theme.background.primary};
+  border-radius: 10px;
+  padding: 1.5rem 1rem 0 1.5rem;
+`;
+
+export const Table = styled.table`
+  font-size: 0.775rem;
+  border-collapse: collapse;
 `;
 
 export const CoinWrapper = styled.div`
@@ -18,10 +25,12 @@ export const CoinImage = styled.img`
 
 export const NameImageWrapper = styled.div`
   display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const OuterBar = styled.div`
-  width: 100px;
+  width: 100%;
   height: 5px;
   background-color: #fee158;
   border-radius: 50vw;
@@ -40,15 +49,32 @@ export const InnerBar = styled.div`
 export const TableHead = styled.thead``;
 
 export const BigRow = styled.th`
-  width: 500px;
   text-align: left;
-  font-size: 18px;
-  font-weight: normal;
+  padding: 5px 10px;
 `;
 
 export const SmallRow = styled.th`
-  width: 100px;
   text-align: left;
-  font-size: 18px;
-  font-weight: normal;
+  padding: 10px 15px;
+`;
+
+export const PriceChange = styled.th`
+  text-align: left;
+  padding: 10px 15px;
+  color: ${(props) => (props.color > 0 ? "green" : "red")};
+`;
+
+export const CoinRow = styled.tr`
+  border-bottom: 1px solid #606061;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+export const DotSpan = styled.span`
+  font-size: 40px;
+  padding-right: 5px;
+  border-radius: 100%;
+  color: #ffb528;
 `;

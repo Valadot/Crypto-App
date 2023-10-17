@@ -37,7 +37,7 @@ export const Sparkline = ({ data, last7d }) => {
         label: 'BTC',
         data: prices,
         backgroundColor: [
-            " #191B1F"
+            "transparent"
         ],
         borderColor: [
             borderColor,
@@ -73,6 +73,7 @@ const chartOptions = {
   },
   scales: {
       x: {
+        display: false,
           grid: {
               display: false,
               drawBorder: false,
@@ -82,7 +83,7 @@ const chartOptions = {
           },
       },
       y: {
-
+        display: false,
           grid: {
               display: false,
               drawBorder: false,

@@ -8,13 +8,14 @@ import Portfolio from "./pages/Portfolio/Portfolio";
 import Coinspage from "./pages/Coinspage/Coinspage";
 import {CurrencyColorProvider, CurrencyColorContext} from "./contexts/CurrencyColorProvider/CurrencyColorProvider"
 import { useContext } from "react";
+import Navbar from "./components/Navbar/Navbar"
 
 
 
 
 function App() {
 
-  const {currency, setCurrency, colorMode, setColorMode} = useContext(CurrencyColorContext)
+  const {colorMode} = useContext(CurrencyColorContext)
 
   const darkTheme = {
     primary: "#191B1F",
@@ -50,6 +51,7 @@ function App() {
   return (
       <ThemeProvider theme={{background: colorMode === "dark" ? darkTheme : lightTheme}}>
       <Container>
+        
         <RouterProvider router={router} />
         </Container>
       </ThemeProvider> 

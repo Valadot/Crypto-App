@@ -7,6 +7,7 @@ export const CoinDataContext = createContext();
 export const CoinDataProvider = ({children}) => {
     const [coinIcon, setCoinIcon] = useState("")
     const {currency} = useContext(CurrencyColorContext)
+    const [btcPrice, setBtcPrice] = useState("")
     
     const formattedCurrency = currency.toLowerCase()
     const [coinList, setCoinList] = useState([])
@@ -15,7 +16,7 @@ export const CoinDataProvider = ({children}) => {
 
     const getCoinlist = async( ) => {
         try {
-            const {data} = await axios (`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${formattedCurrency}&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d&locale=en`)
+            const {data} = await axios (`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${formattedCurrency}&order=market_cap_desc&per_page=9&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d&locale=en`)
 
             setCoinList(data)
             
@@ -23,9 +24,20 @@ export const CoinDataProvider = ({children}) => {
             console.log(error)
         }
     }
+
+    const getBtcPrice = async() => {
+        try{
+            const {data} = await axios(`https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&market_data=true`)
+
+            setBtcPrice(data)
+        } catch(error){
+            console.log(error)
+        }
+    }
     useEffect(() => {
         getCoinlist(formattedCurrency)
-        console.log(coinList)
+        getBtcPrice()
+        
         switch(formattedCurrency){
             case "usd":
                 setCoinIcon("$")
@@ -47,7 +59,7 @@ export const CoinDataProvider = ({children}) => {
 
 
     return(
-        <CoinDataContext.Provider value={{coinList, setCoinList,coinIcon}}>
+        <CoinDataContext.Provider value={{coinList, setCoinList,coinIcon,btcPrice}}>
              {children}
         </CoinDataContext.Provider>
     )

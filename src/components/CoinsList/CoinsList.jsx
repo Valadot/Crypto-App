@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import {Container, CoinWrapper,CoinImage,NameImageWrapper, InnerBar,OuterBar,TableHead, BigRow, SmallRow} from "./CoinsList.styles"
+import {Container, CoinWrapper,CoinImage,NameImageWrapper, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,DotSpan} from "./CoinsList.styles"
 import {CoinDataContext} from "../../contexts/CoinDataProvider/CoinDataProvider"
 import Sparkline from "../Sparkline/Sparkline"
 
@@ -32,7 +32,8 @@ const CoinsList = () => {
     return(
         <Container>
             <div>
-                <table>
+                
+                <Table>
                     <TableHead>
                         <tr>
                             <SmallRow>#</SmallRow>
@@ -49,50 +50,50 @@ const CoinsList = () => {
                     </TableHead>
                     <tbody>
                     {coinList && coinList.map(coin =>
-                       <tr key={coin.id}>
+                       <CoinRow key={coin.id}>
                         <SmallRow>{coin.market_cap_rank}</SmallRow>
-                        <td><NameImageWrapper><CoinImage src={coin.image}></CoinImage>{coin.name}({coin.symbol})</NameImageWrapper></td>
-                        <td>{coinIcon} {coin.current_price}</td>
-                        <td>{coin.price_change_percentage_1h_in_currency.toFixed(2)}</td>
-                        <td>{coin.price_change_percentage_24h_in_currency.toFixed(2)}</td>
-                        <td>{coin.price_change_percentage_7d_in_currency.toFixed(2)}</td>
-                        <td>
+                        <BigRow><NameImageWrapper><CoinImage src={coin.image}></CoinImage>{coin.name}({coin.symbol})</NameImageWrapper></BigRow>
+                        <SmallRow>{coinIcon} {coin.current_price.toLocaleString()}</SmallRow>
+                        <PriceChange color={coin.price_change_percentage_1h_in_currency}>{coin.price_change_percentage_1h_in_currency.toFixed(2)}</PriceChange>
+                        <PriceChange color={coin.price_change_percentage_24h_in_currency}>{coin.price_change_percentage_24h_in_currency.toFixed(2)}</PriceChange>
+                        <PriceChange color={coin.price_change_percentage_7d_in_currency}>{coin.price_change_percentage_7d_in_currency.toFixed(2)}</PriceChange>
+                        <BigRow>
                             <div style={{display: "flex", justifyContent:"space-between"}}>
                                 <div>
-                                    <span>.</span>
+                                    <DotSpan>.</DotSpan>
                                     {coinIcon} {formatNumber(coin.total_volume)}
                                 </div>
                                 <div>
-                                    <span>.</span>
+                                    <DotSpan>.</DotSpan>
                                     {coinIcon} {formatNumber(coin.market_cap)}
                                 </div>
                             </div>
                             <OuterBar>
                                 <InnerBar lowernum={coin.total_volume} highernum={coin.market_cap}></InnerBar>
                             </OuterBar>
-                        </td>
-                        <td style={{paddingLeft: "1rem"}}>
-                            <div style={{display: "flex", justifyContent:"space-between"}}>
+                        </BigRow>
+                        <BigRow>
+                            <div style={{display: "flex", justifyContent:"space-between", alignItems:"center",}}>
                                 <div>
-                                    <span>.</span>
+                                    <DotSpan>.</DotSpan>
                                     {coinIcon} {formatNumber(coin.circulating_supply)}
                                 </div>
-                                <div>
-                                    <span>.</span>
+                                <div >
+                                    <DotSpan>.</DotSpan>
                                     {coinIcon} {coin.max_supply !== null ? formatNumber(coin.max_supply) : formatNumber(coin.circulating_supply)}
                                 </div>
                             </div>
                             <OuterBar>
                                 <InnerBar lowernum={coin.circulating_supply} highernum={coin.max_supply}></InnerBar>
                             </OuterBar>
-                        </td>
-                        <td>
+                        </BigRow>
+                        <BigRow>
                             <Sparkline data={coin.sparkline_in_7d} last7d={coin.price_change_percentage_7d_in_currency}/>
                             {/* {coin.sparkline_in_7d.price.map(price => price)} */}
-                        </td>
-                       </tr> )}
+                        </BigRow>
+                       </CoinRow> )}
                         </tbody>
-                </table>
+                </Table>
             </div>
         </Container>
 
