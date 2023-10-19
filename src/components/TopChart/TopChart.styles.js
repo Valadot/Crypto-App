@@ -34,6 +34,4 @@ export const ChartDescription = styled.div`
   }
 `;
 
-export const PriceData = styled.h1`
-  font-size: 14px;
-`;
+export const PriceData = styled.h1``;
