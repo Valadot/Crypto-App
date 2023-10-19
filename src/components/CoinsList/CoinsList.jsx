@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import {Container, CoinWrapper,CoinImage,NameImageWrapper, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,DotSpan} from "./CoinsList.styles"
+import {Container, CoinWrapper,CoinImage,NameImageWrapper, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,LeftDotSpan, RightDotSpan, BarIndicatorWrapper, LeftFigure, RightFigure} from "./CoinsList.styles"
 import {CoinDataContext} from "../../contexts/CoinDataProvider/CoinDataProvider"
 import Sparkline from "../Sparkline/Sparkline"
 
@@ -10,9 +10,32 @@ const CoinsList = () => {
     // am besten coindata und so in context packen und dann muss der useeffect sich immer updaten, wenn sich etwas ändert in der währung zb. Ich kann dann axios anpassen anhand der momentanen currency
     // anstatt es hardzucoden.
 
-
+    const TableLeftcolors = [
+        "#FFB528",
+        "#474C77",
+        "#1BA27A",
+        "#BB9F33",
+        "#FE7D43",
+        "#B3404A",
+        "#2775C9",
+        "#83808B",
+        "#345D9D",
+      ];
+   
+      const TableRightcolors = [
+        "#FEE158",
+        "#8A92B2",
+        "#FFFFFF",
+        "#E4CD82",
+        "#FFDCCE",
+        "#F4B2B0",
+        "#FFFFFF",
+        "#F09242",
+        "#FFFFFF",
+      ];
     const {coinList, coinIcon} = useContext(CoinDataContext)
     
+
 
     function formatNumber(number) {
         if (number >= 1e12) {
@@ -49,7 +72,7 @@ const CoinsList = () => {
                         </tr>
                     </TableHead>
                     <tbody>
-                    {coinList && coinList.map(coin =>
+                    {coinList && coinList.map((coin,index) =>
                        <CoinRow key={coin.id}>
                         <SmallRow>{coin.market_cap_rank}</SmallRow>
                         <BigRow><NameImageWrapper><CoinImage src={coin.image}></CoinImage>{coin.name}({coin.symbol})</NameImageWrapper></BigRow>
@@ -58,33 +81,34 @@ const CoinsList = () => {
                         <PriceChange color={coin.price_change_percentage_24h_in_currency}>{coin.price_change_percentage_24h_in_currency.toFixed(2)}</PriceChange>
                         <PriceChange color={coin.price_change_percentage_7d_in_currency}>{coin.price_change_percentage_7d_in_currency.toFixed(2)}</PriceChange>
                         <BigRow>
-                            <div style={{display: "flex", justifyContent:"space-between"}}>
-                                <div>
-                                    <DotSpan>.</DotSpan>
+                            <BarIndicatorWrapper>
+                            <LeftFigure color={TableLeftcolors[index % TableLeftcolors.length]}>
+                                    <LeftDotSpan>.</LeftDotSpan>
                                     {coinIcon} {formatNumber(coin.total_volume)}
-                                </div>
-                                <div>
-                                    <DotSpan>.</DotSpan>
+                                </LeftFigure>
+                                <RightFigure color={TableRightcolors[index % TableRightcolors.length]}>
+                                    <RightDotSpan>.</RightDotSpan>
                                     {coinIcon} {formatNumber(coin.market_cap)}
-                                </div>
-                            </div>
-                            <OuterBar>
-                                <InnerBar lowernum={coin.total_volume} highernum={coin.market_cap}></InnerBar>
+                                </RightFigure>
+                            </BarIndicatorWrapper>
+                            <OuterBar color={TableRightcolors[index % TableRightcolors.length]}>
+                                <InnerBar lowernum={coin.total_volume} highernum={coin.market_cap} color={TableLeftcolors[index % TableLeftcolors.length]}></InnerBar>
                             </OuterBar>
                         </BigRow>
                         <BigRow>
-                            <div style={{display: "flex", justifyContent:"space-between", alignItems:"center",}}>
-                                <div>
-                                    <DotSpan>.</DotSpan>
+                            <BarIndicatorWrapper>
+                                
+                            <LeftFigure color={TableLeftcolors[index % TableLeftcolors.length]}>
+                                    <LeftDotSpan>.</LeftDotSpan>
                                     {coinIcon} {formatNumber(coin.circulating_supply)}
-                                </div>
-                                <div >
-                                    <DotSpan>.</DotSpan>
+                                </LeftFigure>
+                                <RightFigure color={TableRightcolors[index % TableRightcolors.length]}>
+                                    <RightDotSpan>.</RightDotSpan>
                                     {coinIcon} {coin.max_supply !== null ? formatNumber(coin.max_supply) : formatNumber(coin.circulating_supply)}
-                                </div>
-                            </div>
-                            <OuterBar>
-                                <InnerBar lowernum={coin.circulating_supply} highernum={coin.max_supply}></InnerBar>
+                                </RightFigure>
+                            </BarIndicatorWrapper>
+                            <OuterBar color={TableRightcolors[index % TableRightcolors.length]}>
+                                <InnerBar lowernum={coin.circulating_supply} highernum={coin.max_supply} color={TableLeftcolors[index % TableLeftcolors.length]}></InnerBar>
                             </OuterBar>
                         </BigRow>
                         <BigRow>
