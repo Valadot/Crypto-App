@@ -32,7 +32,8 @@ export const NameImageWrapper = styled.div`
 export const OuterBar = styled.div`
   width: 100%;
   height: 5px;
-  background-color: #fee158;
+  margin-bottom: 40px;
+  background-color: ${(props) => props.color};
   border-radius: 50vw;
 `;
 
@@ -42,7 +43,7 @@ export const InnerBar = styled.div`
       ? `${(props.lowernum / props.highernum) * 100}%`
       : "100%"};
   height: 5px;
-  background-color: #ffb528;
+  background-color: ${(props) => props.color};
   border-radius: 50vw;
 `;
 
@@ -72,9 +73,30 @@ export const CoinRow = styled.tr`
   }
 `;
 
-export const DotSpan = styled.span`
-  font-size: 40px;
+export const LeftDotSpan = styled.span`
+  font-size: 30px;
   padding-right: 5px;
   border-radius: 100%;
-  color: #ffb528;
+  color: ${(props) => props.color};
+`;
+
+export const RightDotSpan = styled.span`
+  font-size: 30px;
+  padding-right: 5px;
+  border-radius: 100%;
+  margin-left: 20px;
+  color: ${(props) => props.color};
+`;
+
+export const BarIndicatorWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const LeftFigure = styled.div`
+  color: ${(props) => props.color};
+`;
+
+export const RightFigure = styled.div`
+  color: ${(props) => props.color};
 `;
