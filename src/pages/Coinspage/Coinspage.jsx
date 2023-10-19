@@ -1,8 +1,9 @@
+
 import {Container} from "./Coinspage.styles"
 import Navbar from "../../components/Navbar/Navbar"
 import CoinsList from "../../components/CoinsList/CoinsList"
 import TopChart from "../../components/TopChart/TopChart"
-import { useState } from "react"
+import ChinChart from "../../components/ChinChart/ChinChart"
 
 
 function Coinspage() {
@@ -12,7 +13,9 @@ function Coinspage() {
       <>
       <Navbar />
       <Container>
+      <ChinChart />
         <TopChart />
+        
 
         <CoinsList/>
   

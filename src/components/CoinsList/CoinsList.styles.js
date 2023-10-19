@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin: 3rem auto 0 auto;
   background-color: ${(props) => props.theme.background.primary};
@@ -32,7 +33,7 @@ export const NameImageWrapper = styled.div`
 export const OuterBar = styled.div`
   width: 100%;
   height: 5px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   background-color: ${(props) => props.color};
   border-radius: 50vw;
 `;
@@ -56,13 +57,18 @@ export const BigRow = styled.th`
 
 export const SmallRow = styled.th`
   text-align: left;
-  padding: 10px 15px;
+  padding: 5px 10px;
 `;
 
 export const PriceChange = styled.th`
   text-align: left;
   padding: 10px 15px;
-  color: ${(props) => (props.color > 0 ? "green" : "red")};
+  color: ${(props) => (props.color > 0 ? "#00FC2A" : "#FE1040")};
+
+  div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const CoinRow = styled.tr`
@@ -74,17 +80,16 @@ export const CoinRow = styled.tr`
 `;
 
 export const LeftDotSpan = styled.span`
-  font-size: 30px;
+  font-size: 25px;
   padding-right: 5px;
   border-radius: 100%;
   color: ${(props) => props.color};
 `;
 
 export const RightDotSpan = styled.span`
-  font-size: 30px;
+  font-size: 25px;
   padding-right: 5px;
   border-radius: 100%;
-  margin-left: 20px;
   color: ${(props) => props.color};
 `;
 
@@ -99,4 +104,8 @@ export const LeftFigure = styled.div`
 
 export const RightFigure = styled.div`
   color: ${(props) => props.color};
+`;
+
+export const Caret = styled.img`
+  width: 20px;
 `;

@@ -4,11 +4,7 @@ import {NavbarContainer, RightNavbar,SearchWrapper,ThemeChangeWrapper,CurrencyCh
 import DarkTheme from "../../assets/dark-theme.svg"
 import LightTheme from "../../assets/light-theme.svg"
 import CurrencySymbol from "../CurrencySymbol/CurrencySymbol"
-import DollarSign from "../../assets/dollar-sign.svg"
-import PoundSign from "../../assets/gbp-sign.svg"
-import EuroSign from "../../assets/eur-sign.svg"
-import BitcoinSign from "../../assets/btc-sign.svg"
-import EthereumSign from "../../assets/eth-sign.svg"
+import { currencyLogo } from "../../utils/currencyLogo/currencyLogo"
 import MagnyfingGlassDark from "../../assets/magnifying-glass-dark.svg"
 import MagnyfingGlassLight from "../../assets/magnifying-glass-light.svg"
 
@@ -27,13 +23,6 @@ const Navbar = () => {
     }
   }
 
-  const CurrencyLogo = {
-    USD: DollarSign,
-    GBP:PoundSign,
-    EUR: EuroSign,
-    BTC: BitcoinSign,
-    ETH: EthereumSign
-  }
 
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value)
@@ -50,7 +39,7 @@ const Navbar = () => {
               <SearchInput placeholder="Search..."/>
             </SearchWrapper >
             <CurrencyChangeWrapper>
-              <CurrencySymbol currency={CurrencyLogo[currency]} />
+              <CurrencySymbol currency={currencyLogo(currency)} />
               <CurrencyChanger onChange={handleCurrencyChange} name="currency" value={currency}>
                 <option value="USD">USD</option>
                 <option value="GBP">GBP</option>
