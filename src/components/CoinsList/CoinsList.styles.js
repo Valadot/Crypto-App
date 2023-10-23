@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export const Container = styled.div`
   display: flex;
@@ -108,4 +109,8 @@ export const RightFigure = styled.div`
 
 export const Caret = styled.img`
   width: 20px;
+`;
+
+export const InfiteScrolling = styled(InfiniteScroll)`
+  display: flex;
 `;
