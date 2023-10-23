@@ -21,7 +21,6 @@ const ChinChart = () =>{
         ETH: "Ξ"
     }
 
-    console.log(globalData)
 
     return(
         <Container>

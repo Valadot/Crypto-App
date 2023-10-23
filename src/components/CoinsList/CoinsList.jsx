@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import {Container, CoinWrapper,CoinImage,NameImageWrapper, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,LeftDotSpan, RightDotSpan, BarIndicatorWrapper, LeftFigure, RightFigure,Caret} from "./CoinsList.styles"
+import InfiniteScroll from "react-infinite-scroll-component"
+import {Container, CoinWrapper,CoinImage,NameImageWrapper, InfiteScrolling, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,LeftDotSpan, RightDotSpan, BarIndicatorWrapper, LeftFigure, RightFigure,Caret} from "./CoinsList.styles"
 import {CoinDataContext} from "../../contexts/CoinDataProvider/CoinDataProvider"
 import Sparkline from "../Sparkline/Sparkline"
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
@@ -36,9 +35,11 @@ const CoinsList = () => {
         "#F09242",
         "#FFFFFF",
       ];
-    const {coinList, coinIcon} = useContext(CoinDataContext)
+    const {coinList, coinIcon,getCoinlist,loading } = useContext(CoinDataContext)
     
     return(
+        
+        <InfiniteScroll dataLength={coinList.length} next={getCoinlist} hasMore={!loading} loader={<h4>Loading coins...</h4>}>
         <Container>
             <div>
                 
@@ -57,8 +58,11 @@ const CoinsList = () => {
                             
                         </tr>
                     </TableHead>
+                    
                     <tbody>
+                    
                     {coinList && coinList.map((coin,index) =>
+                    
                        <CoinRow key={coin.id}>
                         <SmallRow>{coin.market_cap_rank}</SmallRow>
                         <BigRow><NameImageWrapper><CoinImage src={coin.image}></CoinImage>{coin.name}({coin.symbol})</NameImageWrapper></BigRow>
@@ -114,11 +118,16 @@ const CoinsList = () => {
                             <Sparkline data={coin.sparkline_in_7d} last7d={coin.price_change_percentage_7d_in_currency}/>
                             {/* {coin.sparkline_in_7d.price.map(price => price)} */}
                         </BigRow>
-                       </CoinRow> )}
+                       </CoinRow> 
+                       )}
+                        
                         </tbody>
+                        
+
                 </Table>
             </div>
         </Container>
+        </InfiniteScroll>
 
     );
 };
