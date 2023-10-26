@@ -14,8 +14,10 @@ import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
-import {Container,
-    ChartWrapper,Chart,Headline, ChartDescription,PriceData} from "./TopChart.styles"
+import {Container,Headline} from "./TopChart.styles"
+  
+import LineChart from "../Linechart/LineChart";
+import BarChart from "../BarChart/BarChart";
 
 
 ChartJS.register(
@@ -28,226 +30,19 @@ ChartJS.register(
     Filler
 )
 
-const TopChart =({price}) => {
- const [priceData, setPriceData] = useState([]);
- const [volumeData, setVolumeData] = useState([]);
- const [todayDate, setTodayDate] = useState(new Date());
-
- const {colorMode, currency} = useContext(CurrencyColorContext);
-
-    const getChartData = async( ) => {
-        try {
-            const {data} = await axios ("https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30&interval=daily")
-        
-           
-           setPriceData(data.prices.map(price => price[1]))
-           setVolumeData(data.total_volumes.map(volume => volume[1]))
-        } catch (error){
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        getChartData()
-    }, []);
+const TopChart =() => {
 
 
 
-
-    //for the line chart - showing data for 2 days
-const dataPoints = priceData;
-const dateLabels = [];
-const fullDateLabels = [];
-const startDate = new Date();
-startDate.setDate(startDate.getDate() - 29); 
-let currentDate = new Date(startDate);
-
-while (currentDate <= new Date()) {
-  dateLabels.push(currentDate.getDate()); // Full date for x-axis
-  fullDateLabels.push(currentDate.toISOString().split('T')[0]); // Full date for tooltips
-  currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1 day
-  }
-
-    const data={
-        labels: dateLabels,
-        datasets: [{
-            data: priceData,
-            backgroundColor: (context) => {
-                
-                const bgColor= colorMode === "dark" ? ["RGBA(0,255,95,0.56 )","RGBA(255,255,255,0.2 )","RGBA(0,255,95,0 )"] : ["RGBA(37,80,234,0.56)", "RGBA(37,80,234,0.2 )","RGBA(37,80,234,0)"]
-                if(!context.chart.chartArea){
-                    return;
-                }
-
-                const {ctx, data, chartArea:{top,bottom}} = context.chart;
-                const gradientBg = ctx.createLinearGradient(0,top,0,bottom);
-                gradientBg.addColorStop(0, bgColor[0])
-                gradientBg.addColorStop(0.5, bgColor[1])
-                gradientBg.addColorStop(1, bgColor[2])
-                return gradientBg
-            },
-            borderColor: colorMode === "dark" ? "#04DC55" : "#2550EA",
-            pointBorderColor: "white",
-            fill: true,
-            tension: 0.5,
-            
-
-        }]
-    }
-
-    const options = {
-        scales: {
-          x:{
-            display: true,
-            grid: {
-                display: false,
-            },
-            ticks: {
-              stepSize: 1,
-              minRotation: 0,
-              maxRotation: 0,
-            },
-          },
-          y: {
-            display: false,
-            grid: {
-                display: false,
-            },
-          },
-        },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              title: (tooltipItem) => fullDateLabels[tooltipItem[0].dataIndex],
-              label: (context) => `Price: ${priceData[context.dataIndex].toLocaleString()}`
-            },
-          },
-        },
-        aspectRatio: undefined,
-        responsive: true,
-  maintainAspectRatio: true,
-        layout: {
-            padding:{
-                left: 10,
-                right: 10,
-                top: 10,
-                bottom: 10,
-            }
-        }
-      };
-
-
-//for the bar chart - showing data every day
-
-
-const BardataPoints = [volumeData];
-
-// Generate date labels for every day
-const BarDateLabels = [];
-const BarFullDateLabels = [];
-const BarStartDate = new Date();
-BarStartDate.setDate(BarStartDate.getDate() - 29); // Start with today - 29 days
-let BarcurrentDate = new Date(BarStartDate);
-
-while (BarcurrentDate <= new Date()) {
-BarDateLabels.push(BarcurrentDate.getDate()); // Full date for x-axis
-  BarFullDateLabels.push(BarcurrentDate.toISOString().split('T')[0]); // Full date for tooltips
-  BarcurrentDate.setDate(BarcurrentDate.getDate() + 1); // Increment the date by 1 day
-}
-
-// Ensure that your data contains a value for each day
-const BarfullData = [];
-let BardataIndex = 0;
-
-while (BardataIndex < BardataPoints.length) {
-    BarfullData.push(BardataPoints[BardataIndex]);
-    BardataIndex++;
-}
-
-      const Bardata = {
-        labels: BarDateLabels,
-        datasets: [{
-            data: volumeData,
-            backgroundColor: colorMode === "dark" ? "#2172E5" : "#1AD761",
-            barPercentage: 1,
-            borderRadius: 5,
-        }]
-      }
-
-      const Baroptions = {
-        scales: {
-          x: {
-            display: true,
-            grid: {
-                display: false,
-            },
-            ticks: {
-              stepSize: 1,
-            },
-          },
-          y: {
-            display: false,
-            grid: {
-            display: false,
-            },
-          },
-        },
-        plugins: {
-          tooltip: {
-            callbacks: {
-                title: (tooltipItem) => BarFullDateLabels[tooltipItem[0].dataIndex],
-              label: (context) => `Volume: ${volumeData[context.dataIndex].toLocaleString()}`
-            },
-          },
-        },
-        aspectRatio: undefined,
-        responsive: true,
-  maintainAspectRatio: true,
-        layout: {
-            padding:{
-                left: 10,
-                right: 10,
-                top: 10,
-                bottom: 10,
-            }
-        }
-      };
-
-      const {coinList, coinIcon} = useContext(CoinDataContext)
- 
-      
     return(
       <>
       <Headline>
-      <h1>Your overview</h1>
+        <h1>Your Overview</h1>
       </Headline>
         <Container>
+      <LineChart />
+      <BarChart/>
 
-        <ChartWrapper>
-                <ChartDescription>
-            <h1>BTC</h1>
-            {coinIcon && coinList[0] && <PriceData>{coinIcon} {coinList[0].current_price.toLocaleString()}</PriceData>}
-              <h1>{todayDate.toDateString()}</h1>
-          </ChartDescription>
-            <Line
-                data = {data}
-                options = {options}>
-                  
-
-            </Line>
-            </ChartWrapper>
-            <ChartWrapper>
-              <ChartDescription>
-            <h1>Volume 24h</h1>
-            {coinIcon && coinList[0] && <PriceData>{coinIcon} {coinList[0].total_volume.toLocaleString()}</PriceData>}
-              <h1>{todayDate.toDateString()}</h1>
-          </ChartDescription>
-            <Bar
-            
-                data = {Bardata}
-                options = {Baroptions}
-            >
-            </Bar>
-            </ChartWrapper>
         </Container>
         </>
     )

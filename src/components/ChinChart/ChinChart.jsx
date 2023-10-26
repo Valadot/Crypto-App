@@ -1,12 +1,12 @@
 import {useContext} from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider"
 import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider"
 import {Container,OuterBar, InnerBar, InnerBarCap,CoinStatWrapper,Dot, Caret} from "./ChinChart.styles"
 import BitcoinLogo from "../../assets/bitcoin-logo.svg"
 import EthLogo from "../../assets/eth-logo.svg"
 import { formatNumber } from "../../utils/formatNumber/formatNumber"
-import { currencyLogo } from "../../utils/currencyLogo/currencyLogo"
-import { pickCaret } from "../../utils/correctCaret/correctCaret"
 
 const ChinChart = () =>{
 
@@ -35,7 +35,7 @@ const ChinChart = () =>{
             <div style={{display:"flex", alignItems:"center", gap:"0.5rem"}}>
                 <Dot></Dot>
                 {currencySymbol[currency]} {globalData && formatNumber(globalData.data.total_market_cap[currency.toLowerCase()])}
-                <Caret src={globalData && pickCaret(globalData.data.market_cap_change_percentage_24h_usd.toString())}/>
+                {globalData && globalData.data.market_cap_change_percentage_24h_usd < 0 ? <FontAwesomeIcon icon={faCaretDown} style={{color: "#FE1040",}} /> : <FontAwesomeIcon icon={faCaretUp} style={{color: "#00FC2A",}} />}
 
             </div>
             <div style={{display:"flex", alignItems:"center", gap:"0.5rem"}}>

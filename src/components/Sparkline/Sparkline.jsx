@@ -9,9 +9,7 @@ import {
     Tooltip,
     Filler,
 } from "chart.js"
-import { useContext, useState } from "react";
-import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
-import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
+
 
 
 ChartJS.register(
@@ -25,7 +23,9 @@ ChartJS.register(
 
 export const Sparkline = ({ data, last7d }) => {
   const prices = data && data.price.map((el) => el)
+  
   const labels = [...Array(data.price.length).keys()];
+
   const borderColor = last7d && last7d >= 0 ? '#00FF5F' : '#FE1040';
 
   const chartData = {
@@ -33,7 +33,7 @@ export const Sparkline = ({ data, last7d }) => {
     datasets: [{
         fill: true,
         pointBorderColor: '#191B1F',
-        tension: 0.5,
+        tension: 1,
         label: 'BTC',
         data: prices,
         backgroundColor: [
