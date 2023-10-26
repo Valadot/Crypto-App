@@ -24,10 +24,14 @@ export const NavLinkWrapper = styled.div`
 
 export const StyledLink = styled(NavLink)`
   color: ${(props) => props.theme.background.secondary};
-  background-color: ${(props) => props.theme.background.componentBackground};
+  background-color: ${(props) => props.theme.background.primary};
   text-decoration: none;
   padding: 0.7rem 3rem;
   border-radius: 10px;
+
+  &.active {
+    background-color: ${(props) => props.theme.background.componentBackground};
+  }
 `;
 
 export const RightNavbar = styled.div`

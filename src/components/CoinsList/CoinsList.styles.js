@@ -69,6 +69,7 @@ export const PriceChange = styled.th`
   div {
     display: flex;
     align-items: center;
+    gap: 5px;
   }
 `;
 
@@ -83,14 +84,12 @@ export const CoinRow = styled.tr`
 export const LeftDotSpan = styled.span`
   font-size: 25px;
   padding-right: 5px;
-  border-radius: 100%;
   color: ${(props) => props.color};
 `;
 
 export const RightDotSpan = styled.span`
   font-size: 25px;
   padding-right: 5px;
-  border-radius: 100%;
   color: ${(props) => props.color};
 `;
 
@@ -105,10 +104,6 @@ export const LeftFigure = styled.div`
 
 export const RightFigure = styled.div`
   color: ${(props) => props.color};
-`;
-
-export const Caret = styled.img`
-  width: 20px;
 `;
 
 export const InfiteScrolling = styled(InfiniteScroll)`

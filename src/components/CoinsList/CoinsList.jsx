@@ -1,45 +1,44 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import InfiniteScroll from "react-infinite-scroll-component"
-import {Container, CoinWrapper,CoinImage,NameImageWrapper, InfiteScrolling, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,LeftDotSpan, RightDotSpan, BarIndicatorWrapper, LeftFigure, RightFigure,Caret} from "./CoinsList.styles"
+import {Container,CoinImage,NameImageWrapper, InfiteScrolling, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,LeftDotSpan, RightDotSpan, BarIndicatorWrapper, LeftFigure, RightFigure} from "./CoinsList.styles"
 import {CoinDataContext} from "../../contexts/CoinDataProvider/CoinDataProvider"
 import Sparkline from "../Sparkline/Sparkline"
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
-import {pickCaret} from "../../utils/correctCaret/correctCaret" 
+import { formatPrice } from "../../utils/formatPrice/formatPrice";
 import {formatPriceChange} from "../../utils/formatPriceChange/formatPriceChange"
 
 const CoinsList = () => {
 
-    // am besten coindata und so in context packen und dann muss der useeffect sich immer updaten, wenn sich etwas ändert in der währung zb. Ich kann dann axios anpassen anhand der momentanen currency
-    // anstatt es hardzucoden.
-
     const TableLeftcolors = [
         "#FFB528",
         "#474C77",
-        "#1BA27A",
+        "#0f664c",
         "#BB9F33",
         "#FE7D43",
         "#B3404A",
         "#2775C9",
         "#83808B",
-        "#345D9D",
+        "#2b4c81",
       ];
    
       const TableRightcolors = [
         "#FEE158",
         "#8A92B2",
-        "#FFFFFF",
+        "#1BA27A",
         "#E4CD82",
-        "#FFDCCE",
-        "#F4B2B0",
-        "#FFFFFF",
         "#F09242",
-        "#FFFFFF",
+        "#f8bda5",
+        "#7db5f1",
+        "#F4B2B0",
+        "#518ceb",
       ];
     const {coinList, coinIcon,getCoinlist,loading } = useContext(CoinDataContext)
     
     return(
         
-        <InfiniteScroll dataLength={coinList.length} next={getCoinlist} hasMore={!loading} loader={<h4>Loading coins...</h4>}>
+        // <InfiniteScroll dataLength={coinList.length} next={getCoinlist} hasMore={!loading} loader={<h4>Loading coins...</h4>}>
         <Container>
             <div>
                 
@@ -66,21 +65,21 @@ const CoinsList = () => {
                        <CoinRow key={coin.id}>
                         <SmallRow>{coin.market_cap_rank}</SmallRow>
                         <BigRow><NameImageWrapper><CoinImage src={coin.image}></CoinImage>{coin.name}({coin.symbol})</NameImageWrapper></BigRow>
-                        <SmallRow>{coinIcon} {coin.current_price.toLocaleString()}</SmallRow>
+                        <SmallRow>{coinIcon} {formatPrice(coin.current_price)}</SmallRow>
                         <PriceChange color={coin.price_change_percentage_1h_in_currency}>
                             <div>
-                        <Caret src={pickCaret(coin.price_change_percentage_1h_in_currency.toString())} alt="" />
+                        {coin.price_change_percentage_1h_in_currency === 0 ? "" : coin.price_change_percentage_1h_in_currency < 0 ? <FontAwesomeIcon icon={faCaretDown} style={{color: "#FE1040",}} /> : <FontAwesomeIcon icon={faCaretUp} style={{color: "#00FC2A",}} />}
                         {formatPriceChange(coin.price_change_percentage_1h_in_currency)}
                         </div></PriceChange>
                         <PriceChange color={coin.price_change_percentage_24h_in_currency}>
                             <div>
-                            <Caret src={pickCaret(coin.price_change_percentage_24h_in_currency.toString())} alt="" />
+                            {coin.price_change_percentage_24h_in_currency === 0 ? "" : coin.price_change_percentage_24h_in_currency < 0 ? <FontAwesomeIcon icon={faCaretDown} style={{color: "#FE1040",}} /> : <FontAwesomeIcon icon={faCaretUp} style={{color: "#00FC2A",}} />}
                             {formatPriceChange(coin.price_change_percentage_24h_in_currency)}
                             </div>
                             </PriceChange>
                         <PriceChange color={coin.price_change_percentage_7d_in_currency}>
                             <div>
-                            <Caret src={pickCaret(coin.price_change_percentage_7d_in_currency.toString())} alt="" />
+                            {coin.price_change_percentage_7d_in_currency === 0 ? "" : coin.price_change_percentage_7d_in_currency < 0 ? <FontAwesomeIcon icon={faCaretDown} style={{color: "#FE1040",}} /> : <FontAwesomeIcon icon={faCaretUp} style={{color: "#00FC2A",}} />}
                             {formatPriceChange(coin.price_change_percentage_7d_in_currency)}
                                 </div></PriceChange>
                         <BigRow>
@@ -116,7 +115,6 @@ const CoinsList = () => {
                         </BigRow>
                         <BigRow>
                             <Sparkline data={coin.sparkline_in_7d} last7d={coin.price_change_percentage_7d_in_currency}/>
-                            {/* {coin.sparkline_in_7d.price.map(price => price)} */}
                         </BigRow>
                        </CoinRow> 
                        )}
@@ -127,7 +125,7 @@ const CoinsList = () => {
                 </Table>
             </div>
         </Container>
-        </InfiniteScroll>
+        // </InfiniteScroll>
 
     );
 };

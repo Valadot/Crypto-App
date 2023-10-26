@@ -13,6 +13,7 @@ import MagnyfingGlassLight from "../../assets/magnifying-glass-light.svg"
 const Navbar = () => {
 
   const {currency, setCurrency, colorMode, setColorMode} = useContext(CurrencyColorContext)
+  const [activeLink, setActiveLink] = useState("");
 
   const handleColorModeChange = () => {
 
@@ -30,8 +31,15 @@ const Navbar = () => {
   return (
     <NavbarContainer>
       <NavLinkWrapper>
-      <StyledLink to="/">Coins</StyledLink>
-      <StyledLink to="/portfolio">Portfolio</StyledLink>
+      <StyledLink to="/"
+      onClick={() => setActiveLink("Coins")}
+      className={activeLink === "Coins" ? "active" : ""}>
+        Coins
+        </StyledLink>
+      <StyledLink to="/portfolio"
+      onClick={() => setActiveLink("Portfolio")}
+      className={activeLink === "Portfolio" ? "active" : ""}>
+        Portfolio</StyledLink>
       </NavLinkWrapper>
           <RightNavbar>
             <SearchWrapper>
