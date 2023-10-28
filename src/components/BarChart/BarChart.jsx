@@ -91,6 +91,12 @@ const BarChart = () => {
                 title: (tooltipItem) => BarFullDateLabels[tooltipItem[0].dataIndex],
               label: (context) => `Volume: ${coinIcon} ${volumeData[context.dataIndex].toLocaleString()}`
             },
+            titleFont: {
+              size: 16,
+            },
+            bodyFont: {
+              size: 16, 
+            },
           },
         },
         aspectRatio: undefined,
@@ -98,8 +104,8 @@ const BarChart = () => {
   maintainAspectRatio: true,
         layout: {
             padding:{
-                left: 30,
-                right: 30,
+                left: 40,
+                right: 40,
                 top: 10,
                 bottom: 10,
             }
