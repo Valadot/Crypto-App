@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
+  width: 1000px;
   justify-content: center;
   align-items: center;
   gap: 2rem;
@@ -10,7 +11,7 @@ export const Container = styled.div`
   align-self: center;
   border-radius: 0 0 10px 10px;
   top: 0;
-  font-size: 12px;
+  font-size: 17px;
   background-color: ${(props) => props.theme.background.primary};
 `;
 

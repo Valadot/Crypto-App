@@ -18,4 +18,6 @@ export const ChartDescription = styled.div`
   }
 `;
 
-export const PriceData = styled.h1``;
+export const PriceData = styled.h1`
+  font-size: 2.75rem;
+`;

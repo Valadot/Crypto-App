@@ -46,7 +46,7 @@ export const CoinDataProvider = ({children}) => {
     const getBtcPrice = async() => {
         try{
             const {data} = await axios(`https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&market_data=true`)
-
+            console.log(data)
             setBtcPrice(data)
         } catch(error){
             console.log(error)

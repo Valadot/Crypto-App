@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { NavLink } from "react-router-dom";
 
 export const Container = styled.div`
   display: flex;
@@ -8,11 +9,12 @@ export const Container = styled.div`
   margin: 3rem auto 0 auto;
   background-color: ${(props) => props.theme.background.primary};
   border-radius: 10px;
-  padding: 1.5rem 1rem 0 1.5rem;
+
+  padding: 1.5rem 0 0 1.5rem;
 `;
 
 export const Table = styled.table`
-  font-size: 0.775rem;
+  font-size: 1.19rem;
   border-collapse: collapse;
 `;
 
@@ -25,10 +27,12 @@ export const CoinImage = styled.img`
   aspect-ratio: 1/1;
 `;
 
-export const NameImageWrapper = styled.div`
+export const StyledLink = styled(NavLink)`
+  color: ${(props) => props.theme.background.secondary};
   display: flex;
+  text-decoration: none;
   align-items: center;
-  gap: 10px;
+  gap: 0.7rem;
 `;
 
 export const OuterBar = styled.div`
@@ -53,7 +57,7 @@ export const TableHead = styled.thead``;
 
 export const BigRow = styled.th`
   text-align: left;
-  padding: 5px 10px;
+  padding: 5px 15px;
 `;
 
 export const SmallRow = styled.th`

@@ -106,6 +106,12 @@ while (currentDate <= new Date()) {
               title: (tooltipItem) => fullDateLabels[tooltipItem[0].dataIndex],
               label: (context) => `Price: ${coinIcon} ${priceData[context.dataIndex].toLocaleString()}`
             },
+            titleFont: {
+              size: 16,
+            },
+            bodyFont: {
+              size: 16, 
+            },
           },
         },
         aspectRatio: undefined,
@@ -113,8 +119,8 @@ while (currentDate <= new Date()) {
   maintainAspectRatio: true,
         layout: {
             padding:{
-                left: 30,
-                right: 30,
+                left: 40,
+                right: 40,
                 top: 10,
                 bottom: 10,
             }

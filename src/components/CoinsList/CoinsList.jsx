@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import InfiniteScroll from "react-infinite-scroll-component"
-import {Container,CoinImage,NameImageWrapper, InfiteScrolling, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,LeftDotSpan, RightDotSpan, BarIndicatorWrapper, LeftFigure, RightFigure} from "./CoinsList.styles"
+import {Container,CoinImage,StyledLink, InfiteScrolling, InnerBar,OuterBar,TableHead, BigRow, SmallRow,CoinRow,Table,PriceChange,LeftDotSpan, RightDotSpan, BarIndicatorWrapper, LeftFigure, RightFigure} from "./CoinsList.styles"
 import {CoinDataContext} from "../../contexts/CoinDataProvider/CoinDataProvider"
 import Sparkline from "../Sparkline/Sparkline"
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
@@ -35,7 +35,8 @@ const CoinsList = () => {
         "#518ceb",
       ];
     const {coinList, coinIcon,getCoinlist,loading } = useContext(CoinDataContext)
-    
+
+    console.log(coinList)
     return(
         
         // <InfiniteScroll dataLength={coinList.length} next={getCoinlist} hasMore={!loading} loader={<h4>Loading coins...</h4>}>
@@ -64,7 +65,7 @@ const CoinsList = () => {
                     
                        <CoinRow key={coin.id}>
                         <SmallRow>{coin.market_cap_rank}</SmallRow>
-                        <BigRow><NameImageWrapper><CoinImage src={coin.image}></CoinImage>{coin.name}({coin.symbol})</NameImageWrapper></BigRow>
+                        <BigRow><StyledLink to={`/coin/${coin.id}`}><CoinImage src={coin.image}></CoinImage>{coin.name} ({coin.symbol.toUpperCase()})</StyledLink></BigRow>
                         <SmallRow>{coinIcon} {formatPrice(coin.current_price)}</SmallRow>
                         <PriceChange color={coin.price_change_percentage_1h_in_currency}>
                             <div>
