@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-
+import BackToTopButton from "./components/BackToTopButton/BackToTopButton";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import Coinspage from "./pages/Coinspage/Coinspage";
 import {CurrencyColorProvider, CurrencyColorContext} from "./contexts/CurrencyColorProvider/CurrencyColorProvider"
@@ -62,6 +62,7 @@ function App() {
       <Container>
         
         <RouterProvider router={router} />
+        <BackToTopButton/>
         </Container>
       </ThemeProvider> 
   )

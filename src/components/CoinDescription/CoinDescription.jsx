@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
+import FadeIn from 'react-fade-in';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown, faCaretUp, faLayerGroup, faLink,faCopy } from '@fortawesome/free-solid-svg-icons'
 import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
@@ -205,7 +206,8 @@ const CoinDescription = () => {
            <CopyIcon onClick={() => handleCopy(coinLinks[2])}>{colorMode === "dark" ? <FontAwesomeIcon icon={faCopy} style={{color: "#ffffff",}} /> : <FontAwesomeIcon icon={faLink} style={{color: "#191b1f",}}/>}</CopyIcon>
 
            </Link>
-           {copied && <Copied>Copied!</Copied>}
+            {copied && <Copied showPopup={copied}>Copied!</Copied>}
+           
             </CoinLinks>
         </Container>
         </>
