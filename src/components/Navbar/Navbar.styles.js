@@ -5,14 +5,17 @@ export const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1300px;
+  max-width: 1700px;
   padding: 10px 0;
   background-color: ${(props) => props.theme.background.primary};
   font-weight: 500;
   margin: 0 auto;
+  transition: 0.3s;
 
-  * {
-    box-sizing: border-box;
+  &.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 `;
 

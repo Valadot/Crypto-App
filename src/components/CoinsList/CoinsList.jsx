@@ -36,10 +36,9 @@ const CoinsList = () => {
       ];
     const {coinList, coinIcon,getCoinlist,loading } = useContext(CoinDataContext)
 
-    console.log(coinList)
     return(
         
-        // <InfiniteScroll dataLength={coinList.length} next={getCoinlist} hasMore={!loading} loader={<h4>Loading coins...</h4>}>
+        <InfiniteScroll dataLength={coinList.length} next={getCoinlist} hasMore={!loading} loader={<h4>Loading coins...</h4>}>
         <Container>
             <div>
                 
@@ -126,7 +125,7 @@ const CoinsList = () => {
                 </Table>
             </div>
         </Container>
-        // </InfiniteScroll>
+        </InfiniteScroll>
 
     );
 };

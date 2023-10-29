@@ -1,4 +1,4 @@
-import {useState, useContext} from "react"
+import {useState, useContext, useEffect} from "react"
 import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import {NavbarContainer, RightNavbar,SearchWrapper,ThemeChangeWrapper,CurrencyChangeWrapper,SearchInput,CurrencyChanger,NavLinkWrapper,StyledLink} from "./Navbar.styles"
 import DarkTheme from "../../assets/dark-theme.svg"
@@ -14,6 +14,7 @@ const Navbar = () => {
 
   const {currency, setCurrency, colorMode, setColorMode} = useContext(CurrencyColorContext)
   const [activeLink, setActiveLink] = useState("");
+  const [sticky, setSticky] = useState(false)
 
   const handleColorModeChange = () => {
 
@@ -28,8 +29,17 @@ const Navbar = () => {
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value)
   }
+
+  useEffect(() => {
+    const handleScroll =() => {
+      setSticky(window.scrollY > 0)
+      // console.log(window.scrollY)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  })
   return (
-    <NavbarContainer>
+    <NavbarContainer className={`${sticky ? "sticky" : ""}`}>
       <NavLinkWrapper>
       <StyledLink to="/"
       onClick={() => setActiveLink("Coins")}

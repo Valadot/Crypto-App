@@ -1,6 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
-import debounce from 'lodash/debounce';
 import { CurrencyColorContext } from "../CurrencyColorProvider/CurrencyColorProvider";
 
 export const CoinDataContext = createContext();
@@ -23,18 +22,17 @@ export const CoinDataProvider = ({children}) => {
         setCoinList([]);
         setPriceData([]);
         setVolumeData([]);
-        setPage(1); // Moved setPage to the end to ensure it reflects the updated value
+        setPage(1);
     };
    
+    // NEED TO DO PROMISE.ALL HERE WHEN REFACTORING! Too many API calls lead to too many state changes => Application re-renders multiple times at once.
 
-    const getCoinlist = async ( ) => {
+    const getCoinlist = async (prevCoins = coinList, defaultPage = page ) => {
         try {
             setLoading(true)
-            const {data} = await axios (`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${formattedCurrency}&order=market_cap_desc&per_page=30&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d&locale=en`)
-            // console.log(data)
-            // setCoinList([...coinList, ...data])
-            setCoinList(data)
-            // setPage(page + 5)
+            const {data} = await axios (`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${formattedCurrency}&order=market_cap_desc&per_page=30&page=${defaultPage}&sparkline=true&price_change_percentage=1h%2C24h%2C7d&locale=en`)
+            setCoinList([...prevCoins, ...data])
+            setPage(defaultPage + 1)
             setLoading(false)
 
             
@@ -46,7 +44,6 @@ export const CoinDataProvider = ({children}) => {
     const getBtcPrice = async() => {
         try{
             const {data} = await axios(`https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&market_data=true`)
-            console.log(data)
             setBtcPrice(data)
         } catch(error){
             console.log(error)
@@ -60,7 +57,6 @@ export const CoinDataProvider = ({children}) => {
            
            setPriceData(data.prices.map(price => price[1]))
            setVolumeData(data.total_volumes.map(volume => volume[1]))
-        //    console.log(data.prices.map(price => price[1]))
         } catch (error){
             console.log(error)
         }
@@ -77,18 +73,13 @@ export const CoinDataProvider = ({children}) => {
 
     }
 
-    // const debouncedFetchCoins = debounce(getCoinlist, 1000)
 
     useEffect(() => {
-
-        const fetchData = async () => {
             resetData(); 
-            console.log(page)
-            getCoinlist(); 
+            getCoinlist([],1); 
             getBtcPrice();
             getGlobalMarketData();
             getChartData();
-        }
         // resetData();
 
 
@@ -110,11 +101,6 @@ export const CoinDataProvider = ({children}) => {
                     break;
         }
     
-        // getCoinlist();
-        // getBtcPrice();
-        // getGlobalMarketData();
-        // getChartData();
-        fetchData()
     }, [currency]);
 
 
