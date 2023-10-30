@@ -2,10 +2,9 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  width: 100%;
   flex-direction: column;
   margin: 3rem auto 0 auto;
-  background-color: ${(props) => props.theme.background.componentBackground};
+  background-color: ${(props) => props.theme.background.pageBackground};
   border-radius: 10px;
   padding: 1.5rem 1rem 0 1.5rem;
 `;
@@ -199,4 +198,59 @@ export const Copied = styled.div`
   border-radius: 12px;
   font-size: 24px;
   font-weight: 500;
+`;
+
+export const CurrencyConverter = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  align-items: center;
+  gap: 2rem;
+`;
+
+export const Currency = styled.div`
+  padding: 1rem 1.5rem;
+  background-color: #06d554;
+  border-radius: 8px 0 0 8px;
+  font-weight: 500;
+  position: relative;
+
+  &:after {
+    content: "${(props) => props.$currency}";
+    position: absolute;
+    width: 50px;
+    left: 100px;
+    color: ${(props) => props.theme.background.secondary};
+  }
+
+  &:before {
+    content: "${(props) => props.$beforecurrency}";
+    position: absolute;
+    width: 50px;
+    left: 90px;
+    color: ${(props) => props.theme.background.secondary};
+  }
+`;
+
+export const CurrencyValue = styled.input`
+  padding: 1.1rem 3rem;
+  background-color: ${(props) => props.theme.background.componentBackground};
+  border-radius: 0 8px 8px 0;
+  border: none;
+  font-size: 16px;
+  color: ${(props) => props.theme.background.secondary};
+
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
+export const CurrencyWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;

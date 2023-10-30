@@ -1,4 +1,6 @@
 import {useEffect, useState} from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { Button } from "./BackToTopButton.styles";
 
 const BackToTopButton = () => {
@@ -7,7 +9,7 @@ const BackToTopButton = () => {
 
     useEffect(() => {
         window.addEventListener("scroll",() => {
-            if(window.scrollY > 600){
+            if(window.scrollY > 900){
                 setBackToTopButton(true)
             } else {
                 setBackToTopButton(false)
@@ -25,7 +27,7 @@ const BackToTopButton = () => {
     return(
         <div>
             {backToTopButton && <Button 
-            onClick={scrollUp}>Back to top!</Button>}
+            onClick={scrollUp}><FontAwesomeIcon size="xl" icon={faArrowUp} style={{color: "#ffffff",}} /></Button>}
             
         </div>
     )
