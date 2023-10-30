@@ -30,8 +30,8 @@ function App() {
   const lightTheme = {
     primary: "#F6F6F6",
     secondary: "black",
-    componentBackground: "#EDEFF2",
-    pageBackground:"#F7F7F7",
+    componentBackground: "#FFFFFF",
+    pageBackground:"#FCFCFC",
     copyBackground: "rgba(216, 216, 216, 0.8)"
   }
 
@@ -62,7 +62,7 @@ function App() {
       <Container>
         
         <RouterProvider router={router} />
-        <BackToTopButton/>
+        {/* <BackToTopButton/> */}
         </Container>
       </ThemeProvider> 
   )

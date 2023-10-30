@@ -3,22 +3,24 @@ import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import FadeIn from 'react-fade-in';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretDown, faCaretUp, faLayerGroup, faLink,faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faCaretUp, faLayerGroup, faLink,faCopy, faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
 import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import { Container,CoinDataWrapper,CoinDiv,CoinIcon,CoinIconWrapper,CoinInfo,HomePage,PriceDataWrapper, PriceData, MarketChange,HistoryPrice,CoinInfoWrapper, 
-    CoinData,Data,CoinDescriptionWrapper,Section,CoinLinks,Link,LinkIcon, CopyIcon, Copied } from "./CoinDescription.styles"
+    CoinData,Data,CoinDescriptionWrapper,Section,CoinLinks,Link,LinkIcon, CopyIcon, Copied,CurrencyConverter,CurrencyWrapper, Currency, CurrencyValue } from "./CoinDescription.styles"
 import { formatPrice } from "../../utils/formatPrice/formatPrice";
 import { formatPriceChange } from "../../utils/formatPriceChange/formatPriceChange";
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
+import TimeFrameRadioButtons from "../TimeFrameRadioButtons/TimeFrameRadioButtons";
+import { CurrencyChangeWrapper } from "../Navbar/Navbar.styles";
 
 const CoinDescription = () => {
 
     const [coinInfo, setCoinInfo] = useState();
     const [homepage, setHomepage] = useState("");
-    const [currentPrice, setCurrentPrice] = useState();
     const [coinLinks, setCoinLinks] = useState();
-    const [copied, setCopied] = useState(false)
+    const [copied, setCopied] = useState(false);
+    const [currencyFormat, setCurrencyFormat] = useState();
 
     const {coinList} = useContext(CoinDataContext)
     const {currency, colorMode} = useContext(CurrencyColorContext)
@@ -42,7 +44,6 @@ const CoinDescription = () => {
             setCoinInfo(data)
             setHomepage(data.links.homepage[0]);
             setCoinLinks(data.links.blockchain_site)
-            setCurrentPrice(data.market_data.current_price[currency.toLowerCase()])
 
         } catch(error){
             console.log(error)
@@ -97,14 +98,18 @@ const CoinDescription = () => {
 
       const originalDate = coinInfo && coinInfo.market_data.ath_date[currency.toLowerCase()];
         const formattedDate = formatDateToCustom(originalDate);
+
+        const formatCurrency = (e) => {
+            const convertedPrice = (e.target.value/ coin.current_price).toFixed(5)
+            setCurrencyFormat(convertedPrice)
+             
+        }
     useEffect(() => {
         getCoinInfo();
         getCoinData();
         
     },[currency])
     return(
-        <>
-            
         <Container>
             <Section>Your summary</Section>
         
@@ -122,7 +127,7 @@ const CoinDescription = () => {
                 </CoinDiv>
                 <PriceDataWrapper>
                     <PriceData>
-                        {currencySymbol[currency]} {currentPrice && formatPrice(currentPrice)}
+                        {currencySymbol[currency]} {coin && formatPrice(coin.current_price)}
                         <MarketChange color={coinInfo && coinInfo.market_data.price_change_percentage_24h}>
                     {coinInfo && coinInfo.market_data.price_change_percentage_24h_in_currency[currency.toLowerCase()]
  === 0 ? "" : coinInfo && coinInfo.market_data.price_change_percentage_24h_in_currency[currency.toLowerCase()] <0 ? <FontAwesomeIcon icon={faCaretDown} style={{color: "#FE1040",}} /> : <FontAwesomeIcon icon={faCaretUp} style={{color: "#00FC2A",}} />}
@@ -209,8 +214,22 @@ const CoinDescription = () => {
             {copied && <Copied showPopup={copied}>Copied!</Copied>}
            
             </CoinLinks>
+            <TimeFrameRadioButtons/>
+            <CurrencyConverter>
+                <CurrencyWrapper>
+                    <Currency $currency={currencySymbol[currency]} >{currency}</Currency>
+                    <CurrencyValue type="number" min="1" onChange={(e) => formatCurrency(e)} ></CurrencyValue>
+                </CurrencyWrapper>
+                <FontAwesomeIcon size="xl" icon={faArrowRightArrowLeft} style={{color: "#ffffff",}} />
+                <CurrencyWrapper>
+                    <Currency $beforecurrency={coin && coin.symbol.toUpperCase()} >{coin && coin.symbol.toUpperCase()}</Currency>
+                    <CurrencyValue 
+                    value={currencyFormat || ""}
+                    readOnly
+                    />
+                </CurrencyWrapper>
+            </CurrencyConverter>
         </Container>
-        </>
     )
 }
 

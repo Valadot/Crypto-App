@@ -34,7 +34,7 @@ export const InnerBar = styled.div`
 `;
 
 export const InnerBarCap = styled.div`
-  width: ${(props) => (props.cap ? `${props.cap}%` : "100%")};
+  width: ${(props) => (props.$cap ? `${props.$cap}%` : "100%")};
   height: 13px;
   border-radius: 50vw;
   background-color: #ffffff;

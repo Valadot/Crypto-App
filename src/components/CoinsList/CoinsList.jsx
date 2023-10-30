@@ -8,6 +8,7 @@ import Sparkline from "../Sparkline/Sparkline"
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
 import { formatPrice } from "../../utils/formatPrice/formatPrice";
 import {formatPriceChange} from "../../utils/formatPriceChange/formatPriceChange"
+import BackToTopButton from "../BackToTopButton/BackToTopButton";
 
 const CoinsList = () => {
 
@@ -121,9 +122,10 @@ const CoinsList = () => {
                         
                         </tbody>
                         
-
+                        
                 </Table>
             </div>
+            <BackToTopButton/>
         </Container>
         </InfiniteScroll>
 

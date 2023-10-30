@@ -9,6 +9,7 @@ export const Container = styled.div`
   margin: 3rem auto 0 auto;
   background-color: ${(props) => props.theme.background.primary};
   border-radius: 10px;
+  position: relative;
 
   padding: 1.5rem 0 0 1.5rem;
 `;
