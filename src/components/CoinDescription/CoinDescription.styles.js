@@ -3,15 +3,19 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 3rem auto 0 auto;
+  align-items: center;
+  margin: 4rem 0 0 0;
   background-color: ${(props) => props.theme.background.pageBackground};
   border-radius: 10px;
-  padding: 1.5rem 1rem 0 1.5rem;
+  /* padding: 1.5rem 1rem 0 1.5rem; */
+  box-sizing: border-box;
 `;
 
 export const Section = styled.div`
   font-size: 22px;
   font-weight: 500;
+  align-self: flex-start;
+  margin-left: 9rem;
 `;
 
 export const CoinDataWrapper = styled.div`
@@ -36,7 +40,7 @@ export const CoinInfo = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.background.primary};
-  width: 258px;
+  width: 100%;
   height: 295px;
   border-radius: 12px;
   gap: 1rem;
@@ -57,7 +61,7 @@ export const CoinIcon = styled.img`
 `;
 
 export const HomePage = styled.div`
-  width: 258px;
+  /* width: 258px; */
   height: 64px;
   background-color: ${(props) => props.theme.background.primary};
   display: flex;
@@ -115,10 +119,9 @@ export const CoinInfoWrapper = styled.div`
 
 export const CoinData = styled.div`
   display: flex;
-  /* align-items: center; */
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem;
+  padding: 1.5rem;
 `;
 
 export const Data = styled.div`
@@ -141,7 +144,6 @@ export const Data = styled.div`
 
 export const CoinDescriptionWrapper = styled.div`
   width: 1424px;
-  height: 100%;
   background-color: ${(props) => props.theme.background.primary};
   display: flex;
   flex-direction: column;
@@ -219,21 +221,13 @@ export const Currency = styled.div`
     content: "${(props) => props.$currency}";
     position: absolute;
     width: 50px;
-    left: 100px;
-    color: ${(props) => props.theme.background.secondary};
-  }
-
-  &:before {
-    content: "${(props) => props.$beforecurrency}";
-    position: absolute;
-    width: 50px;
     left: 90px;
     color: ${(props) => props.theme.background.secondary};
   }
 `;
 
 export const CurrencyValue = styled.input`
-  padding: 1.1rem 3rem;
+  padding: 1.1rem 2rem;
   background-color: ${(props) => props.theme.background.componentBackground};
   border-radius: 0 8px 8px 0;
   border: none;

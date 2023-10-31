@@ -9,6 +9,9 @@ export const CoinDataProvider = ({children}) => {
     const {currency} = useContext(CurrencyColorContext)
     const [btcPrice, setBtcPrice] = useState("")
     const [loading, setLoading] = useState(false)
+    const [coinChart, setCoinChart] = useState([])
+    const [timeFrame, setTimeFrame] = useState("7")
+    const [coin, setCoin] = useState("")
     
     
     const formattedCurrency = currency.toLowerCase()
@@ -105,7 +108,7 @@ export const CoinDataProvider = ({children}) => {
 
 
     return(
-        <CoinDataContext.Provider value={{coinList, setCoinList,coinIcon,btcPrice, globalData, getCoinlist,loading,priceData,volumeData}}>
+        <CoinDataContext.Provider value={{coinList, setCoinList,coinIcon,btcPrice, globalData, getCoinlist,loading,priceData,volumeData,setCoinChart,coinChart,timeFrame, setTimeFrame,coin, setCoin}}>
              {children}
         </CoinDataContext.Provider>
     )
