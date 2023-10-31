@@ -12,7 +12,7 @@ import { formatPrice } from "../../utils/formatPrice/formatPrice";
 import { formatPriceChange } from "../../utils/formatPriceChange/formatPriceChange";
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
 import TimeFrameRadioButtons from "../TimeFrameRadioButtons/TimeFrameRadioButtons";
-import { CurrencyChangeWrapper } from "../Navbar/Navbar.styles";
+import CoinChart from "../CoinChart/CoinChart";
 
 const CoinDescription = () => {
 
@@ -22,13 +22,15 @@ const CoinDescription = () => {
     const [copied, setCopied] = useState(false);
     const [currencyFormat, setCurrencyFormat] = useState();
 
-    const {coinList} = useContext(CoinDataContext)
+    const {coinList, setCoin} = useContext(CoinDataContext)
     const {currency, colorMode} = useContext(CurrencyColorContext)
 
     const {id} = useParams();
 
-
     const coin = coinList.find(coin => coin.id === id)
+
+
+    setCoin(id && id)
 
     const currencySymbol = {
         USD: "$",
@@ -37,7 +39,6 @@ const CoinDescription = () => {
         BTC:"₿",
         ETH: "Ξ"
     }
-
     const getCoinInfo = async() => {
         try{
             const {data} = await axios(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&market_data=true`)
@@ -112,7 +113,7 @@ const CoinDescription = () => {
     return(
         <Container>
             <Section>Your summary</Section>
-        
+
             <CoinDataWrapper>
                 <CoinDiv>
                     <CoinInfo>
@@ -130,7 +131,7 @@ const CoinDescription = () => {
                         {currencySymbol[currency]} {coin && formatPrice(coin.current_price)}
                         <MarketChange color={coinInfo && coinInfo.market_data.price_change_percentage_24h}>
                     {coinInfo && coinInfo.market_data.price_change_percentage_24h_in_currency[currency.toLowerCase()]
- === 0 ? "" : coinInfo && coinInfo.market_data.price_change_percentage_24h_in_currency[currency.toLowerCase()] <0 ? <FontAwesomeIcon icon={faCaretDown} style={{color: "#FE1040",}} /> : <FontAwesomeIcon icon={faCaretUp} style={{color: "#00FC2A",}} />}
+                    === 0 ? "" : coinInfo && coinInfo.market_data.price_change_percentage_24h_in_currency[currency.toLowerCase()] <0 ? <FontAwesomeIcon icon={faCaretDown} style={{color: "#FE1040",}} /> : <FontAwesomeIcon icon={faCaretUp} style={{color: "#00FC2A",}} />}
                     {coinInfo && formatPriceChange(coinInfo.market_data.price_change_percentage_24h_in_currency[currency.toLowerCase()])}%
                     </MarketChange>
                     </PriceData>
@@ -224,12 +225,14 @@ const CoinDescription = () => {
                 <CurrencyWrapper>
                     <Currency $beforecurrency={coin && coin.symbol.toUpperCase()} >{coin && coin.symbol.toUpperCase()}</Currency>
                     <CurrencyValue 
-                    value={currencyFormat || ""}
+                    value={`${coin && coin.symbol.toUpperCase()} ${currencyFormat ?? "0"}  ` }
                     readOnly
                     />
                 </CurrencyWrapper>
             </CurrencyConverter>
+            <CoinChart />
         </Container>
+
     )
 }
 
