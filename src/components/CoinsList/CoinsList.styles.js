@@ -46,8 +46,8 @@ export const OuterBar = styled.div`
 
 export const InnerBar = styled.div`
   width: ${(props) =>
-    props.lowernum && props.highernum && props.lowernum < props.highernum
-      ? `${(props.lowernum / props.highernum) * 100}%`
+    props.$lowernum && props.$highernum && props.$lowernum < props.$highernum
+      ? `${(props.$lowernum / props.$highernum) * 100}%`
       : "100%"};
   height: 5px;
   background-color: ${(props) => props.color};
