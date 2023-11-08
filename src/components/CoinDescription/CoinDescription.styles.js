@@ -108,6 +108,10 @@ export const HistoryPrice = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  p {
+    width: 300px;
+  }
 `;
 
 export const CoinInfoWrapper = styled.div`
