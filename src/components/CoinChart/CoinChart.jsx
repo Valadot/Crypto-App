@@ -1,5 +1,4 @@
 import { Line } from "react-chartjs-2";
-import axios from "axios";
 import { connect } from "react-redux";
 import {
   Chart as ChartJS,
@@ -10,12 +9,9 @@ import {
   Tooltip,
   Filler,
 } from "chart.js";
-import { useContext, useState } from "react";
-import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
-import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
+import { useState } from "react";
+
 import { ChartWrapper } from "./CoinChart.styles";
-import { getCoinData } from "../../store/coindata/actions";
-import { getCurrency } from "../../store/currency/actions";
 import { formatPrice } from "../../utils/formatPrice/formatPrice";
 
 ChartJS.register(
@@ -30,16 +26,12 @@ ChartJS.register(
 const CoinChart = (props) => {
   const [todayDate, setTodayDate] = useState(new Date());
 
-  const { colorMode } = useContext(CurrencyColorContext);
-  const { coinList, coinIcon, priceData, coinChart, timeFrame } =
-    useContext(CoinDataContext);
+  const pricesCount = props.chartdata.length; // take the length here to calculate the days as they are dynamic
 
-  const pricesCount = props.chartdata.length; //HIER FEHLER
-  // Calculate the start date based on the number of prices
   const startDate = new Date(todayDate);
   startDate.setDate(todayDate.getDate() - pricesCount);
 
-  // Generate date labels for the x-axis
+  // Labels for the X-asis, loop pushes the dates until it reaches the pricesCount length
   const dateLabels = [];
   for (let i = 0; i < pricesCount; i++) {
     const date = new Date(startDate);
@@ -148,20 +140,11 @@ const CoinChart = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  timeframe: state.coinchartdata.timeframe,
-  coin: state.coindata.coin,
   chartdata: state.coinchartdata.chartdata,
-  coindata: state.coindata.coindata,
-  coinlist: state.coinlist.data,
-  pricedata: state.bitcoinChartData.priceData,
-  isLoading: state.bitcoinChartData.isLoading,
-  error: state.bitcoinChartData.error,
-  currency: state.currency.currency,
+  isLoading: state.coinchartdata.isLoading,
+  error: state.coinchartdata.error,
   currencyIcon: state.currency.currencyIcon,
   colormode: state.colormode.colormode,
-  currencyIcon: state.currency.currencyIcon,
 });
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CoinChart);
+export default connect(mapStateToProps)(CoinChart);

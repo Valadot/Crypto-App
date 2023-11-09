@@ -1,9 +1,7 @@
 import { connect } from "react-redux";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
-import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
-import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import {
   Container,
   OuterBar,
@@ -11,7 +9,6 @@ import {
   InnerBarCap,
   CoinStatWrapper,
   Dot,
-  Caret,
 } from "./ChinChart.styles";
 import BitcoinLogo from "../../assets/bitcoin-logo.svg";
 import EthLogo from "../../assets/eth-logo.svg";

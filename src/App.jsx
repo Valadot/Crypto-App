@@ -1,19 +1,12 @@
-import { useContext } from "react";
 import { connect } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Container } from "./App.styles";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import Coinspage from "./pages/Coinspage/Coinspage";
-import {
-  CurrencyColorProvider,
-  CurrencyColorContext,
-} from "./contexts/CurrencyColorProvider/CurrencyColorProvider";
 import Coin from "./pages/Coin/Coin";
 
 function App(props) {
-  const { colorMode } = useContext(CurrencyColorContext);
-
   const darkTheme = {
     primary: "#191B1F",
     secondary: "#F6F6F6",

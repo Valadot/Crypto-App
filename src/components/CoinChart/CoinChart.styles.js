@@ -8,4 +8,5 @@ export const ChartWrapper = styled.div`
   height: 300px;
   box-sizing: border-box;
   margin-top: 4rem;
+  padding-bottom: 1rem;
 `;
