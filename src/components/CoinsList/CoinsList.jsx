@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -7,7 +7,6 @@ import {
   Container,
   CoinImage,
   StyledLink,
-  InfiteScrolling,
   InnerBar,
   OuterBar,
   TableHead,
@@ -22,7 +21,6 @@ import {
   LeftFigure,
   RightFigure,
 } from "./CoinsList.styles";
-import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
 import Sparkline from "../Sparkline/Sparkline";
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
 import { formatPrice } from "../../utils/formatPrice/formatPrice";
@@ -54,8 +52,6 @@ const CoinsList = (props) => {
     "#F4B2B0",
     "#518ceb",
   ];
-  const { coinIcon } = useContext(CoinDataContext);
-
   useEffect(() => {
     props.getCoins();
   }, [props.currency]);
@@ -173,7 +169,7 @@ const CoinsList = (props) => {
                           }
                         >
                           <LeftDotSpan>.</LeftDotSpan>
-                          {coinIcon}
+                          {props.currencyIcon}
                           {formatNumber(coin.total_volume)}
                         </LeftFigure>
                         <RightFigure
@@ -182,7 +178,7 @@ const CoinsList = (props) => {
                           }
                         >
                           <RightDotSpan>.</RightDotSpan>
-                          {coinIcon}
+                          {props.currencyIcon}
                           {formatNumber(coin.market_cap)}
                         </RightFigure>
                       </BarIndicatorWrapper>
@@ -252,13 +248,10 @@ const CoinsList = (props) => {
   );
 };
 
-// export default CoinsList;
-
 const mapStateToProps = (state) => ({
   coinlist: state.coinlist.data,
   isLoading: state.coinlist.isLoading,
   error: state.coinlist.error,
-  page: state.coinlist.page,
   currency: state.currency.currency,
   currencyIcon: state.currency.currencyIcon,
 });

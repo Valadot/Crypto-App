@@ -1,5 +1,4 @@
-import { useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   Container,
@@ -7,18 +6,9 @@ import {
   TimeFrameRadioButton,
   Label,
 } from "./TimeFrameRadioButtons.styles";
-import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
-import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import { getChartData } from "../../store/coinChartData/actions";
 
 const TimeFrameRadioButtons = (props) => {
-  const { setCoinChart, timeFrame, setTimeFrame, coin } =
-    useContext(CoinDataContext);
-  const { currency } = useContext(CurrencyColorContext);
-  const handleClick = (e) => {
-    setTimeFrame(e.target.value);
-  };
-
   useEffect(() => {
     getChartData();
   }, [props.coin, props.timeframe, props.currency]);

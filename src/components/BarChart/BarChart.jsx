@@ -1,6 +1,5 @@
-import { Line, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { connect } from "react-redux";
-import { useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale, // x axis
@@ -10,13 +9,9 @@ import {
   Filler,
   BarElement,
 } from "chart.js";
-import { useContext, useState } from "react";
-import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
-import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
+import { useState } from "react";
 import { ChartWrapper, ChartDescription, PriceData } from "./BarChart.styles";
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
-import { getCurrency } from "../../store/currency/actions";
-import { getBitcoinData } from "../../store/bitcoinChartData/actions";
 
 ChartJS.register(
   CategoryScale,
@@ -34,13 +29,13 @@ const BarChart = (props) => {
   const BarDateLabels = [];
   const BarFullDateLabels = [];
   const BarStartDate = new Date();
-  BarStartDate.setDate(BarStartDate.getDate() - 29); // today - 29days
+  BarStartDate.setDate(BarStartDate.getDate() - 29); // this calculates today and goes minus 29 days
   let BarcurrentDate = new Date(BarStartDate);
 
   while (BarcurrentDate <= new Date()) {
-    BarDateLabels.push(BarcurrentDate.getDate()); // full date for X-axis
-    BarFullDateLabels.push(BarcurrentDate.toISOString().split("T")[0]); // full date for tooltips
-    BarcurrentDate.setDate(BarcurrentDate.getDate() + 1); // increment date by 1 day
+    BarDateLabels.push(BarcurrentDate.getDate()); // shows full date for X-axis
+    BarFullDateLabels.push(BarcurrentDate.toISOString().split("T")[0]); // shows full date for tooltips
+    BarcurrentDate.setDate(BarcurrentDate.getDate() + 1); // this increments date by 1 day, so every bar is 1 day
   }
 
   const BarfullData = [];
@@ -139,6 +134,4 @@ const mapStateToProps = (state) => ({
   colormode: state.colormode.colormode,
 });
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BarChart);
+export default connect(mapStateToProps)(BarChart);

@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import {
@@ -11,8 +10,6 @@ import {
   faCopy,
   faArrowRightArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { CoinDataContext } from "../../contexts/CoinDataProvider/CoinDataProvider";
-import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import {
   Container,
   CoinDataWrapper,
@@ -46,7 +43,6 @@ import { formatNumber } from "../../utils/formatNumber/formatNumber";
 import TimeFrameRadioButtons from "../TimeFrameRadioButtons/TimeFrameRadioButtons";
 import CoinChart from "../CoinChart/CoinChart";
 import { getCoinData } from "../../store/coindata/actions";
-import { getChartData } from "../../store/coinChartData/actions";
 
 const CoinDescription = (props) => {
   const [copied, setCopied] = useState(false);
@@ -54,6 +50,7 @@ const CoinDescription = (props) => {
   const coindata = props.coindata;
   const { id } = useParams();
 
+  // changes the date more custom, so it shows the day, date, time and GMT
   function formatDateToCustom(dateString) {
     const options = {
       weekday: "short",
@@ -75,6 +72,8 @@ const CoinDescription = (props) => {
     window.open(page, "_blank");
   };
 
+  //copy the link if the user clicks on the icon next to the text
+
   const handleCopy = (copytext) => {
     navigator.clipboard.writeText(copytext);
     setCopied(true);
@@ -84,6 +83,7 @@ const CoinDescription = (props) => {
     }, 2000);
   };
 
+  // changes the homepage format, removes the // and https etc.
   const formatHomepage = (homepage) => {
     return homepage.replace(/\/\/|.+\/\//, "");
   };
@@ -442,13 +442,10 @@ const mapStateToProps = (state) => ({
   currency: state.currency.currency,
   currencyIcon: state.currency.currencyIcon,
   colormode: state.colormode.colormode,
-  coin: state.coindata.coin,
-  coinlist: state.coinlist.data,
 });
 
 const mapDispatchToProps = {
   getCoinData,
-  getChartData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoinDescription);

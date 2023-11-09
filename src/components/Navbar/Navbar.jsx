@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import { CurrencyColorContext } from "../../contexts/CurrencyColorProvider/CurrencyColorProvider";
 import {
   NavbarContainer,
   RightNavbar,
@@ -22,17 +21,8 @@ import { getCurrency } from "../../store/currency/actions";
 import { changeColorMode } from "../../store/colormode/actions";
 
 const Navbar = (props) => {
-  const { colorMode, setColorMode } = useContext(CurrencyColorContext);
   const [activeLink, setActiveLink] = useState("");
   const [sticky, setSticky] = useState(false);
-
-  // const handleColorModeChange = () => {
-  //   if (props.colormode === "light") {
-  //     setColorMode("dark");
-  //   } else {
-  //     setColorMode("light");
-  //   }
-  // };
 
   useEffect(() => {
     const handleScroll = () => {

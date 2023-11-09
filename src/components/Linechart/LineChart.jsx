@@ -1,5 +1,4 @@
 import { Line } from "react-chartjs-2";
-import axios from "axios";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import {
@@ -13,7 +12,6 @@ import {
 } from "chart.js";
 import { useState } from "react";
 import { ChartWrapper, ChartDescription, PriceData } from "./LineChart.styles";
-import { getCurrency } from "../../store/currency/actions";
 import { getBitcoinData } from "../../store/bitcoinChartData/actions";
 
 ChartJS.register(
@@ -34,9 +32,9 @@ const LineChart = (props) => {
   let currentDate = new Date(startDate);
 
   while (currentDate <= new Date()) {
-    dateLabels.push(currentDate.getDate()); // Full date for x-axis
-    fullDateLabels.push(currentDate.toISOString().split("T")[0]); // Full date for tooltips
-    currentDate.setDate(currentDate.getDate() + 1); // Increment the date by 1 day
+    dateLabels.push(currentDate.getDate());
+    fullDateLabels.push(currentDate.toISOString().split("T")[0]);
+    currentDate.setDate(currentDate.getDate() + 1);
   }
 
   const data = {
@@ -169,7 +167,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  getCurrency,
   getBitcoinData,
 };
 
