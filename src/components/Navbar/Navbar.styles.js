@@ -52,6 +52,7 @@ export const SearchWrapper = styled.div`
   display: flex;
   border-radius: 10px;
   width: 350px;
+  position: relative;
 `;
 
 export const ThemeChangeWrapper = styled.div`
@@ -102,4 +103,27 @@ export const SearchInput = styled.input`
     font-weight: 500;
     color: ${(props) => props.theme.background.secondary};
   }
+`;
+
+export const FilteredDropdown = styled.div`
+  position: absolute;
+  padding-left: 1rem;
+  z-index: 99;
+  top: 50px;
+  left: 2px;
+  width: 100%;
+  display: flex;
+  background-color: ${(props) => props.theme.background.componentBackground};
+  flex-direction: column;
+  border-radius: 10px;
+`;
+
+export const DropdownItem = styled(NavLink)`
+  width: 100%;
+  /* background-color: red; */
+  border-radius: 10px;
+  padding: 0.4rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${(props) => props.theme.background.secondary};
 `;

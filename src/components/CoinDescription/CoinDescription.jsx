@@ -102,7 +102,7 @@ const CoinDescription = (props) => {
 
   useEffect(() => {
     props.getCoinData(id);
-  }, [props.currency]);
+  }, [props.currency, id]);
   return (
     <Container>
       <Section>Your summary</Section>
@@ -354,49 +354,78 @@ const CoinDescription = (props) => {
                 )}
               </CopyIcon>
             </Link>
-            <Link>
-              <LinkIcon
-                onClick={() => goToLink(coindata.links.blockchain_site[1])}
-              >
-                {props.colormode === "dark" ? (
-                  <FontAwesomeIcon icon={faLink} style={{ color: "#ffffff" }} />
-                ) : (
-                  <FontAwesomeIcon icon={faLink} style={{ color: "#191b1f" }} />
-                )}
-              </LinkIcon>
-              {formatLinks(coindata.links.blockchain_site[1])}
-              <CopyIcon
-                onClick={() => handleCopy(coindata.links.blockchain_site[1])}
-              >
-                {props.colormode === "dark" ? (
-                  <FontAwesomeIcon icon={faCopy} style={{ color: "#ffffff" }} />
-                ) : (
-                  <FontAwesomeIcon icon={faLink} style={{ color: "#191b1f" }} />
-                )}
-              </CopyIcon>
-            </Link>
-            <Link>
-              <LinkIcon
-                onClick={() => goToLink(coindata.links.blockchain_site[2])}
-              >
-                {props.colormode === "dark" ? (
-                  <FontAwesomeIcon icon={faLink} style={{ color: "#ffffff" }} />
-                ) : (
-                  <FontAwesomeIcon icon={faLink} style={{ color: "#191b1f" }} />
-                )}
-              </LinkIcon>
-              {formatLinks(coindata.links.blockchain_site[2]) ??
-                formatLinks(coindata.links.blockchain_site[2])}
-              <CopyIcon
-                onClick={() => handleCopy(coindata.links.blockchain_site[2])}
-              >
-                {props.colormode === "dark" ? (
-                  <FontAwesomeIcon icon={faCopy} style={{ color: "#ffffff" }} />
-                ) : (
-                  <FontAwesomeIcon icon={faLink} style={{ color: "#191b1f" }} />
-                )}
-              </CopyIcon>
-            </Link>
+            {coindata.links.blockchain_site[1] && (
+              <Link>
+                <LinkIcon
+                  onClick={() => goToLink(coindata.links.blockchain_site[1])}
+                >
+                  {props.colormode === "dark" ? (
+                    <FontAwesomeIcon
+                      icon={faLink}
+                      style={{ color: "#ffffff" }}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faLink}
+                      style={{ color: "#191b1f" }}
+                    />
+                  )}
+                </LinkIcon>
+                {formatLinks(coindata.links.blockchain_site[1])}
+                <CopyIcon
+                  onClick={() => handleCopy(coindata.links.blockchain_site[1])}
+                >
+                  {props.colormode === "dark" ? (
+                    <FontAwesomeIcon
+                      icon={faCopy}
+                      style={{ color: "#ffffff" }}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faLink}
+                      style={{ color: "#191b1f" }}
+                    />
+                  )}
+                </CopyIcon>
+              </Link>
+            )}
+            {coindata.links.blockchain_site[2] && (
+              <Link>
+                <LinkIcon
+                  onClick={() => goToLink(coindata.links.blockchain_site[2])}
+                >
+                  {props.colormode === "dark" ? (
+                    <FontAwesomeIcon
+                      icon={faLink}
+                      style={{ color: "#ffffff" }}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faLink}
+                      style={{ color: "#191b1f" }}
+                    />
+                  )}
+                </LinkIcon>
+                {formatLinks(coindata.links.blockchain_site[2]) ??
+                  formatLinks(coindata.links.blockchain_site[2])}
+                <CopyIcon
+                  onClick={() => handleCopy(coindata.links.blockchain_site[2])}
+                >
+                  {props.colormode === "dark" ? (
+                    <FontAwesomeIcon
+                      icon={faCopy}
+                      style={{ color: "#ffffff" }}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faLink}
+                      style={{ color: "#191b1f" }}
+                    />
+                  )}
+                </CopyIcon>
+              </Link>
+            )}
+
             {copied && <Copied $showPopup={copied}>Copied!</Copied>}
           </CoinLinks>
           <TimeFrameRadioButtons />
