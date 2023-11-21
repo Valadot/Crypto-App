@@ -54,15 +54,16 @@ export const CoinData = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  padding: 1rem;
+  padding: 3rem;
   border-radius: 12px;
   gap: 1rem;
+  width: 300px;
 `;
 
 export const CoinImage = styled.div`
   background-color: ${(props) => props.theme.background.componentBackground};
-  width: 50px;
-  padding: 2rem;
+  width: 150px;
+  padding: 3rem;
   display: flex;
   justify-content: center;
   border-radius: 8px;
@@ -127,4 +128,28 @@ export const DropdownItem = styled.div`
   cursor: pointer;
   text-decoration: none;
   color: ${(props) => props.theme.background.secondary};
+`;
+
+export const AssetList = styled.div`
+  padding-top: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: ${(props) => props.theme.background.pageBackground};
+`;
+
+export const MetricsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+`;
+
+export const Metrics = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  border-radius: 12px;
+  background-color: ${(props) => props.theme.background.primary};
 `;
