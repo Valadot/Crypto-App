@@ -5,7 +5,6 @@ export const Container = styled.div`
   max-width: 1700px;
   background-color: ${(props) => props.theme.background.primary};
   margin: 0 auto;
-  height: 100vh;
 `;
 
 export const AddAssetButton = styled.button`

@@ -9,7 +9,6 @@ const Portfolio = () => {
       <Navbar />
       <Container>
         <ChinChart />
-        <h1>In future you will see your portfolio here</h1>
         <PortfolioComponent />
       </Container>
     </>
