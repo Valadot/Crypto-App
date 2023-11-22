@@ -1,5 +1,7 @@
 import { useState } from "react";
+import uuid from "react-uuid";
 import { connect } from "react-redux";
+import format from "date-fns/format";
 import {
   Container,
   Overlay,
@@ -14,11 +16,9 @@ import {
   Button,
   FilteredDropdown,
   DropdownItem,
-  AssetList,
-  Metrics,
-  MetricsWrapper,
 } from "./Portfolio.styles";
 import { getCoinData } from "../../store/coindata/actions";
+import AssetList from "../AssetList/AssetList";
 
 const Portfolio = (props) => {
   const [showAddAsset, setShowAddAsset] = useState(false);
@@ -29,6 +29,7 @@ const Portfolio = (props) => {
 
   const handleClick = () => {
     setShowAddAsset(!showAddAsset);
+    setSearchInput("");
   };
 
   const filteredCoins = props.coins.filter(
@@ -54,24 +55,29 @@ const Portfolio = (props) => {
     setAsset({ ...asset, amount: e.target.value });
   };
 
-  const handlePrice = (e) => {
-    setAsset({ ...asset, price: e.target.value });
-  };
-
   const handlePurchaseDate = (e) => {
-    setAsset({ ...asset, purchaseDate: e.target.value });
+    setAsset({
+      ...asset,
+      purchaseDate: format(new Date(e.target.value), "dd-MM-yyyy"),
+    });
   };
 
   const addAsset = () => {
     setAssetList([
       ...assetList,
-      { ...asset, image: props.coindata.image.small },
+      { ...asset, image: props.coindata.image.small, id: uuid() },
     ]);
     setShowAddAsset(!showAddAsset);
-    console.log("list", assetList);
+    setAsset({});
   };
-  console.log("list", assetList);
-  console.log("asset", asset);
+
+  const handleAssetDelete = (asset) => {
+    const newAssetList = assetList.filter((assets) => assets.id !== asset.id);
+    // console.log(asset);
+    setAssetList(newAssetList);
+    console.log(assetList);
+  };
+
   return (
     <>
       <Container>
@@ -80,15 +86,17 @@ const Portfolio = (props) => {
         {showAddAsset && (
           <Overlay>
             <AddAssetWrapper>
-              Select Coins
+              <div>Select Coins</div>
               <CoinWrapper>
                 <CoinData>
                   <CoinImage>
-                    {props.coindata && (
-                      <img src={props.coindata.image.small}></img>
+                    {props.coindata.image && (
+                      <img
+                        src={asset.assetName && props.coindata.image.small}
+                      ></img>
                     )}
                   </CoinImage>
-                  {props.coindata && (
+                  {props.coindata.id && asset.assetName && (
                     <div>
                       {props.coindata.id} ({props.coindata.symbol.toUpperCase()}
                       )
@@ -106,10 +114,10 @@ const Portfolio = (props) => {
                     searchInput &&
                     searchInput.length > 2 &&
                     props.coins && (
-                      <FilteredDropdown id="coin-list">
+                      <FilteredDropdown>
                         {displayedCoins.map((coin) => (
                           <DropdownItem
-                            onClick={(e) => handleClickedLink(coin.id)}
+                            onClick={() => handleClickedLink(coin.id)}
                             key={coin.id}
                           >
                             {coin.id} ({coin.symbol.toUpperCase()})
@@ -121,11 +129,6 @@ const Portfolio = (props) => {
                     onChange={handleAmount}
                     required
                     placeholder="Purchased Amount"
-                  ></Input>
-                  <Input
-                    onChange={handlePrice}
-                    required
-                    placeholder="Purchased Price"
                   ></Input>
                   <Input
                     onChange={handlePurchaseDate}
@@ -157,33 +160,11 @@ const Portfolio = (props) => {
           </Overlay>
         )}
       </Container>
-      {assetList &&
-        assetList.map((asset) => (
-          <AssetList>
-            <CoinData>
-              <CoinImage>
-                <img src={asset.image}></img>
-              </CoinImage>
-              {asset.assetName}
-            </CoinData>
-            <MetricsWrapper>
-              Market price:
-              <Metrics>
-                <div>Current price: {asset.price}</div>
-                <div>Price change 24h{asset.price}</div>
-                <div>Market Cap vs Volume{asset.price}</div>
-                <div>Circ supply vs max supply{asset.price}</div>
-              </Metrics>
-              Your coin:
-              <Metrics>
-                <div>Current price: {asset.price}</div>
-                <div>Price change 24h{asset.price}</div>
-                <div>Market Cap vs Volume{asset.price}</div>
-                <div>Circ supply vs max supply{asset.price}</div>
-              </Metrics>
-            </MetricsWrapper>
-          </AssetList>
-        ))}
+      <AssetList
+        assets={assetList}
+        setAsset={(newAsset) => setAssetList(newAsset)}
+        deleteAsset={handleAssetDelete}
+      />
     </>
   );
 };
