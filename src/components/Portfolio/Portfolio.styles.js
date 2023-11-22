@@ -36,6 +36,7 @@ export const AddAssetWrapper = styled.div`
   background-color: ${(props) => props.theme.background.componentBackground};
   width: 1000px;
   padding: 2rem;
+  gap: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,6 +59,10 @@ export const CoinData = styled.div`
   border-radius: 12px;
   gap: 1rem;
   width: 300px;
+
+  div {
+    text-align: center;
+  }
 `;
 
 export const CoinImage = styled.div`
@@ -72,7 +77,7 @@ export const CoinImage = styled.div`
 export const CoinsForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  justify-content: space-between;
   position: relative;
 `;
 
@@ -130,7 +135,7 @@ export const DropdownItem = styled.div`
   color: ${(props) => props.theme.background.secondary};
 `;
 
-export const AssetList = styled.div`
+export const List = styled.div`
   padding-top: 4rem;
   display: flex;
   align-items: center;
@@ -152,4 +157,24 @@ export const Metrics = styled.div`
   justify-content: space-between;
   border-radius: 12px;
   background-color: ${(props) => props.theme.background.primary};
+`;
+
+export const OuterBar = styled.div`
+  width: 75px;
+  background-color: green;
+  height: 20px;
+  border-radius: 50vw;
+`;
+
+export const InnerBar = styled.div`
+  width: ${(props) => `${props.$marketData}%`};
+  background-color: white;
+  height: 20px;
+  border-radius: 50vw;
+`;
+
+export const MarketData = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 `;

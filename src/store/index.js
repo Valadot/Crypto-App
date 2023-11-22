@@ -8,6 +8,7 @@ import coindataReducer from "./coindata/coindataReducer";
 import coinChartDataReducer from "./coinChartData/coinChartDataReducer";
 import globalMarketDataReducer from "./globalMarketData/globalMarketDataReducer";
 import allCoinsListReducer from "./allCoinsList/allCoinsListReducer";
+import coinHistoryDataReducer from "./coinHistoryData/coinHistoryDataReducer";
 
 const reducers = combineReducers({
   coinlist: coinlistReducer,
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   coinchartdata: coinChartDataReducer,
   globalmarketdata: globalMarketDataReducer,
   allcoins: allCoinsListReducer,
+  history: coinHistoryDataReducer,
 });
 
 export const store = createStore(reducers, applyMiddleware(thunk));
