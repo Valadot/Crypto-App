@@ -29,6 +29,7 @@ const Portfolio = (props) => {
 
   const handleClick = () => {
     setShowAddAsset(!showAddAsset);
+    setAsset({});
     setSearchInput("");
   };
 
@@ -38,6 +39,13 @@ const Portfolio = (props) => {
   );
 
   const displayedCoins = filteredCoins.slice(0, 5);
+
+  function formatDateForServer(inputDate) {
+    console.log(inputDate);
+    const [year, month, day] = inputDate.split("-");
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  }
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
@@ -58,11 +66,11 @@ const Portfolio = (props) => {
   const handlePurchaseDate = (e) => {
     setAsset({
       ...asset,
-      purchaseDate: format(new Date(e.target.value), "dd-MM-yyyy"),
+      purchaseDate: formatDateForServer(e.target.value),
     });
   };
 
-  const addAsset = () => {
+  const addAsset = (asset) => {
     setAssetList([
       ...assetList,
       { ...asset, image: props.coindata.image.small, id: uuid() },
@@ -73,7 +81,6 @@ const Portfolio = (props) => {
 
   const handleAssetDelete = (asset) => {
     const newAssetList = assetList.filter((assets) => assets.id !== asset.id);
-    // console.log(asset);
     setAssetList(newAssetList);
     console.log(assetList);
   };
@@ -129,6 +136,7 @@ const Portfolio = (props) => {
                     onChange={handleAmount}
                     required
                     placeholder="Purchased Amount"
+                    value={asset.amount || ""}
                   ></Input>
                   <Input
                     onChange={handlePurchaseDate}
@@ -149,7 +157,7 @@ const Portfolio = (props) => {
                   Close
                 </Button>
                 <Button
-                  onClick={addAsset}
+                  onClick={() => addAsset(asset)}
                   $background="#06D554"
                   $color={props.colormode === "dark" ? "#FFFFFF" : "#1F2128"}
                 >
@@ -162,8 +170,9 @@ const Portfolio = (props) => {
       </Container>
       <AssetList
         assets={assetList}
-        setAsset={(newAsset) => setAssetList(newAsset)}
+        setAsset={(newAsset) => setAsset(newAsset)}
         deleteAsset={handleAssetDelete}
+        setShowAddAsset={setShowAddAsset}
       />
     </>
   );

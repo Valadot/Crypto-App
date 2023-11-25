@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import uuid from "react-uuid";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import format from "date-fns/format";
 import {
   faCaretDown,
   faCaretUp,
   faRectangleXmark,
+  faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   List,
@@ -18,12 +18,25 @@ import {
   InnerBar,
   MarketData,
   GreenText,
+  ProfitWrapper,
+  PriceChange,
+  ChangeCoinDataWrapper,
+  Overlay,
+  EditCoinWrapper,
+  EditCoinsForm,
+  ButtonWrapper,
+  Button,
 } from "./AssetList.styles";
 import { getCoinHistoryData } from "../../store/coinHistoryData/acions";
+import { formatPriceChange } from "../../utils/formatPriceChange/formatPriceChange";
+import { formatPrice } from "../../utils/formatPrice/formatPrice";
 
-const AssetList = ({ assets, setAsset, deleteAsset }) => {
+const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [newPortfolio, setNewPortfolio] = useState([]);
+  const [editData, setEditData] = useState(false);
+  const [editedAmount, setEditedAmount] = useState("");
+  const [editingCoinId, setEditingCoinId] = useState("");
 
   let noDupps = assets.reduce((acc, el) => {
     if (acc[el.assetName]) return acc;
@@ -72,19 +85,18 @@ const AssetList = ({ assets, setAsset, deleteAsset }) => {
           priceChange24h: noDupps[coin.assetName].priceChange24h,
           marketCapVsVolume: noDupps[coin.assetName].marketCapVsVolume,
           circSupplyVsMaxSuply: noDupps[coin.assetName].circSupplyVsMaxSuply,
-          previousPriceChange: (
+          previousPriceChange:
             ((noDupps[coin.assetName].currentPrice -
               json.market_data.current_price.usd) /
               noDupps[coin.assetName].currentPrice) *
-            100
-          ).toFixed(2),
+            100,
           previousPrice: json.market_data.current_price.usd,
         };
       })
     );
 
     setNewPortfolio(newPortfolio);
-
+    setAsset(newPortfolio);
     setIsLoading(false);
   }
 
@@ -93,6 +105,43 @@ const AssetList = ({ assets, setAsset, deleteAsset }) => {
     const formattedDate = `${month}.${day}.${year}`;
     return formattedDate;
   }
+
+  // const handlePurchaseDateChange = (e, currentAsset) => {
+  //   const updatedPurchaseDate = e.target.value;
+
+  //   setNewPortfolio((prevPortfolio) =>
+  //     prevPortfolio.map((item) =>
+  //       item.id === currentAsset.id
+  //         ? { ...item, purchaseDate: updatedPurchaseDate }
+  //         : item
+  //     )
+  //   );
+  // };
+
+  // const handleAmountChange = (coinId, e) => {
+  //   const updatedAmount = e.target.value;
+  //   setEditedAmount(updatedAmount);
+  //   setNewPortfolio((prevPortfolio) =>
+  //     prevPortfolio.map((item) =>
+  //       item.id === coinId ? { ...item, amount: updatedAmount } : item
+  //     )
+  //   );
+  // };
+
+  const handleAmountBlur = (coinId) => {
+    setNewPortfolio((prevPortfolio) =>
+      prevPortfolio.map((item) =>
+        item.id === coinId ? { ...item, amount: editedAmount } : item
+      )
+    );
+    setEditingCoinId(null);
+  };
+
+  const handleEditClick = (coinId, currentAmount) => {
+    // Set the edited amount to the current coin's amount when starting to edit
+    setEditedAmount(currentAmount.toString());
+    setEditingCoinId(coinId);
+  };
 
   useEffect(() => {
     getData();
@@ -128,7 +177,9 @@ const AssetList = ({ assets, setAsset, deleteAsset }) => {
                 </div>
                 <div>
                   Price change 24h:{" "}
-                  <GreenText>{asset.priceChange24h}</GreenText>
+                  <GreenText>
+                    {formatPriceChange(asset.priceChange24h)}
+                  </GreenText>
                 </div>
                 <MarketData>
                   Market Cap vs Volume:{" "}
@@ -147,10 +198,36 @@ const AssetList = ({ assets, setAsset, deleteAsset }) => {
                   </OuterBar>
                 </MarketData>
               </Metrics>
-              Your coin:
+              <ChangeCoinDataWrapper>Your coin:</ChangeCoinDataWrapper>
               <Metrics>
                 <div>
-                  Coin amount: <GreenText>{asset.amount}</GreenText>
+                  Coin amount:
+                  {editingCoinId === asset.id ? (
+                    <input
+                      autoFocus="autoFocus"
+                      type="number"
+                      value={editedAmount}
+                      onChange={(e) => setEditedAmount(e.target.value)}
+                      onBlur={() => handleAmountBlur(asset.id)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          handleAmountBlur(asset.id);
+                        }
+                      }}
+                    ></input>
+                  ) : (
+                    <GreenText>
+                      {asset.amount}
+                      <div
+                        onClick={() => handleEditClick(asset.id, asset.amount)}
+                      >
+                        <FontAwesomeIcon
+                          icon={faPencil}
+                          style={{ color: "#dbc266" }}
+                        />
+                      </div>
+                    </GreenText>
+                  )}
                 </div>
                 <div>
                   Amount value:{" "}
@@ -158,7 +235,7 @@ const AssetList = ({ assets, setAsset, deleteAsset }) => {
                     {(asset.amount * asset.currentPrice).toLocaleString()}
                   </GreenText>
                 </div>
-                <div>
+                <ProfitWrapper>
                   Amount price change since purchase:{" "}
                   {asset.previousPriceChange === 0 ? (
                     ""
@@ -173,14 +250,54 @@ const AssetList = ({ assets, setAsset, deleteAsset }) => {
                       style={{ color: "#00FC2A" }}
                     />
                   )}
-                  <GreenText>{asset.previousPriceChange}%</GreenText>
-                </div>
+                  <PriceChange color={asset.previousPriceChange}>
+                    {formatPriceChange(asset.previousPriceChange)}%
+                  </PriceChange>
+                </ProfitWrapper>
                 <div>
                   Purchase Date:{" "}
                   <GreenText>{formatDate(asset.purchaseDate)}</GreenText>
                 </div>
               </Metrics>
             </MetricsWrapper>
+            {/* {editCoinData && (
+              <Overlay>
+                Edit your Coin:
+                <EditCoinWrapper>
+                  <EditCoinsForm>
+                    <input
+                      type="number"
+                      placeholder="Enter the Amount"
+                      onChange={(e) => handleAmountChange(e, asset)}
+                      value={asset.amount}
+                    ></input>
+                    <input
+                      type="date"
+                      onChange={(e) => handlePurchaseDateChange(e, asset)}
+                      value={asset.purchaseDate || ""}
+                    />
+                  </EditCoinsForm>
+
+                  <ButtonWrapper>
+                    <Button
+                      onClick={handleClick}
+                      $background={colormode === "dark" ? "#FFFFFF" : "#F6F6F6"}
+                      $color={colormode === "dark" ? "#06D554" : "#1F2128"}
+                    >
+                      Close
+                    </Button>
+                    <Button
+                      onClick={() => addAsset(asset)}
+                      $background="#06D554"
+                      $color={colormode === "dark" ? "#FFFFFF" : "#1F2128"}
+                    >
+                      Save and Continue
+                    </Button>
+                  </ButtonWrapper>
+                </EditCoinWrapper>
+                <div onClick={() => setEditCoinData(false)}>tessstttt</div>
+              </Overlay>
+            )} */}
           </List>
         ))
       )}
