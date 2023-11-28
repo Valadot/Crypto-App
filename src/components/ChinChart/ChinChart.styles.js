@@ -13,6 +13,22 @@ export const Container = styled.div`
   top: 0;
   font-size: 17px;
   background-color: ${(props) => props.theme.background.primary};
+
+  @media screen and (max-width: 1100px) {
+    width: 800px;
+  }
+
+  @media screen and (max-width: 900px) {
+    width: 600px;
+  }
+
+  @media screen and (max-width: 700px) {
+    width: 500px;
+  }
+
+  @media screen and (max-width: 550px) {
+    width: 350px;
+  }
 `;
 
 export const OuterBar = styled.div`
@@ -56,4 +72,32 @@ export const Dot = styled.div`
 export const Caret = styled.img`
   width: 20px;
   height: 20px;
+`;
+
+export const Exchanges = styled.div`
+  @media screen and (max-width: 1100px) {
+    display: none;
+  }
+`;
+
+export const Coins = styled.div`
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+`;
+
+export const GlobalCap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
+`;
+
+export const EthStats = styled.div`
+  @media screen and (max-width: 550px) {
+    display: none;
+  }
 `;

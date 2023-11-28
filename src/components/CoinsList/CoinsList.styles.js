@@ -10,13 +10,73 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.background.primary};
   border-radius: 10px;
   position: relative;
-
+  height: 100vh;
   padding: 1.5rem 0 0 1.5rem;
 `;
 
-export const Table = styled.table`
+export const TableWrapper = styled.table`
   font-size: 1.19rem;
-  border-collapse: collapse;
+
+  @media screen and (max-width: 700px) {
+    font-size: 11px;
+  }
+
+  .ReactVirtualized__Table__headerRow {
+    font-size: 18px;
+    text-transform: none;
+  }
+
+  .ReactVirtualized__Table__row {
+    padding: 1rem 0;
+  }
+
+  .ReactVirtualized__Table__row:not(:last-child) {
+    border-bottom: 1px solid #2a2c2f;
+  }
+
+  .ReactVirtualized__Table__Grid {
+    /* Styling for both horizontal and vertical scrollbars */
+    overflow: overlay;
+  }
+
+  /* Styling for horizontal scrollbar */
+  .ReactVirtualized__Table__Grid--horizontalScroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+    bottom: 0;
+  }
+
+  /* Styling for vertical scrollbar */
+  .ReactVirtualized__Table__Grid--verticalScroll {
+    overflow-x: hidden;
+    overflow-y: auto;
+    right: 0;
+    display: none;
+  }
+
+  /* Optional: Customize scrollbar appearance */
+  /* Width of the scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    background-color: ${(props) => props.theme.background.primary};
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    background-color: ${(props) => props.theme.background.componentBackground};
+    border-radius: 12px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 
 export const CoinWrapper = styled.div`
@@ -37,7 +97,7 @@ export const StyledLink = styled(NavLink)`
 `;
 
 export const OuterBar = styled.div`
-  width: 100%;
+  width: 250px;
   height: 5px;
   margin-bottom: 30px;
   background-color: ${(props) => props.color};
@@ -58,17 +118,14 @@ export const TableHead = styled.thead``;
 
 export const BigRow = styled.th`
   text-align: left;
-  padding: 5px 15px;
 `;
 
 export const SmallRow = styled.th`
   text-align: left;
-  padding: 5px 10px;
 `;
 
 export const PriceChange = styled.th`
   text-align: left;
-  padding: 10px 15px;
   color: ${(props) => (props.color > 0 ? "#00FC2A" : "#FE1040")};
 
   div {
@@ -113,4 +170,10 @@ export const RightFigure = styled.div`
 
 export const InfiteScrolling = styled(InfiniteScroll)`
   display: flex;
+`;
+
+export const Line = styled.div`
+  width: 1700px;
+  height: 2px;
+  background-color: red;
 `;
