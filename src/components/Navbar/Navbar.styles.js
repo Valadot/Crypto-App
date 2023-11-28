@@ -23,6 +23,10 @@ export const NavLinkWrapper = styled.div`
   display: flex;
   gap: 2rem;
   background-color: transparent;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const StyledLink = styled(NavLink)`
@@ -53,6 +57,16 @@ export const SearchWrapper = styled.div`
   border-radius: 10px;
   width: 350px;
   position: relative;
+
+  @media screen and (max-width: 1300px) {
+    width: 250px;
+    margin-left: 1rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 150px;
+    margin-left: 1rem;
+  }
 `;
 
 export const ThemeChangeWrapper = styled.div`
@@ -63,6 +77,10 @@ export const ThemeChangeWrapper = styled.div`
   padding: 0.7rem 0;
   width: 47px;
   border-radius: 10px;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const CurrencyChangeWrapper = styled.div`

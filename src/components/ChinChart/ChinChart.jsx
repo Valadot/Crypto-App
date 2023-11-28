@@ -9,6 +9,10 @@ import {
   InnerBarCap,
   CoinStatWrapper,
   Dot,
+  Exchanges,
+  Coins,
+  GlobalCap,
+  EthStats,
 } from "./ChinChart.styles";
 import BitcoinLogo from "../../assets/bitcoin-logo.svg";
 import EthLogo from "../../assets/eth-logo.svg";
@@ -23,9 +27,11 @@ const ChinChart = (props) => {
     <Container>
       {props.globalmarketdata && (
         <>
-          <div>Coins {props.globalmarketdata.data.active_cryptocurrencies}</div>
-          <div>Exchanges {props.globalmarketdata.data.markets}</div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Coins>
+            Coins {props.globalmarketdata.data.active_cryptocurrencies}
+          </Coins>
+          <Exchanges>Exchanges {props.globalmarketdata.data.markets}</Exchanges>
+          <GlobalCap>
             <Dot></Dot>
             {props.currencyIcon}{" "}
             {formatNumber(
@@ -42,7 +48,7 @@ const ChinChart = (props) => {
             ) : (
               <FontAwesomeIcon icon={faCaretUp} style={{ color: "#00FC2A" }} />
             )}
-          </div>
+          </GlobalCap>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Dot></Dot>
             {props.currencyIcon}{" "}
@@ -82,7 +88,7 @@ const ChinChart = (props) => {
               </OuterBar>
             </CoinStatWrapper>
           </div>
-          <div>
+          <EthStats>
             <CoinStatWrapper>
               <img style={{ width: "15px" }} src={EthLogo} alt="" />
               {props.globalmarketdata.data.market_cap_percentage["eth"].toFixed(
@@ -97,7 +103,7 @@ const ChinChart = (props) => {
                 ></InnerBarCap>
               </OuterBar>
             </CoinStatWrapper>
-          </div>
+          </EthStats>
         </>
       )}
     </Container>

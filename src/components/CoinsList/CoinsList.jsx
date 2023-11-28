@@ -1,7 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {
+  Table,
+  Column,
+  InfiniteLoader,
+  AutoSizer,
+  WindowScroller,
+} from "react-virtualized";
+import "react-virtualized/styles.css";
 import { connect } from "react-redux";
 import {
   Container,
@@ -13,13 +21,14 @@ import {
   BigRow,
   SmallRow,
   CoinRow,
-  Table,
+  TableWrapper,
   PriceChange,
   LeftDotSpan,
   RightDotSpan,
   BarIndicatorWrapper,
   LeftFigure,
   RightFigure,
+  Line,
 } from "./CoinsList.styles";
 import Sparkline from "../Sparkline/Sparkline";
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
@@ -29,6 +38,8 @@ import BackToTopButton from "../BackToTopButton/BackToTopButton";
 import { getCoins, incrementPage } from "../../store/coinslist/actions";
 
 const CoinsList = (props) => {
+  const [availableWidth, setAvailableWidth] = useState(0);
+
   const TableLeftcolors = [
     "#FFB528",
     "#474C77",
@@ -52,199 +63,327 @@ const CoinsList = (props) => {
     "#F4B2B0",
     "#518ceb",
   ];
+
+  const isRowLoaded = ({ index }) => index < props.coinlist.length;
+
+  const loadMoreRows = () => {
+    props.incrementPage();
+  };
+
   useEffect(() => {
     props.getCoins();
   }, [props.currency]);
 
   return (
-    <InfiniteScroll
-      dataLength={props.coinlist.length}
-      next={() => props.incrementPage()}
-      hasMore={!props.isLoading}
-      loader={<h4>Loading coins...</h4>}
-    >
-      <Container>
-        {props.isLoading && <div>Loading...</div>}
-        <div>
-          <Table>
-            <TableHead>
-              <tr>
-                <SmallRow>#</SmallRow>
-                <BigRow>Name</BigRow>
-                <SmallRow>Price</SmallRow>
-                <SmallRow>1h%</SmallRow>
-                <SmallRow>24h%</SmallRow>
-                <SmallRow>7d%</SmallRow>
-                <BigRow>24h Volume/Market Cap</BigRow>
-                <BigRow>Circulating/Total Supply</BigRow>
-                <SmallRow>Last 7d</SmallRow>
-              </tr>
-            </TableHead>
-
-            <tbody>
-              {props.coinlist &&
-                props.coinlist.map((coin, index) => (
-                  <CoinRow key={coin.id}>
-                    <SmallRow>{coin.market_cap_rank}</SmallRow>
-                    <BigRow>
-                      <StyledLink to={`/coin/${coin.id}`}>
-                        <CoinImage src={coin.image}></CoinImage>
-                        {coin.name} ({coin.symbol.toUpperCase()})
-                      </StyledLink>
-                    </BigRow>
-                    <SmallRow>
-                      {props.currencyIcon} {formatPrice(coin.current_price)}
-                    </SmallRow>
-                    <PriceChange
-                      color={coin.price_change_percentage_1h_in_currency}
+    <WindowScroller>
+      {({ height, isScrolling, registerChild, scrollTop }) => (
+        <InfiniteLoader
+          isRowLoaded={isRowLoaded}
+          rowCount={props.coinlist.length + 1}
+          loadMoreRows={loadMoreRows}
+        >
+          {({ onRowsRendered, registerChild }) => (
+            <Container>
+              <AutoSizer onResize={({ width }) => setAvailableWidth(width)}>
+                {({ height, width }) => (
+                  <TableWrapper>
+                    <Table
+                      width={width}
+                      height={height}
+                      headerHeight={40}
+                      rowHeight={80}
+                      rowCount={props.coinlist.length}
+                      rowGetter={({ index }) => props.coinlist[index]}
+                      onRowsRendered={onRowsRendered}
+                      ref={registerChild}
                     >
-                      <div>
-                        {coin.price_change_percentage_1h_in_currency === 0 ? (
-                          ""
-                        ) : coin.price_change_percentage_1h_in_currency < 0 ? (
-                          <FontAwesomeIcon
-                            icon={faCaretDown}
-                            style={{ color: "#FE1040" }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faCaretUp}
-                            style={{ color: "#00FC2A" }}
-                          />
+                      <Column label="#" dataKey="market_cap_rank" width={50} />
+                      <Column
+                        label="Name"
+                        dataKey="name"
+                        width={availableWidth > 400 ? 320 : 150}
+                        responsive
+                        cellRenderer={({ cellData, rowIndex }) => (
+                          <StyledLink
+                            to={`/coin/${props.coinlist[rowIndex].id}`}
+                          >
+                            <CoinImage
+                              src={props.coinlist[rowIndex].image}
+                            ></CoinImage>
+                            {cellData} (
+                            {props.coinlist[rowIndex].symbol.toUpperCase()})
+                          </StyledLink>
                         )}
-                        {formatPriceChange(
-                          coin.price_change_percentage_1h_in_currency
-                        )}
-                      </div>
-                    </PriceChange>
-                    <PriceChange
-                      color={coin.price_change_percentage_24h_in_currency}
-                    >
-                      <div>
-                        {coin.price_change_percentage_24h_in_currency === 0 ? (
-                          ""
-                        ) : coin.price_change_percentage_24h_in_currency < 0 ? (
-                          <FontAwesomeIcon
-                            icon={faCaretDown}
-                            style={{ color: "#FE1040" }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faCaretUp}
-                            style={{ color: "#00FC2A" }}
-                          />
-                        )}
-                        {formatPriceChange(
-                          coin.price_change_percentage_24h_in_currency
-                        )}
-                      </div>
-                    </PriceChange>
-                    <PriceChange
-                      color={coin.price_change_percentage_7d_in_currency}
-                    >
-                      <div>
-                        {coin.price_change_percentage_7d_in_currency === 0 ? (
-                          ""
-                        ) : coin.price_change_percentage_7d_in_currency < 0 ? (
-                          <FontAwesomeIcon
-                            icon={faCaretDown}
-                            style={{ color: "#FE1040" }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faCaretUp}
-                            style={{ color: "#00FC2A" }}
-                          />
-                        )}
-                        {formatPriceChange(
-                          coin.price_change_percentage_7d_in_currency
-                        )}
-                      </div>
-                    </PriceChange>
-                    <BigRow>
-                      <BarIndicatorWrapper>
-                        <LeftFigure
-                          color={
-                            TableLeftcolors[index % TableLeftcolors.length]
-                          }
-                        >
-                          <LeftDotSpan>.</LeftDotSpan>
-                          {props.currencyIcon}
-                          {formatNumber(coin.total_volume)}
-                        </LeftFigure>
-                        <RightFigure
-                          color={
-                            TableRightcolors[index % TableRightcolors.length]
-                          }
-                        >
-                          <RightDotSpan>.</RightDotSpan>
-                          {props.currencyIcon}
-                          {formatNumber(coin.market_cap)}
-                        </RightFigure>
-                      </BarIndicatorWrapper>
-                      <OuterBar
-                        color={
-                          TableRightcolors[index % TableRightcolors.length]
-                        }
-                      >
-                        <InnerBar
-                          $lowernum={coin.total_volume}
-                          $highernum={coin.market_cap}
-                          color={
-                            TableLeftcolors[index % TableLeftcolors.length]
-                          }
-                        ></InnerBar>
-                      </OuterBar>
-                    </BigRow>
-                    <BigRow>
-                      <BarIndicatorWrapper>
-                        <LeftFigure
-                          color={
-                            TableLeftcolors[index % TableLeftcolors.length]
-                          }
-                        >
-                          <LeftDotSpan>.</LeftDotSpan>
-                          {formatNumber(coin.circulating_supply)}
-                        </LeftFigure>
-                        <RightFigure
-                          color={
-                            TableRightcolors[index % TableRightcolors.length]
-                          }
-                        >
-                          <RightDotSpan>.</RightDotSpan>
-                          {coin.max_supply !== null
-                            ? formatNumber(coin.max_supply)
-                            : formatNumber(coin.circulating_supply)}
-                        </RightFigure>
-                      </BarIndicatorWrapper>
-                      <OuterBar
-                        color={
-                          TableRightcolors[index % TableRightcolors.length]
-                        }
-                      >
-                        <InnerBar
-                          $lowernum={coin.circulating_supply}
-                          $highernum={coin.max_supply}
-                          color={
-                            TableLeftcolors[index % TableLeftcolors.length]
-                          }
-                        ></InnerBar>
-                      </OuterBar>
-                    </BigRow>
-                    <BigRow>
-                      <Sparkline
-                        data={coin.sparkline_in_7d}
-                        last7d={coin.price_change_percentage_7d_in_currency}
                       />
-                    </BigRow>
-                  </CoinRow>
-                ))}
-            </tbody>
-          </Table>
-        </div>
-        <BackToTopButton />
-      </Container>
-    </InfiniteScroll>
+                      <Column
+                        label="Price"
+                        dataKey="current_price"
+                        width={150}
+                        responsive
+                        cellRenderer={({ cellData, rowIndex }) => (
+                          <SmallRow>
+                            {props.currencyIcon} {formatPrice(cellData)}
+                          </SmallRow>
+                        )}
+                      />
+                      {availableWidth > 670 && (
+                        <Column
+                          label="1h%"
+                          dataKey="price_change_percentage_1h_in_currency"
+                          width={80}
+                          responsive
+                          cellRenderer={({ cellData, rowIndex }) => (
+                            <PriceChange
+                              color={
+                                props.coinlist[rowIndex]
+                                  .price_change_percentage_1h_in_currency
+                              }
+                            >
+                              <div>
+                                {props.coinlist[rowIndex]
+                                  .price_change_percentage_1h_in_currency ===
+                                0 ? (
+                                  ""
+                                ) : props.coinlist[rowIndex]
+                                    .price_change_percentage_1h_in_currency <
+                                  0 ? (
+                                  <FontAwesomeIcon
+                                    icon={faCaretDown}
+                                    style={{ color: "#FE1040" }}
+                                  />
+                                ) : (
+                                  <FontAwesomeIcon
+                                    icon={faCaretUp}
+                                    style={{ color: "#00FC2A" }}
+                                  />
+                                )}
+                                {formatPriceChange(cellData)}
+                              </div>
+                            </PriceChange>
+                          )}
+                        />
+                      )}
+
+                      {availableWidth > 750 && (
+                        <Column
+                          label="24h%"
+                          dataKey="price_change_percentage_24h_in_currency"
+                          width={80}
+                          responsive
+                          cellRenderer={({ cellData, rowIndex }) => (
+                            <PriceChange
+                              color={
+                                props.coinlist[rowIndex]
+                                  .price_change_percentage_24h_in_currency
+                              }
+                            >
+                              <div>
+                                {props.coinlist[rowIndex]
+                                  .price_change_percentage_24h_in_currency ===
+                                0 ? (
+                                  ""
+                                ) : props.coinlist[rowIndex]
+                                    .price_change_percentage_24h_in_currency <
+                                  0 ? (
+                                  <FontAwesomeIcon
+                                    icon={faCaretDown}
+                                    style={{ color: "#FE1040" }}
+                                  />
+                                ) : (
+                                  <FontAwesomeIcon
+                                    icon={faCaretUp}
+                                    style={{ color: "#00FC2A" }}
+                                  />
+                                )}
+                                {formatPriceChange(cellData)}
+                              </div>
+                            </PriceChange>
+                          )}
+                        />
+                      )}
+
+                      {availableWidth > 850 && (
+                        <Column
+                          label="7d%"
+                          dataKey="price_change_percentage_7d_in_currency"
+                          width={80}
+                          responsive
+                          cellRenderer={({ cellData, rowIndex }) => (
+                            <PriceChange
+                              color={
+                                props.coinlist[rowIndex]
+                                  .price_change_percentage_7d_in_currency
+                              }
+                            >
+                              <div>
+                                {props.coinlist[rowIndex]
+                                  .price_change_percentage_7d_in_currency ===
+                                0 ? (
+                                  ""
+                                ) : props.coinlist[rowIndex]
+                                    .price_change_percentage_7d_in_currency <
+                                  0 ? (
+                                  <FontAwesomeIcon
+                                    icon={faCaretDown}
+                                    style={{ color: "#FE1040" }}
+                                  />
+                                ) : (
+                                  <FontAwesomeIcon
+                                    icon={faCaretUp}
+                                    style={{ color: "#00FC2A" }}
+                                  />
+                                )}
+                                {formatPriceChange(cellData)}
+                              </div>
+                            </PriceChange>
+                          )}
+                        />
+                      )}
+
+                      {availableWidth > 1150 && (
+                        <Column
+                          label="24h Volume/Market Cap"
+                          dataKey="total_volume"
+                          width={300}
+                          responsive
+                          cellRenderer={({ cellData, rowIndex }) => (
+                            <BigRow>
+                              <BarIndicatorWrapper>
+                                <LeftFigure
+                                  color={
+                                    TableLeftcolors[
+                                      rowIndex % TableLeftcolors.length
+                                    ]
+                                  }
+                                >
+                                  <LeftDotSpan>.</LeftDotSpan>
+                                  {props.currencyIcon}
+                                  {formatNumber(cellData)}
+                                </LeftFigure>
+                                <RightFigure
+                                  color={
+                                    TableRightcolors[
+                                      [rowIndex % TableRightcolors.length]
+                                    ]
+                                  }
+                                >
+                                  <RightDotSpan>.</RightDotSpan>
+                                  {props.currencyIcon}
+                                  {formatNumber(
+                                    props.coinlist[rowIndex].market_cap
+                                  )}
+                                </RightFigure>
+                              </BarIndicatorWrapper>
+                              <OuterBar
+                                color={
+                                  TableRightcolors[
+                                    [rowIndex % TableRightcolors.length]
+                                  ]
+                                }
+                              >
+                                <InnerBar
+                                  $lowernum={cellData}
+                                  $highernum={
+                                    props.coinlist[rowIndex].market_cap
+                                  }
+                                  color={
+                                    TableLeftcolors[
+                                      rowIndex % TableLeftcolors.length
+                                    ]
+                                  }
+                                ></InnerBar>
+                              </OuterBar>
+                            </BigRow>
+                          )}
+                        />
+                      )}
+
+                      {availableWidth > 1450 && (
+                        <Column
+                          label="Circulating/Total Supply"
+                          dataKey="circulating_supply"
+                          width={300}
+                          responsive
+                          cellRenderer={({ cellData, rowIndex }) => (
+                            <BigRow>
+                              <BarIndicatorWrapper>
+                                <LeftFigure
+                                  color={
+                                    TableLeftcolors[
+                                      rowIndex % TableLeftcolors.length
+                                    ]
+                                  }
+                                >
+                                  <LeftDotSpan>.</LeftDotSpan>
+                                  {formatNumber(cellData)}
+                                </LeftFigure>
+                                <RightFigure
+                                  color={
+                                    TableRightcolors[
+                                      [rowIndex % TableRightcolors.length]
+                                    ]
+                                  }
+                                >
+                                  <RightDotSpan>.</RightDotSpan>
+                                  {props.coinlist[rowIndex].max_supply !== null
+                                    ? formatNumber(
+                                        props.coinlist[rowIndex].max_supply
+                                      )
+                                    : formatNumber(cellData)}
+                                </RightFigure>
+                              </BarIndicatorWrapper>
+                              <OuterBar
+                                color={
+                                  TableRightcolors[
+                                    [rowIndex % TableRightcolors.length]
+                                  ]
+                                }
+                              >
+                                <InnerBar
+                                  $lowernum={cellData}
+                                  $highernum={
+                                    props.coinlist[rowIndex].max_supply
+                                  }
+                                  color={
+                                    TableLeftcolors[
+                                      rowIndex % TableLeftcolors.length
+                                    ]
+                                  }
+                                ></InnerBar>
+                              </OuterBar>
+                            </BigRow>
+                          )}
+                        />
+                      )}
+
+                      {availableWidth > 1500 && (
+                        <Column
+                          label="last 7d"
+                          dataKey="sparkline_in_7d"
+                          width={200}
+                          responsive
+                          cellRenderer={({ cellData, rowIndex }) => (
+                            <BigRow>
+                              <Sparkline
+                                data={cellData}
+                                last7d={
+                                  props.coinlist[rowIndex]
+                                    .price_change_percentage_7d_in_currency
+                                }
+                              />
+                            </BigRow>
+                          )}
+                        />
+                      )}
+                    </Table>
+                  </TableWrapper>
+                )}
+              </AutoSizer>
+            </Container>
+          )}
+        </InfiniteLoader>
+      )}
+    </WindowScroller>
   );
 };
 
