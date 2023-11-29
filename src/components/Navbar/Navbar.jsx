@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import {
   NavbarContainer,
   RightNavbar,
@@ -13,6 +15,10 @@ import {
   StyledLink,
   FilteredDropdown,
   DropdownItem,
+  MobileRightNavbar,
+  MobileNavLinkWrapper,
+  Overlay,
+  MobileThemechange,
 } from "./Navbar.styles";
 import DarkTheme from "../../assets/dark-theme.svg";
 import LightTheme from "../../assets/light-theme.svg";
@@ -29,6 +35,7 @@ const Navbar = (props) => {
   const [sticky, setSticky] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [clicked, setClicked] = useState(false);
+  const [openHambugerMenu, setOpenHamburgerMenu] = useState(false);
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
@@ -45,6 +52,11 @@ const Navbar = (props) => {
   );
 
   const displayedCoins = filteredCoins.slice(0, 5);
+
+  const handleHamburgerMenu = () => {
+    console.log(openHambugerMenu);
+    setOpenHamburgerMenu(!openHambugerMenu);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -131,6 +143,39 @@ const Navbar = (props) => {
           ></img>
         </ThemeChangeWrapper>
       </RightNavbar>
+      <MobileRightNavbar onClick={handleHamburgerMenu}>
+        <FontAwesomeIcon
+          icon={faBars}
+          size="xl"
+          style={{ color: props.colormode === "dark" ? "#ffffff" : "#000000" }}
+        />
+
+        {openHambugerMenu && (
+          <Overlay>
+            <MobileNavLinkWrapper>
+              <StyledLink
+                to="/"
+                onClick={() => setActiveLink("Coins")}
+                className={activeLink === "Coins" ? "active" : ""}
+              >
+                Coins
+              </StyledLink>
+              <StyledLink
+                to="/portfolio"
+                onClick={() => setActiveLink("Portfolio")}
+                className={activeLink === "Portfolio" ? "active" : ""}
+              >
+                Portfolio
+              </StyledLink>
+              <MobileThemechange
+                onClick={() => props.changeColorMode(props.colormode)}
+              >
+                Theme
+              </MobileThemechange>
+            </MobileNavLinkWrapper>
+          </Overlay>
+        )}
+      </MobileRightNavbar>
     </NavbarContainer>
   );
 };

@@ -8,6 +8,10 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.background.pageBackground};
   border-radius: 10px;
   /* padding: 1.5rem 1rem 0 1.5rem; */
+  /* padding-right: 2rem; */
+  max-width: 1424px;
+  width: 100%;
+  padding: 2rem;
   box-sizing: border-box;
 `;
 
@@ -15,15 +19,18 @@ export const Section = styled.div`
   font-size: 22px;
   font-weight: 500;
   align-self: flex-start;
-  margin-left: 9rem;
 `;
 
 export const CoinDataWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 1424px;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
+  width: 100%;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+
+  @media (max-width: 1196px) {
+    gap: 1rem;
+  }
 `;
 
 export const CoinDiv = styled.div`
@@ -31,7 +38,14 @@ export const CoinDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   gap: calc(379px - 295px - 64px);
+
+  @media (max-width: 1196px) {
+    flex: 1;
+    justify-content: normal;
+    align-items: normal;
+  }
 `;
 
 export const CoinInfo = styled.div`
@@ -40,13 +54,15 @@ export const CoinInfo = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.background.primary};
-  width: 100%;
+  padding: 0 6rem;
   height: 295px;
+
   border-radius: 12px;
   gap: 1rem;
 `;
 export const CoinIconWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.background.componentBackground};
@@ -66,10 +82,11 @@ export const HomePage = styled.div`
   background-color: ${(props) => props.theme.background.primary};
   display: flex;
   align-items: center;
+  justify-content: center;
   font-size: 15px;
   border-radius: 12px;
-  gap: 3rem;
-  padding: 0 20px;
+  gap: 1rem;
+  padding: 0 4.4rem;
 `;
 
 export const LinkIcon = styled.div`
@@ -82,18 +99,32 @@ export const PriceDataWrapper = styled.div`
   padding: 0;
   align-items: center;
   justify-content: center;
-  width: 463px;
-  height: 379px;
+  padding: 2rem;
   border-radius: 12px;
   background-color: ${(props) => props.theme.background.primary};
 
   gap: 1rem;
+  @media (max-width: 1196px) {
+    flex: 1;
+  }
 `;
 
 export const PriceData = styled.div`
   font-size: 44px;
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 500px) {
+    font-size: 22px;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const PriceDate = styled.p`
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 
 export const MarketChange = styled.div`
@@ -112,13 +143,23 @@ export const HistoryPrice = styled.div`
   p {
     width: 300px;
   }
+
+  @media (max-width: 500px) {
+    font-size: 15px;
+    p {
+      width: 200px;
+    }
+  }
 `;
 
 export const CoinInfoWrapper = styled.div`
   background-color: ${(props) => props.theme.background.primary};
-  width: 546px;
-  height: 379px;
+  padding: 0 2rem;
   border-radius: 12px;
+
+  @media (max-width: 1196px) {
+    flex: 100%;
+  }
 `;
 
 export const CoinData = styled.div`
@@ -144,10 +185,16 @@ export const Data = styled.div`
   p {
     font-size: 16px;
   }
+
+  @media (max-width: 500px) {
+    p {
+      font-size: 15px;
+    }
+  }
 `;
 
 export const CoinDescriptionWrapper = styled.div`
-  width: 1424px;
+  width: 100%;
   background-color: ${(props) => props.theme.background.primary};
   display: flex;
   flex-direction: column;
@@ -162,28 +209,50 @@ export const CoinDescriptionWrapper = styled.div`
   p {
     font-size: 19px;
   }
+
+  @media (max-width: 500px) {
+    p {
+      font-size: 13px;
+      text-align: center;
+    }
+  }
 `;
 
 export const CoinLinks = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  width: 1424px;
+  width: 100%;
   text-align: center;
   gap: 1rem;
   margin-top: 2rem;
   position: relative;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const Link = styled.div`
   background-color: ${(props) => props.theme.background.primary};
   text-align: center;
   flex: 1;
+  width: 100%;
   padding: 15px 20px;
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    font-size: 15px;
+    word-break: break-all;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
 export const CopyIcon = styled.div`
@@ -192,7 +261,6 @@ export const CopyIcon = styled.div`
 
 export const Copied = styled.div`
   position: absolute;
-  top: -80%;
   left: 50%;
   transform: translate(-50%);
   background-color: ${(props) => props.theme.background.copyBackground};
@@ -204,14 +272,24 @@ export const Copied = styled.div`
   border-radius: 12px;
   font-size: 24px;
   font-weight: 500;
+
+  @media screen and (max-width: 860px) {
+    top: 50%;
+  }
 `;
 
 export const CurrencyConverter = styled.div`
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin-top: 2rem;
   align-items: center;
   gap: 2rem;
+  width: 100%;
+
+  @media screen and (max-width: 825px) {
+    flex-direction: column;
+  }
 `;
 
 export const Currency = styled.div`
@@ -236,6 +314,8 @@ export const CurrencyValue = styled.input`
   border-radius: 0 8px 8px 0;
   border: none;
   font-size: 16px;
+  width: 100%;
+  max-width: 300px;
   color: ${(props) => props.theme.background.secondary};
 
   &::-webkit-inner-spin-button {
@@ -251,4 +331,10 @@ export const CurrencyValue = styled.input`
 export const CurrencyWrapper = styled.div`
   display: flex;
   align-items: center;
+  /* justify-content: center; */
+
+  @media screen and (max-width: 860px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;

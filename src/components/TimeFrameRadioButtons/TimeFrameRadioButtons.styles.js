@@ -4,7 +4,9 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
+  width: 100%;
   margin-top: 4rem;
+  flex-wrap: wrap;
 `;
 
 export const TimeFrameWrapper = styled.div`
