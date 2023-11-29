@@ -65,10 +65,12 @@ const Navbar = (props) => {
 
     props.getAllCoins();
     document.addEventListener("click", handleClickedLink);
+    document.addEventListener("touchstart", handleClickedLink);
     window.addEventListener("scroll", handleScroll);
     return (
       () => window.removeEventListener("scroll", handleScroll),
-      document.removeEventListener("click", handleClickedLink)
+      document.removeEventListener("click", handleClickedLink),
+      document.removeEventListener("touchstart", handleClickedLink)
     );
   }, [clicked]);
   return (
