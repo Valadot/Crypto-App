@@ -36,6 +36,7 @@ import {
   CurrencyWrapper,
   Currency,
   CurrencyValue,
+  PriceDate,
 } from "./CoinDescription.styles";
 import { formatPrice } from "../../utils/formatPrice/formatPrice";
 import { formatPriceChange } from "../../utils/formatPriceChange/formatPriceChange";
@@ -137,7 +138,7 @@ const CoinDescription = (props) => {
             </CoinDiv>
             <PriceDataWrapper>
               <PriceData>
-                {props.currencyIcon}{" "}
+                {props.currencyIcon}
                 {formatPrice(
                   coindata.market_data.current_price[
                     props.currency.toLowerCase()
@@ -198,11 +199,11 @@ const CoinDescription = (props) => {
                       coindata.market_data.ath[props.currency.toLowerCase()]
                     )}
                   </p>
-                  <p>
+                  <PriceDate>
                     {formatDateToCustom(
                       props.athDate[props.currency.toLowerCase()]
                     )}
-                  </p>
+                  </PriceDate>
                 </div>
               </HistoryPrice>
               <HistoryPrice>
@@ -217,11 +218,11 @@ const CoinDescription = (props) => {
                       coindata.market_data.atl[props.currency.toLowerCase()]
                     )}
                   </p>
-                  <p>
+                  <PriceDate>
                     {formatDateToCustom(
                       props.atlDate[props.currency.toLowerCase()]
                     )}
-                  </p>
+                  </PriceDate>
                 </div>
               </HistoryPrice>
             </PriceDataWrapper>

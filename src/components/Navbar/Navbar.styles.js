@@ -39,6 +39,14 @@ export const StyledLink = styled(NavLink)`
   &.active {
     background-color: ${(props) => props.theme.background.componentBackground};
   }
+
+  @media screen and (max-width: 800px) {
+    border-radius: 0;
+    background-color: transparent;
+    text-align: right;
+    padding: 0.3rem 0.2rem 0.3rem 2rem;
+    border-radius: 8px;
+  }
 `;
 
 export const RightNavbar = styled.div`
@@ -144,4 +152,51 @@ export const DropdownItem = styled(NavLink)`
   cursor: pointer;
   text-decoration: none;
   color: ${(props) => props.theme.background.secondary};
+`;
+
+export const MobileRightNavbar = styled.div`
+  display: none;
+  cursor: pointer;
+  position: relative;
+
+  @media screen and (max-width: 800px) {
+    display: block;
+    padding-right: 4rem;
+  }
+`;
+
+export const MobileNavLinkWrapper = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 60px;
+  z-index: 2;
+  margin-top: 1rem;
+  padding-right: 0.4rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  background-color: ${(props) => props.theme.background.componentBackground};
+  text-align: right;
+  border-radius: 8px;
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const MobileThemechange = styled.p`
+  border-radius: 0;
+  background-color: transparent;
+  text-align: right;
+  padding: 0.3rem 0.2rem 0.3rem 2rem;
+  border-radius: 8px;
 `;
