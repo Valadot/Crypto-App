@@ -96,11 +96,18 @@ const CoinsList = (props) => {
                       onRowsRendered={onRowsRendered}
                       ref={registerChild}
                     >
-                      <Column label="#" dataKey="market_cap_rank" width={50} />
+                      {availableWidth > 300 && (
+                        <Column
+                          label="#"
+                          dataKey="market_cap_rank"
+                          width={50}
+                        />
+                      )}
+
                       <Column
                         label="Name"
                         dataKey="name"
-                        width={availableWidth > 400 ? 320 : 150}
+                        width={availableWidth > 400 ? 270 : 250}
                         responsive
                         cellRenderer={({ cellData, rowIndex }) => (
                           <StyledLink
@@ -201,7 +208,7 @@ const CoinsList = (props) => {
                         />
                       )}
 
-                      {availableWidth > 850 && (
+                      {availableWidth > 750 && (
                         <Column
                           label="7d%"
                           dataKey="price_change_percentage_7d_in_currency"
@@ -239,7 +246,7 @@ const CoinsList = (props) => {
                         />
                       )}
 
-                      {availableWidth > 1150 && (
+                      {availableWidth > 1000 && (
                         <Column
                           label="24h Volume/Market Cap"
                           dataKey="total_volume"
@@ -297,7 +304,7 @@ const CoinsList = (props) => {
                         />
                       )}
 
-                      {availableWidth > 1450 && (
+                      {availableWidth > 1250 && (
                         <Column
                           label="Circulating/Total Supply"
                           dataKey="circulating_supply"
@@ -355,7 +362,7 @@ const CoinsList = (props) => {
                         />
                       )}
 
-                      {availableWidth > 1500 && (
+                      {availableWidth > 1550 && (
                         <Column
                           label="last 7d"
                           dataKey="sparkline_in_7d"

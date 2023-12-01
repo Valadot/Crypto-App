@@ -4,14 +4,15 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 3rem auto 0 auto;
-  background-color: ${(props) => props.theme.background.primary};
+  background-color: ${(props) => props.theme.background.pageBackground};
   border-radius: 10px;
   position: relative;
+  width: 100%;
 `;
 
 export const Overlay = styled.div`
   position: fixed;
-  top: 0;
+  top: 0px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -20,33 +21,51 @@ export const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  overflow-y: auto;
 `;
 
 export const AddAssetButton = styled.button`
   color: ${(props) => props.theme.background.secondary};
-  padding: 1rem 18rem;
+  padding: 1rem 0;
+
   background-color: #06d554;
+  margin: 0 auto;
   border-radius: 12px;
   font-size: 20px;
+  width: 100%;
+  max-width: 700px;
   cursor: pointer;
   border: none;
 `;
 
 export const AddAssetWrapper = styled.div`
   background-color: ${(props) => props.theme.background.componentBackground};
-  width: 1000px;
+  max-width: 700px;
+  width: 90%;
   padding: 2rem;
   gap: 2rem;
   display: flex;
+  position: absolute;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
+
+  @media screen and (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+  }
 `;
 
 export const CoinWrapper = styled.div`
   display: flex;
   gap: 2rem;
+
+  @media screen and (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const CoinData = styled.div`
@@ -62,6 +81,11 @@ export const CoinData = styled.div`
 
   div {
     text-align: center;
+  }
+
+  @media screen and (max-width: 950px) {
+    max-width: 300px;
+    width: 100%;
   }
 `;
 
@@ -79,6 +103,18 @@ export const CoinsForm = styled.form`
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  width: 100%;
+
+  @media screen and (max-width: 1150px) {
+    gap: 2rem;
+  }
+
+  @media screen and (max-width: 950px) {
+    /* max-width: 700px; */
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+  }
 `;
 
 export const Input = styled.input`
@@ -86,17 +122,24 @@ export const Input = styled.input`
   background-color: ${(props) => props.theme.background.primary};
   color: ${(props) => props.theme.background.secondary};
   border: none;
-  width: 500px;
+  width: 100%;
   border-radius: 12px;
 
   &::placeholder {
     color: ${(props) => props.theme.background.secondary};
+  }
+
+  @media screen and (max-width: 950px) {
+    max-width: 100%;
+    margin: 0 auto;
+    align-items: center;
   }
 `;
 
 export const ButtonWrapper = styled.div`
   display: flex;
   gap: 1rem;
+  width: 100%;
 `;
 
 export const Button = styled.button`

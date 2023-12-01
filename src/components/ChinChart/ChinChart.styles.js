@@ -23,11 +23,11 @@ export const Container = styled.div`
   }
 
   @media screen and (max-width: 700px) {
-    width: 500px;
+    width: 450px;
   }
 
   @media screen and (max-width: 550px) {
-    width: 320px;
+    width: 300px;
   }
 `;
 
@@ -67,6 +67,10 @@ export const Dot = styled.div`
   height: 5px;
   border-radius: 100%;
   background-color: white;
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 `;
 
 export const Caret = styled.img`
