@@ -1,11 +1,26 @@
 import styled from "styled-components";
 
 export const List = styled.div`
+  box-sizing: border-box;
   padding-top: 4rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   background-color: ${(props) => props.theme.background.pageBackground};
+
+  @media screen and (max-width: 1570px) {
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 1030px) {
+    flex-direction: column;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 590px) {
+    flex-direction: column;
+    font-size: 11px;
+  }
 `;
 
 export const MetricsWrapper = styled.div`
@@ -16,9 +31,12 @@ export const MetricsWrapper = styled.div`
 `;
 
 export const Metrics = styled.div`
+  flex-wrap: wrap;
+  gap: 1rem;
   width: 100%;
   display: flex;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  max-height: 100%;
   justify-content: space-between;
   border-radius: 12px;
   background-color: ${(props) => props.theme.background.primary};
@@ -26,6 +44,10 @@ export const Metrics = styled.div`
   div {
     display: flex;
     gap: 0.4rem;
+  }
+
+  @media screen and (max-width: 1030px) {
+    flex-direction: column;
   }
 `;
 
@@ -43,6 +65,10 @@ export const CoinData = styled.div`
   div {
     text-align: center;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 1030px) {
+    width: 100%;
   }
 `;
 

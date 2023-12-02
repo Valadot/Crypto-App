@@ -182,15 +182,15 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
                   </GreenText>
                 </div>
                 <MarketData>
-                  Market Cap vs Volume:{" "}
+                  Vol / Mrkt Cap:{" "}
                   <GreenText>{asset.marketCapVsVolume}%</GreenText>
                   <OuterBar>
                     <InnerBar $marketData={asset.marketCapVsVolume}></InnerBar>
                   </OuterBar>
                 </MarketData>
                 <MarketData>
-                  Circ supply vs max supply:{" "}
-                  <GreenText>{asset.price}</GreenText>
+                  Circ / Total Sup:{" "}
+                  <GreenText>{asset.circSupplyVsMaxSuply}%</GreenText>
                   <OuterBar>
                     <InnerBar
                       $marketData={asset.circSupplyVsMaxSuply}
@@ -236,7 +236,7 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
                   </GreenText>
                 </div>
                 <ProfitWrapper>
-                  Amount price change since purchase:{" "}
+                  Price change since purchase:{" "}
                   {asset.previousPriceChange === 0 ? (
                     ""
                   ) : asset.previousPriceChange < 0 ? (
@@ -260,44 +260,6 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
                 </div>
               </Metrics>
             </MetricsWrapper>
-            {/* {editCoinData && (
-              <Overlay>
-                Edit your Coin:
-                <EditCoinWrapper>
-                  <EditCoinsForm>
-                    <input
-                      type="number"
-                      placeholder="Enter the Amount"
-                      onChange={(e) => handleAmountChange(e, asset)}
-                      value={asset.amount}
-                    ></input>
-                    <input
-                      type="date"
-                      onChange={(e) => handlePurchaseDateChange(e, asset)}
-                      value={asset.purchaseDate || ""}
-                    />
-                  </EditCoinsForm>
-
-                  <ButtonWrapper>
-                    <Button
-                      onClick={handleClick}
-                      $background={colormode === "dark" ? "#FFFFFF" : "#F6F6F6"}
-                      $color={colormode === "dark" ? "#06D554" : "#1F2128"}
-                    >
-                      Close
-                    </Button>
-                    <Button
-                      onClick={() => addAsset(asset)}
-                      $background="#06D554"
-                      $color={colormode === "dark" ? "#FFFFFF" : "#1F2128"}
-                    >
-                      Save and Continue
-                    </Button>
-                  </ButtonWrapper>
-                </EditCoinWrapper>
-                <div onClick={() => setEditCoinData(false)}>tessstttt</div>
-              </Overlay>
-            )} */}
           </List>
         ))
       )}
