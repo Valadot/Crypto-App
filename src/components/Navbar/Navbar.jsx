@@ -38,6 +38,7 @@ const Navbar = (props) => {
   const [openHambugerMenu, setOpenHamburgerMenu] = useState(false);
 
   const handleChange = (e) => {
+    alert("t");
     setSearchInput(e.target.value);
     setClicked(false);
   };
