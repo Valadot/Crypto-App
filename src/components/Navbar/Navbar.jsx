@@ -38,21 +38,26 @@ const Navbar = (props) => {
   const [openHambugerMenu, setOpenHamburgerMenu] = useState(false);
 
   const handleChange = (e) => {
-    alert("t");
     setSearchInput(e.target.value);
+    console.log(searchInput);
     setClicked(false);
   };
 
   const handleClickedLink = () => {
+    e.preventDefault();
     setClicked(true);
   };
 
   const filteredCoins = props.coins.filter(
     (coin) =>
-      coin.id.startsWith(searchInput) || coin.symbol.startsWith(searchInput)
+      coin.id.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+      coin.symbol.toLowerCase().startsWith(searchInput.toLowerCase())
   );
 
+  // console.log(filteredCoins2);
+
   const displayedCoins = filteredCoins.slice(0, 5);
+  console.log("displayed", displayedCoins);
 
   const handleHamburgerMenu = () => {
     console.log(openHambugerMenu);
@@ -65,13 +70,13 @@ const Navbar = (props) => {
     };
 
     props.getAllCoins();
-    document.addEventListener("click", handleClickedLink);
-    document.addEventListener("touchstart", handleClickedLink);
+    // document.addEventListener("click", handleClickedLink);
+    document.addEventListener("touchend", handleClickedLink);
     window.addEventListener("scroll", handleScroll);
     return (
       () => window.removeEventListener("scroll", handleScroll),
-      document.removeEventListener("click", handleClickedLink),
-      document.removeEventListener("touchstart", handleClickedLink)
+      document.removeEventListener("touchend", handleClickedLink)
+      // document.removeEventListener("touchstart", handleClickedLink)
     );
   }, [clicked]);
   return (
@@ -113,7 +118,7 @@ const Navbar = (props) => {
               <FilteredDropdown id="coin-list">
                 {displayedCoins.map((coin) => (
                   <DropdownItem
-                    onClick={handleClickedLink}
+                    onTouchStart={handleClickedLink}
                     to={`/coin/${coin.id}`}
                     key={coin.id}
                   >
