@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import uuid from "react-uuid";
 import { connect } from "react-redux";
+// import DatePicker from "react-datepicker";
 import {
   Container,
   Overlay,
@@ -26,6 +27,7 @@ const Portfolio = (props) => {
   const [asset, setAsset] = useState({});
   const [assetList, setAssetList] = useState([]);
   const [ButtonisDisabled, setButtonIsDisabled] = useState(true);
+  // const [startDate, setStartDate] = useState(new Date());
 
   const handleClick = () => {
     setShowAddAsset(!showAddAsset);
@@ -54,6 +56,7 @@ const Portfolio = (props) => {
   };
 
   const handleClickedLink = (coin) => {
+    console.log("test");
     setClicked(true);
     props.getCoinData(coin);
     setSearchInput(coin);
@@ -169,7 +172,7 @@ const Portfolio = (props) => {
                       <FilteredDropdown>
                         {displayedCoins.map((coin) => (
                           <DropdownItem
-                            onTouchStart={() => handleClickedLink(coin.id)}
+                            onClick={() => handleClickedLink(coin.id)}
                             key={coin.id}
                           >
                             {coin.id} ({coin.symbol.toUpperCase()})
