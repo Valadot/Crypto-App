@@ -39,7 +39,6 @@ const Navbar = (props) => {
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
-    console.log(searchInput);
     setClicked(false);
   };
 
@@ -54,13 +53,9 @@ const Navbar = (props) => {
       coin.symbol.toLowerCase().startsWith(searchInput.toLowerCase())
   );
 
-  // console.log(filteredCoins2);
-
   const displayedCoins = filteredCoins.slice(0, 5);
-  console.log("displayed", displayedCoins);
 
   const handleHamburgerMenu = () => {
-    console.log(openHambugerMenu);
     setOpenHamburgerMenu(!openHambugerMenu);
   };
 

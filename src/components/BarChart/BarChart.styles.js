@@ -6,6 +6,11 @@ export const ChartWrapper = styled.div`
   width: 48.5%;
   padding: 0 15px;
   background-color: ${(props) => props.theme.background.primary};
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const ChartDescription = styled.div`
@@ -16,8 +21,16 @@ export const ChartDescription = styled.div`
   h1 {
     font-weight: 400;
   }
+
+  @media screen and (max-width: 900px) {
+    font-size: 8px;
+  }
 `;
 
 export const PriceData = styled.h1`
   font-size: 2.75rem;
+
+  @media screen and (max-width: 500px) {
+    font-size: 2rem;
+  }
 `;
