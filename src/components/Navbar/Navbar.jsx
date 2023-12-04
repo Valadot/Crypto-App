@@ -45,8 +45,8 @@ const Navbar = (props) => {
   };
 
   const handleClickedLink = (e) => {
-    e.preventDefault();
     setClicked(true);
+    e.stopPropagation();
   };
 
   const filteredCoins = props.coins.filter(
