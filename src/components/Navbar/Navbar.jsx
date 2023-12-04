@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,20 +29,22 @@ import MagnyfingGlassLight from "../../assets/magnifying-glass-light.svg";
 import { getCurrency } from "../../store/currency/actions";
 import { changeColorMode } from "../../store/colormode/actions";
 import { getAllCoins } from "../../store/allCoinsList/actions";
+import { useFetcher } from "react-router-dom";
 
 const Navbar = (props) => {
   const [activeLink, setActiveLink] = useState("");
   const [sticky, setSticky] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(true);
   const [openHambugerMenu, setOpenHamburgerMenu] = useState(false);
+  const inputRef = useRef();
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
     setClicked(false);
   };
 
-  const handleClickedLink = () => {
+  const handleClickedLink = (e) => {
     e.preventDefault();
     setClicked(true);
   };
@@ -60,19 +62,20 @@ const Navbar = (props) => {
   };
 
   useEffect(() => {
+    props.getAllCoins();
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       setSticky(window.scrollY > 0);
     };
 
-    props.getAllCoins();
-    // document.addEventListener("click", handleClickedLink);
-    document.addEventListener("touchend", handleClickedLink);
+    document.addEventListener("click", handleClickedLink);
     window.addEventListener("scroll", handleScroll);
-    return (
-      () => window.removeEventListener("scroll", handleScroll),
-      document.removeEventListener("touchend", handleClickedLink)
-      // document.removeEventListener("touchstart", handleClickedLink)
-    );
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("click", handleClickedLink);
+    };
   }, [clicked]);
   return (
     <NavbarContainer className={`${sticky ? "sticky" : ""}`}>
@@ -106,22 +109,19 @@ const Navbar = (props) => {
             value={searchInput}
             placeholder="Search..."
           />
-          {clicked === false &&
-            searchInput &&
-            searchInput.length > 2 &&
-            props.coins && (
-              <FilteredDropdown id="coin-list">
-                {displayedCoins.map((coin) => (
-                  <DropdownItem
-                    onTouchStart={handleClickedLink}
-                    to={`/coin/${coin.id}`}
-                    key={coin.id}
-                  >
-                    {coin.id} ({coin.symbol.toUpperCase()})
-                  </DropdownItem>
-                ))}
-              </FilteredDropdown>
-            )}
+          {!clicked && searchInput && searchInput.length > 2 && props.coins && (
+            <FilteredDropdown id="coin-list">
+              {displayedCoins.map((coin) => (
+                <DropdownItem
+                  onTouchStart={handleClickedLink}
+                  to={`/coin/${coin.id}`}
+                  key={coin.id}
+                >
+                  {coin.id} ({coin.symbol.toUpperCase()})
+                </DropdownItem>
+              ))}
+            </FilteredDropdown>
+          )}
         </SearchWrapper>
         <CurrencyChangeWrapper>
           <CurrencySymbol currency={currencyLogo(props.currency)} />

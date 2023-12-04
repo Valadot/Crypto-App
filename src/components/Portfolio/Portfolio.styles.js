@@ -153,6 +153,12 @@ export const Button = styled.button`
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
+  pointer-events: ${(props) => (props.disabled ? "none" : null)};
+  opacity: 1;
+
+  &[disabled] {
+    opacity: 0.5;
+  }
 `;
 
 export const FilteredDropdown = styled.div`

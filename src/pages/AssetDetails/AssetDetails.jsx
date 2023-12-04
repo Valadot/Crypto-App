@@ -5,6 +5,7 @@ const AssetDetails = () => {
   return (
     <Container>
       <Navbar />
+      <h1>Your asset will be visible here.</h1>
     </Container>
   );
 };

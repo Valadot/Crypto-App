@@ -29,9 +29,16 @@ import {
 } from "./AssetList.styles";
 import { getCoinHistoryData } from "../../store/coinHistoryData/acions";
 import { formatPriceChange } from "../../utils/formatPriceChange/formatPriceChange";
-import { formatPrice } from "../../utils/formatPrice/formatPrice";
 
-const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
+const AssetList = ({
+  assets,
+  deleteAsset,
+  setAsset,
+  colormode,
+  currency,
+  currencyIcon,
+  setAssets,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [newPortfolio, setNewPortfolio] = useState([]);
   const [editData, setEditData] = useState(false);
@@ -43,6 +50,8 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
     return { ...acc, [el.assetName]: el };
   }, {});
 
+  const correctedCurrency = currency.toLowerCase();
+
   async function getData() {
     setIsLoading(true);
     const pricedCoinsObject = await Promise.all(
@@ -53,7 +62,9 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
 
         const json = await data.json();
         console.log("json", json);
-        noDupps[key].currentPrice = json.market_data.current_price.usd;
+        console.log("currency", json.market_data.current_price);
+        noDupps[key].currentPrice =
+          json.market_data.current_price[correctedCurrency];
 
         noDupps[key].priceChange24h =
           json.market_data.price_change_24h_in_currency.usd;
@@ -98,6 +109,7 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
     setNewPortfolio(newPortfolio);
     setAsset(newPortfolio);
     setIsLoading(false);
+    console.log("assets", assets);
   }
 
   function formatDate(inputDate) {
@@ -106,28 +118,6 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
     return formattedDate;
   }
 
-  // const handlePurchaseDateChange = (e, currentAsset) => {
-  //   const updatedPurchaseDate = e.target.value;
-
-  //   setNewPortfolio((prevPortfolio) =>
-  //     prevPortfolio.map((item) =>
-  //       item.id === currentAsset.id
-  //         ? { ...item, purchaseDate: updatedPurchaseDate }
-  //         : item
-  //     )
-  //   );
-  // };
-
-  // const handleAmountChange = (coinId, e) => {
-  //   const updatedAmount = e.target.value;
-  //   setEditedAmount(updatedAmount);
-  //   setNewPortfolio((prevPortfolio) =>
-  //     prevPortfolio.map((item) =>
-  //       item.id === coinId ? { ...item, amount: updatedAmount } : item
-  //     )
-  //   );
-  // };
-
   const handleAmountBlur = (coinId) => {
     setNewPortfolio((prevPortfolio) =>
       prevPortfolio.map((item) =>
@@ -135,17 +125,22 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
       )
     );
     setEditingCoinId(null);
+    setAssets((prevPortfolio) =>
+      prevPortfolio.map((item) =>
+        item.id === coinId ? { ...item, amount: editedAmount } : item
+      )
+    );
+    console.log("edit", assets);
   };
 
   const handleEditClick = (coinId, currentAmount) => {
-    // Set the edited amount to the current coin's amount when starting to edit
     setEditedAmount(currentAmount.toString());
     setEditingCoinId(coinId);
   };
 
   useEffect(() => {
     getData();
-  }, [assets]);
+  }, [assets, currency]);
 
   return (
     <>
@@ -173,7 +168,9 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
               <Metrics>
                 <div>
                   Current price:{" "}
-                  <GreenText>{asset.currentPrice.toLocaleString()}</GreenText>
+                  <GreenText>
+                    {currencyIcon} {asset.currentPrice.toLocaleString()}
+                  </GreenText>
                 </div>
                 <div>
                   Price change 24h:{" "}
@@ -232,6 +229,7 @@ const AssetList = ({ assets, deleteAsset, setAsset, colormode }) => {
                 <div>
                   Amount value:{" "}
                   <GreenText>
+                    {currencyIcon}{" "}
                     {(asset.amount * asset.currentPrice).toLocaleString()}
                   </GreenText>
                 </div>
@@ -271,6 +269,8 @@ const mapStateToProps = (state) => ({
   coindata: state.coindata.coindata,
   colormode: state.colormode.colormode,
   coins: state.allcoins.coins,
+  currency: state.currency.currency,
+  currencyIcon: state.currency.currencyIcon,
 });
 
 const mapDispatchToProps = {

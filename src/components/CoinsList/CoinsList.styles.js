@@ -14,8 +14,10 @@ export const Container = styled.div`
   padding: 1.5rem 0 0 1.5rem;
 `;
 
-export const TableWrapper = styled.table`
+export const TableWrapper = styled.div`
   font-size: 1.19rem;
+  display: flex;
+  justify-content: space-between;
 
   @media screen and (max-width: 700px) {
     font-size: 11px;
@@ -97,7 +99,7 @@ export const StyledLink = styled(NavLink)`
 `;
 
 export const OuterBar = styled.div`
-  width: 250px;
+  width: 300px;
   height: 5px;
   margin-bottom: 30px;
   background-color: ${(props) => props.color};
@@ -116,15 +118,15 @@ export const InnerBar = styled.div`
 
 export const TableHead = styled.thead``;
 
-export const BigRow = styled.th`
+export const BigRow = styled.div`
   text-align: left;
 `;
 
-export const SmallRow = styled.th`
+export const SmallRow = styled.div`
   text-align: left;
 `;
 
-export const PriceChange = styled.th`
+export const PriceChange = styled.div`
   text-align: left;
   color: ${(props) => (props.color > 0 ? "#00FC2A" : "#FE1040")};
 
@@ -135,7 +137,7 @@ export const PriceChange = styled.th`
   }
 `;
 
-export const CoinRow = styled.tr`
+export const CoinRow = styled.div`
   border-bottom: 1px solid #606061;
 
   &:last-child {
