@@ -97,7 +97,7 @@ const BarChart = (props) => {
     },
     aspectRatio: undefined,
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     layout: {
       padding: {
         left: 40,
