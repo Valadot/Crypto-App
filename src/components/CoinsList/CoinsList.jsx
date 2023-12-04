@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -38,6 +38,28 @@ import { getCoins, incrementPage } from "../../store/coinslist/actions";
 
 const CoinsList = (props) => {
   const [availableWidth, setAvailableWidth] = useState(0);
+
+  const CustomRow = ({
+    className,
+    columns,
+    index,
+    key,
+    onRowClick,
+    onRowMouseOver,
+    onRowMouseOut,
+    rowData,
+    style,
+  }) => {
+    return (
+      <div
+        key={key}
+        className={className}
+        style={{ ...style, display: "flex", justifyContent: "space-between" }}
+      >
+        {columns}
+      </div>
+    );
+  };
 
   const TableLeftcolors = [
     "#FFB528",
@@ -94,14 +116,16 @@ const CoinsList = (props) => {
                   onRowsRendered={onRowsRendered}
                   ref={registerChild}
                 >
-                  {availableWidth > 300 && (
-                    <Column label="#" dataKey="market_cap_rank" width={50} />
-                  )}
+                  <Column
+                    label="#"
+                    dataKey="market_cap_rank"
+                    width={availableWidth > 300 ? 50 : 0}
+                  />
 
                   <Column
                     label="Name"
                     dataKey="name"
-                    width={availableWidth > 400 ? 270 : 250}
+                    width={availableWidth > 400 ? 300 : 300}
                     responsive
                     cellRenderer={({ cellData, rowIndex }) => (
                       <StyledLink to={`/coin/${props.coinlist[rowIndex].id}`}>
@@ -159,7 +183,6 @@ const CoinsList = (props) => {
                       )}
                     />
                   )}
-
                   {availableWidth > 750 && (
                     <Column
                       label="24h%"
@@ -231,7 +254,6 @@ const CoinsList = (props) => {
                       )}
                     />
                   )}
-
                   {availableWidth > 1000 && (
                     <Column
                       label="24h Volume/Market Cap"
@@ -348,8 +370,9 @@ const CoinsList = (props) => {
                     <Column
                       label="last 7d"
                       dataKey="sparkline_in_7d"
-                      width={200}
+                      width={190}
                       responsive
+                      style={{ marginLeft: "1rem" }}
                       cellRenderer={({ cellData, rowIndex }) => (
                         <BigRow>
                           <Sparkline

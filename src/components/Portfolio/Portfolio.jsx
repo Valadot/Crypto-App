@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import uuid from "react-uuid";
 import { connect } from "react-redux";
-import format from "date-fns/format";
 import {
   Container,
   Overlay,
@@ -26,6 +25,7 @@ const Portfolio = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const [asset, setAsset] = useState({});
   const [assetList, setAssetList] = useState([]);
+  const [ButtonisDisabled, setButtonIsDisabled] = useState(true);
 
   const handleClick = () => {
     setShowAddAsset(!showAddAsset);
@@ -35,12 +35,13 @@ const Portfolio = (props) => {
 
   const filteredCoins = props.coins.filter(
     (coin) =>
-      coin.id.startsWith(searchInput) || coin.symbol.startsWith(searchInput)
+      coin.id.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+      coin.symbol.toLowerCase().startsWith(searchInput.toLowerCase())
   );
 
   const displayedCoins = filteredCoins.slice(0, 5);
 
-  function formatDateForServer(inputDate) {
+  function formatDateForApiCall(inputDate) {
     console.log(inputDate);
     const [year, month, day] = inputDate.split("-");
     const formattedDate = `${day}-${month}-${year}`;
@@ -59,24 +60,57 @@ const Portfolio = (props) => {
     setAsset({ ...asset, assetName: coin });
   };
 
+  const removeCoinsDropdown = () => {
+    setClicked(true);
+  };
+
   const handleAmount = (e) => {
     setAsset({ ...asset, amount: e.target.value });
   };
 
   const handlePurchaseDate = (e) => {
-    setAsset({
-      ...asset,
-      purchaseDate: formatDateForServer(e.target.value),
-    });
+    const selectedDate = new Date(e.target.value);
+    const todayDate = new Date();
+    console.log(asset.purchaseDate);
+    if (selectedDate > todayDate) {
+      alert("Please select a date on or before today.");
+      setButtonIsDisabled(true);
+      setAsset({
+        ...asset,
+        purchaseDate: "",
+      });
+      e.target.value = "";
+
+      return;
+    } else {
+      setAsset({
+        ...asset,
+        purchaseDate: formatDateForApiCall(e.target.value),
+      });
+    }
+  };
+
+  const checkValues = () => {
+    if (asset.purchaseDate && asset.amount && asset.assetName !== undefined) {
+      setButtonIsDisabled(false);
+    } else {
+      setButtonIsDisabled(true);
+    }
   };
 
   const addAsset = (asset) => {
-    setAssetList([
-      ...assetList,
-      { ...asset, image: props.coindata.image.small, id: uuid() },
-    ]);
-    setShowAddAsset(!showAddAsset);
-    setAsset({});
+    if (!ButtonisDisabled) {
+      setAssetList([
+        ...assetList,
+        { ...asset, image: props.coindata.image.small, id: uuid() },
+      ]);
+      setShowAddAsset(!showAddAsset);
+      setAsset({});
+      props.coindata.image = "";
+      props.coindata.id = "";
+    } else {
+      alert("Please put in the missing info.");
+    }
   };
 
   const handleAssetDelete = (asset) => {
@@ -84,6 +118,17 @@ const Portfolio = (props) => {
     setAssetList(newAssetList);
     console.log(assetList);
   };
+
+  useEffect(() => {
+    checkValues();
+  }, [asset.purchaseDate, asset.amount, asset.assetName]);
+
+  useEffect(() => {
+    document.addEventListener("click", removeCoinsDropdown);
+    return () => {
+      document.removeEventListener("click", removeCoinsDropdown);
+    };
+  }, [clicked]);
 
   return (
     <>
@@ -124,7 +169,7 @@ const Portfolio = (props) => {
                       <FilteredDropdown>
                         {displayedCoins.map((coin) => (
                           <DropdownItem
-                            onClick={() => handleClickedLink(coin.id)}
+                            onTouchStart={() => handleClickedLink(coin.id)}
                             key={coin.id}
                           >
                             {coin.id} ({coin.symbol.toUpperCase()})
@@ -157,6 +202,7 @@ const Portfolio = (props) => {
                   Close
                 </Button>
                 <Button
+                  disabled={ButtonisDisabled}
                   onClick={() => addAsset(asset)}
                   $background="#06D554"
                   $color={props.colormode === "dark" ? "#FFFFFF" : "#1F2128"}
@@ -170,6 +216,7 @@ const Portfolio = (props) => {
       </Container>
       <AssetList
         assets={assetList}
+        setAssets={(newList) => setAssetList(newList)}
         setAsset={(newAsset) => setAsset(newAsset)}
         deleteAsset={handleAssetDelete}
         setShowAddAsset={setShowAddAsset}
