@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+const sizes = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "475px",
+  tablet: "800px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
+export const devices = {
+  mobileS: `(max-width: ${sizes.mobileS})`,
+  mobileM: `(max-width: ${sizes.mobileM})`,
+  mobileL: `(max-width: ${sizes.mobileL})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  laptop: `(max-width: ${sizes.laptop})`,
+  laptopL: `(max-width: ${sizes.laptopL})`,
+  desktop: `(max-width: ${sizes.desktop})`,
+};
+
 export const List = styled.div`
   box-sizing: border-box;
   padding-top: 4rem;
@@ -8,16 +28,16 @@ export const List = styled.div`
   gap: 1rem;
   background-color: ${(props) => props.theme.background.pageBackground};
 
-  @media screen and (max-width: 1570px) {
+  @media ${devices.laptopL} {
     font-size: 12px;
   }
 
-  @media screen and (max-width: 1030px) {
+  @media ${devices.laptop} {
     flex-direction: column;
     font-size: 14px;
   }
 
-  @media screen and (max-width: 590px) {
+  @media ${devices.mobileL} {
     flex-direction: column;
     font-size: 11px;
   }
@@ -46,7 +66,7 @@ export const Metrics = styled.div`
     gap: 0.4rem;
   }
 
-  @media screen and (max-width: 1030px) {
+  @media ${devices.laptop} {
     flex-direction: column;
   }
 `;
@@ -67,7 +87,7 @@ export const CoinData = styled.div`
     cursor: pointer;
   }
 
-  @media screen and (max-width: 1030px) {
+  @media ${devices.laptop} {
     width: 100%;
   }
 `;
@@ -83,7 +103,7 @@ export const CoinImage = styled.div`
 
 export const OuterBar = styled.div`
   width: 75px;
-  background-color: green;
+  background-color: #00fc2a;
   height: 20px;
   border-radius: 50vw;
 `;
@@ -137,7 +157,7 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,4 +197,9 @@ export const Button = styled.button`
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
+`;
+
+export const Input = styled.input`
+  background: transparent;
+  color: ${(props) => props.theme.background.secondary};
 `;

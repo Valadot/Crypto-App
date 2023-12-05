@@ -2,6 +2,26 @@ import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { NavLink } from "react-router-dom";
 
+const sizes = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "475px",
+  tablet: "800px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
+export const devices = {
+  mobileS: `(max-width: ${sizes.mobileS})`,
+  mobileM: `(max-width: ${sizes.mobileM})`,
+  mobileL: `(max-width: ${sizes.mobileL})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  laptop: `(max-width: ${sizes.laptop})`,
+  laptopL: `(max-width: ${sizes.laptopL})`,
+  desktop: `(max-width: ${sizes.desktop})`,
+};
+
 export const Container = styled.div`
   display: flex;
   width: 100%;
@@ -19,19 +39,20 @@ export const TableWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media screen and (max-width: 700px) {
-    font-size: 11px;
+  @media ${devices.mobileL} {
+    font-size: 12px;
   }
 
+  /* Styling for the header */
   .ReactVirtualized__Table__headerRow {
     font-size: 18px;
     text-transform: none;
   }
-
+  /* Styling for each row */
   .ReactVirtualized__Table__row {
     padding: 1rem 0;
   }
-
+  /* Styling for each Child, which is NOT the last*/
   .ReactVirtualized__Table__row:not(:last-child) {
     border-bottom: 1px solid #2a2c2f;
   }
@@ -42,6 +63,7 @@ export const TableWrapper = styled.div`
   }
 
   /* Styling for horizontal scrollbar */
+  /* Currently not used, so just a safety measure.... */
   .ReactVirtualized__Table__Grid--horizontalScroll {
     overflow-y: hidden;
     overflow-x: auto;
@@ -56,7 +78,6 @@ export const TableWrapper = styled.div`
     display: none;
   }
 
-  /* Optional: Customize scrollbar appearance */
   /* Width of the scrollbar */
   ::-webkit-scrollbar {
     width: 10px;

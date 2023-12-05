@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+const sizes = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "475px",
+  tablet: "800px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
+export const devices = {
+  mobileS: `(max-width: ${sizes.mobileS})`,
+  mobileM: `(max-width: ${sizes.mobileM})`,
+  mobileL: `(max-width: ${sizes.mobileL})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  laptop: `(max-width: ${sizes.laptop})`,
+  laptopL: `(max-width: ${sizes.laptopL})`,
+  desktop: `(max-width: ${sizes.desktop})`,
+};
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -7,8 +27,6 @@ export const Container = styled.div`
   margin: 4rem 0 0 0;
   background-color: ${(props) => props.theme.background.pageBackground};
   border-radius: 10px;
-  /* padding: 1.5rem 1rem 0 1.5rem; */
-  /* padding-right: 2rem; */
   max-width: 1424px;
   width: 100%;
   padding: 2rem;
@@ -77,7 +95,7 @@ export const CoinIcon = styled.img`
 `;
 
 export const HomePage = styled.div`
-  /* width: 258px; */
+  width: 100%;
   height: 64px;
   background-color: ${(props) => props.theme.background.primary};
   display: flex;
@@ -144,7 +162,7 @@ export const HistoryPrice = styled.div`
     width: 300px;
   }
 
-  @media (max-width: 500px) {
+  @media ${devices.mobileL} {
     font-size: 15px;
     p {
       width: 200px;
@@ -186,7 +204,7 @@ export const Data = styled.div`
     font-size: 16px;
   }
 
-  @media (max-width: 500px) {
+  @media ${devices.mobileL} {
     p {
       font-size: 15px;
     }
@@ -210,7 +228,7 @@ export const CoinDescriptionWrapper = styled.div`
     font-size: 19px;
   }
 
-  @media (max-width: 500px) {
+  @media ${devices.mobileL} {
     p {
       font-size: 13px;
       text-align: center;
@@ -228,7 +246,7 @@ export const CoinLinks = styled.div`
   margin-top: 2rem;
   position: relative;
 
-  @media (max-width: 800px) {
+  @media ${devices.tablet} {
     flex-direction: column;
   }
 `;
@@ -244,13 +262,13 @@ export const Link = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 800px) {
+  @media ${devices.laptop} {
     flex-direction: column;
     font-size: 15px;
     word-break: break-all;
   }
 
-  @media (max-width: 500px) {
+  @media ${devices.mobileL} {
     font-size: 12px;
   }
 `;
@@ -273,7 +291,7 @@ export const Copied = styled.div`
   font-size: 24px;
   font-weight: 500;
 
-  @media screen and (max-width: 860px) {
+  @media ${devices.tablet} {
     top: 50%;
   }
 `;
@@ -287,7 +305,7 @@ export const CurrencyConverter = styled.div`
   gap: 2rem;
   width: 100%;
 
-  @media screen and (max-width: 825px) {
+  @media ${devices.laptop} {
     flex-direction: column;
   }
 `;
@@ -331,9 +349,8 @@ export const CurrencyValue = styled.input`
 export const CurrencyWrapper = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: center; */
 
-  @media screen and (max-width: 860px) {
+  @media ${devices.laptop} {
     width: 100%;
     justify-content: center;
   }

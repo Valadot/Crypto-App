@@ -16,10 +16,8 @@ import {
   StyledLink,
   InnerBar,
   OuterBar,
-  TableHead,
   BigRow,
   SmallRow,
-  CoinRow,
   TableWrapper,
   PriceChange,
   LeftDotSpan,
@@ -27,39 +25,16 @@ import {
   BarIndicatorWrapper,
   LeftFigure,
   RightFigure,
-  Line,
 } from "./CoinsList.styles";
 import Sparkline from "../Sparkline/Sparkline";
 import { formatNumber } from "../../utils/formatNumber/formatNumber";
 import { formatPrice } from "../../utils/formatPrice/formatPrice";
 import { formatPriceChange } from "../../utils/formatPriceChange/formatPriceChange";
-import BackToTopButton from "../BackToTopButton/BackToTopButton";
+
 import { getCoins, incrementPage } from "../../store/coinslist/actions";
 
 const CoinsList = (props) => {
   const [availableWidth, setAvailableWidth] = useState(0);
-
-  const CustomRow = ({
-    className,
-    columns,
-    index,
-    key,
-    onRowClick,
-    onRowMouseOver,
-    onRowMouseOut,
-    rowData,
-    style,
-  }) => {
-    return (
-      <div
-        key={key}
-        className={className}
-        style={{ ...style, display: "flex", justifyContent: "space-between" }}
-      >
-        {columns}
-      </div>
-    );
-  };
 
   const TableLeftcolors = [
     "#FFB528",
@@ -183,7 +158,7 @@ const CoinsList = (props) => {
                       )}
                     />
                   )}
-                  {availableWidth > 750 && (
+                  {availableWidth > 550 && (
                     <Column
                       label="24h%"
                       dataKey="price_change_percentage_24h_in_currency"

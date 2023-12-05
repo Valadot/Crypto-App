@@ -1,12 +1,32 @@
 import { styled } from "styled-components";
 import { NavLink } from "react-router-dom";
 
+const sizes = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "475px",
+  tablet: "800px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
+export const devices = {
+  mobileS: `(max-width: ${sizes.mobileS})`,
+  mobileM: `(max-width: ${sizes.mobileM})`,
+  mobileL: `(max-width: ${sizes.mobileL})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  laptop: `(max-width: ${sizes.laptop})`,
+  laptopL: `(max-width: ${sizes.laptopL})`,
+  desktop: `(max-width: ${sizes.desktop})`,
+};
+
 export const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1700px;
-  padding: 10px 0;
+  padding: 10px 1rem;
   background-color: ${(props) => props.theme.background.primary};
   font-weight: 500;
   margin: 0 auto;
@@ -24,7 +44,7 @@ export const NavLinkWrapper = styled.div`
   gap: 2rem;
   background-color: transparent;
 
-  @media screen and (max-width: 800px) {
+  @media ${devices.tablet} {
     display: none;
   }
 `;
@@ -40,7 +60,7 @@ export const StyledLink = styled(NavLink)`
     background-color: ${(props) => props.theme.background.componentBackground};
   }
 
-  @media screen and (max-width: 800px) {
+  @media ${devices.tablet} {
     border-radius: 0;
     background-color: transparent;
     text-align: right;
@@ -66,12 +86,12 @@ export const SearchWrapper = styled.div`
   width: 350px;
   position: relative;
 
-  @media screen and (max-width: 1300px) {
+  @media ${devices.laptopL} {
     width: 250px;
     margin-left: 1rem;
   }
 
-  @media screen and (max-width: 500px) {
+  @media ${devices.mobileL} {
     width: 150px;
     margin-left: 1rem;
   }
@@ -86,7 +106,7 @@ export const ThemeChangeWrapper = styled.div`
   width: 47px;
   border-radius: 10px;
 
-  @media screen and (max-width: 800px) {
+  @media ${devices.tablet} {
     display: none;
   }
 `;
@@ -142,11 +162,14 @@ export const FilteredDropdown = styled.div`
   background-color: ${(props) => props.theme.background.componentBackground};
   flex-direction: column;
   border-radius: 10px;
+
+  @media ${devices.mobileL} {
+    width: 235px;
+  }
 `;
 
 export const DropdownItem = styled(NavLink)`
   width: 100%;
-  /* background-color: red; */
   border-radius: 10px;
   padding: 0.4rem;
   cursor: pointer;
@@ -159,9 +182,9 @@ export const MobileRightNavbar = styled.div`
   cursor: pointer;
   position: relative;
 
-  @media screen and (max-width: 800px) {
+  @media ${devices.tablet} {
     display: block;
-    padding-right: 4rem;
+    padding-right: 1rem;
   }
 `;
 
