@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import uuid from "react-uuid";
 import { connect } from "react-redux";
-// import DatePicker from "react-datepicker";
 import {
   Container,
   Overlay,
@@ -27,7 +26,6 @@ const Portfolio = (props) => {
   const [asset, setAsset] = useState({});
   const [assetList, setAssetList] = useState([]);
   const [ButtonisDisabled, setButtonIsDisabled] = useState(true);
-  // const [startDate, setStartDate] = useState(new Date());
 
   const handleClick = () => {
     setShowAddAsset(!showAddAsset);

@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+const sizes = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "475px",
+  tablet: "800px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
+export const devices = {
+  mobileS: `(max-width: ${sizes.mobileS})`,
+  mobileM: `(max-width: ${sizes.mobileM})`,
+  mobileL: `(max-width: ${sizes.mobileL})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  laptop: `(max-width: ${sizes.laptop})`,
+  laptopL: `(max-width: ${sizes.laptopL})`,
+  desktop: `(max-width: ${sizes.desktop})`,
+};
+
 export const Container = styled.div`
   display: flex;
   width: 1000px;
@@ -14,11 +34,11 @@ export const Container = styled.div`
   font-size: 17px;
   background-color: ${(props) => props.theme.background.primary};
 
-  @media screen and (max-width: 1100px) {
+  @media ${devices.laptop} {
     width: 800px;
   }
 
-  @media screen and (max-width: 900px) {
+  @media ${devices.tablet} {
     width: 600px;
   }
 
@@ -26,7 +46,7 @@ export const Container = styled.div`
     width: 450px;
   }
 
-  @media screen and (max-width: 550px) {
+  @media ${devices.mobileL} {
     width: 320px;
   }
 `;
@@ -68,7 +88,7 @@ export const Dot = styled.div`
   border-radius: 100%;
   background-color: white;
 
-  @media screen and (max-width: 900px) {
+  @media ${devices.laptop} {
     display: none;
   }
 `;
@@ -79,13 +99,13 @@ export const Caret = styled.img`
 `;
 
 export const Exchanges = styled.div`
-  @media screen and (max-width: 1100px) {
+  @media ${devices.laptop} {
     display: none;
   }
 `;
 
 export const Coins = styled.div`
-  @media screen and (max-width: 900px) {
+  @media ${devices.tablet} {
     display: none;
   }
 `;
@@ -95,13 +115,13 @@ export const GlobalCap = styled.div`
   align-items: center;
   gap: 0.5rem;
 
-  @media screen and (max-width: 700px) {
+  @media ${devices.tablet} {
     display: none;
   }
 `;
 
 export const EthStats = styled.div`
-  @media screen and (max-width: 550px) {
+  @media ${devices.mobileL} {
     display: none;
   }
 `;

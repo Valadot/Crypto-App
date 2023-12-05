@@ -73,7 +73,7 @@ const CoinDescription = (props) => {
     window.open(page, "_blank");
   };
 
-  //copy the link if the user clicks on the icon next to the text
+  // copy the link if the user clicks on the icon next to the text
 
   const handleCopy = (copytext) => {
     navigator.clipboard.writeText(copytext);
@@ -104,6 +104,7 @@ const CoinDescription = (props) => {
   useEffect(() => {
     props.getCoinData(id);
   }, [props.currency, id]);
+
   return (
     <Container>
       <Section>Your summary</Section>

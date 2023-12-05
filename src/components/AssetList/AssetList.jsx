@@ -21,11 +21,7 @@ import {
   ProfitWrapper,
   PriceChange,
   ChangeCoinDataWrapper,
-  Overlay,
-  EditCoinWrapper,
-  EditCoinsForm,
-  ButtonWrapper,
-  Button,
+  Input,
 } from "./AssetList.styles";
 import { getCoinHistoryData } from "../../store/coinHistoryData/acions";
 import { formatPriceChange } from "../../utils/formatPriceChange/formatPriceChange";
@@ -34,14 +30,12 @@ const AssetList = ({
   assets,
   deleteAsset,
   setAsset,
-  colormode,
   currency,
   currencyIcon,
   setAssets,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [newPortfolio, setNewPortfolio] = useState([]);
-  const [editData, setEditData] = useState(false);
   const [editedAmount, setEditedAmount] = useState("");
   const [editingCoinId, setEditingCoinId] = useState("");
 
@@ -200,7 +194,7 @@ const AssetList = ({
                 <div>
                   Coin amount:
                   {editingCoinId === asset.id ? (
-                    <input
+                    <Input
                       autoFocus="autoFocus"
                       type="number"
                       value={editedAmount}
@@ -211,7 +205,7 @@ const AssetList = ({
                           handleAmountBlur(asset.id);
                         }
                       }}
-                    ></input>
+                    ></Input>
                   ) : (
                     <GreenText>
                       {asset.amount}

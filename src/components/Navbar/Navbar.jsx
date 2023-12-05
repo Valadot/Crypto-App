@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -29,7 +28,6 @@ import MagnyfingGlassLight from "../../assets/magnifying-glass-light.svg";
 import { getCurrency } from "../../store/currency/actions";
 import { changeColorMode } from "../../store/colormode/actions";
 import { getAllCoins } from "../../store/allCoinsList/actions";
-import { useFetcher } from "react-router-dom";
 
 const Navbar = (props) => {
   const [activeLink, setActiveLink] = useState("");
@@ -37,7 +35,6 @@ const Navbar = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const [clicked, setClicked] = useState(true);
   const [openHambugerMenu, setOpenHamburgerMenu] = useState(false);
-  const inputRef = useRef();
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
@@ -113,7 +110,7 @@ const Navbar = (props) => {
             <FilteredDropdown id="coin-list">
               {displayedCoins.map((coin) => (
                 <DropdownItem
-                  onTouchStart={handleClickedLink}
+                  onClick={handleClickedLink}
                   to={`/coin/${coin.id}`}
                   key={coin.id}
                 >

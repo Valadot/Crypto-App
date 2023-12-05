@@ -5,7 +5,6 @@ import { Container } from "./App.styles";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import Coinspage from "./pages/Coinspage/Coinspage";
 import Coin from "./pages/Coin/Coin";
-import AssetDetails from "./pages/AssetDetails/AssetDetails";
 
 function App(props) {
   const darkTheme = {
@@ -37,10 +36,6 @@ function App(props) {
       path: "/coin/:id",
       element: <Coin />,
     },
-    {
-      path: "/portfolio/:id",
-      element: <AssetDetails />,
-    },
   ]);
 
   return (
@@ -51,7 +46,6 @@ function App(props) {
     >
       <Container>
         <RouterProvider router={router} />
-        {/* <BackToTopButton/> */}
       </Container>
     </ThemeProvider>
   );

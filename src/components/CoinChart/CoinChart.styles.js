@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ChartWrapper = styled.div`
-  /* position: absolute; */
   bottom: 0;
   border-radius: 10px;
   width: 100%;

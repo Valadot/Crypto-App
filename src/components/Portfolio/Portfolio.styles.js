@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+const sizes = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "475px",
+  tablet: "800px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
+
+export const devices = {
+  mobileS: `(max-width: ${sizes.mobileS})`,
+  mobileM: `(max-width: ${sizes.mobileM})`,
+  mobileL: `(max-width: ${sizes.mobileL})`,
+  tablet: `(max-width: ${sizes.tablet})`,
+  laptop: `(max-width: ${sizes.laptop})`,
+  laptopL: `(max-width: ${sizes.laptopL})`,
+  desktop: `(max-width: ${sizes.desktop})`,
+};
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -16,7 +36,7 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,10 +71,15 @@ export const AddAssetWrapper = styled.div`
   align-items: center;
   border-radius: 12px;
 
-  @media screen and (max-width: 1150px) {
+  @media ${devices.laptop} {
     flex-direction: column;
     align-items: center;
     max-width: 500px;
+  }
+
+  @media ${devices.mobileM} {
+    padding: 1rem;
+    gap: 0.5rem;
   }
 `;
 
@@ -62,7 +87,7 @@ export const CoinWrapper = styled.div`
   display: flex;
   gap: 2rem;
 
-  @media screen and (max-width: 1150px) {
+  @media ${devices.laptop} {
     flex-direction: column;
     align-items: center;
   }
@@ -83,7 +108,7 @@ export const CoinData = styled.div`
     text-align: center;
   }
 
-  @media screen and (max-width: 950px) {
+  @media ${devices.laptop} {
     max-width: 300px;
     width: 100%;
   }
@@ -105,12 +130,11 @@ export const CoinsForm = styled.form`
   position: relative;
   width: 100%;
 
-  @media screen and (max-width: 1150px) {
+  @media ${devices.laptop} {
     gap: 2rem;
   }
 
-  @media screen and (max-width: 950px) {
-    /* max-width: 700px; */
+  @media ${devices.tablet} {
     width: 100%;
     margin: 0 auto;
     align-items: center;
@@ -129,7 +153,7 @@ export const Input = styled.input`
     color: ${(props) => props.theme.background.secondary};
   }
 
-  @media screen and (max-width: 950px) {
+  @media ${devices.laptop} {
     max-width: 100%;
     margin: 0 auto;
     align-items: center;
@@ -140,6 +164,10 @@ export const ButtonWrapper = styled.div`
   display: flex;
   gap: 1rem;
   width: 100%;
+
+  @media ${devices.mobileM} {
+    margin-top: -2rem;
+  }
 `;
 
 export const Button = styled.button`
@@ -176,7 +204,6 @@ export const FilteredDropdown = styled.div`
 
 export const DropdownItem = styled.div`
   width: 100%;
-  /* background-color: red; */
   border-radius: 10px;
   padding: 0.4rem;
   cursor: pointer;

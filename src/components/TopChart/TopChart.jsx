@@ -31,25 +31,20 @@ const TopChart = () => {
   const [showSlider, setShowSlider] = useState(false);
 
   useEffect(() => {
-    // Add event listener to track window size
     const handleResize = () => {
-      setShowSlider(window.innerWidth <= 900);
+      setShowSlider(window.innerWidth <= 1024);
     };
 
-    // Initial check on mount
     handleResize();
 
-    // Listen for window resize events
     window.addEventListener("resize", handleResize);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   if (!showSlider) {
-    // Don't render the slider if the screen size is larger than 500px
     return (
       <>
         <Headline>
