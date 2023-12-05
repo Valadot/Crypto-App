@@ -208,7 +208,7 @@ const Portfolio = (props) => {
                   $background="#06D554"
                   $color={props.colormode === "dark" ? "#FFFFFF" : "#1F2128"}
                 >
-                  Save and Continue
+                  Save
                 </Button>
               </ButtonWrapper>
             </AddAssetWrapper>
