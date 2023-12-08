@@ -31,6 +31,7 @@ function coinlistReducer(state = initialState, action) {
         ...state,
         data: action.payload,
         isLoading: false,
+        page: 2,
       };
     case GET_COINS_ERROR:
       return {
