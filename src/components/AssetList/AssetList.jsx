@@ -55,8 +55,6 @@ const AssetList = ({
         );
 
         const json = await data.json();
-        console.log("json", json);
-        console.log("currency", json.market_data.current_price);
         noDupps[key].currentPrice =
           json.market_data.current_price[correctedCurrency];
 
@@ -80,8 +78,6 @@ const AssetList = ({
           `https://api.coingecko.com/api/v3/coins/${coin.assetName}/history?date=${coin.purchaseDate}`
         );
         const json = await data.json();
-        console.log("coin", coin);
-        console.log("json below", json);
         return {
           ...coin,
           assetName: json.id,
@@ -103,7 +99,6 @@ const AssetList = ({
     setNewPortfolio(newPortfolio);
     setAsset(newPortfolio);
     setIsLoading(false);
-    console.log("assets", assets);
   }
 
   function formatDate(inputDate) {
@@ -124,7 +119,6 @@ const AssetList = ({
         item.id === coinId ? { ...item, amount: editedAmount } : item
       )
     );
-    console.log("edit", assets);
   };
 
   const handleEditClick = (coinId, currentAmount) => {

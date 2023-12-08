@@ -42,7 +42,6 @@ const Portfolio = (props) => {
   const displayedCoins = filteredCoins.slice(0, 5);
 
   function formatDateForApiCall(inputDate) {
-    console.log(inputDate);
     const [year, month, day] = inputDate.split("-");
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
@@ -54,7 +53,6 @@ const Portfolio = (props) => {
   };
 
   const handleClickedLink = (coin) => {
-    console.log("test");
     setClicked(true);
     props.getCoinData(coin);
     setSearchInput(coin);
@@ -72,7 +70,6 @@ const Portfolio = (props) => {
   const handlePurchaseDate = (e) => {
     const selectedDate = new Date(e.target.value);
     const todayDate = new Date();
-    console.log(asset.purchaseDate);
     if (selectedDate > todayDate) {
       alert("Please select a date on or before today.");
       setButtonIsDisabled(true);
@@ -117,7 +114,6 @@ const Portfolio = (props) => {
   const handleAssetDelete = (asset) => {
     const newAssetList = assetList.filter((assets) => assets.id !== asset.id);
     setAssetList(newAssetList);
-    console.log(assetList);
   };
 
   useEffect(() => {
