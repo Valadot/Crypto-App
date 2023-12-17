@@ -1,27 +1,21 @@
-
-import {Container} from "./Coinspage.styles"
-import Navbar from "../../components/Navbar/Navbar"
-import CoinsList from "../../components/CoinsList/CoinsList"
-import TopChart from "../../components/TopChart/TopChart"
-import ChinChart from "../../components/ChinChart/ChinChart"
-
+import { Container } from "./Coinspage.styles";
+import Navbar from "../../components/Navbar/Navbar";
+import CoinsList from "../../components/CoinsList/CoinsList";
+import TopChart from "../../components/TopChart/TopChart";
+import ChinChart from "../../components/ChinChart/ChinChart";
+import BTCTimeFrameChart from "../../components/BTCTimeFrameChart/BTCTimeFrameChart";
 
 function Coinspage() {
-
-  
-    return (
-      <>
+  return (
+    <>
       <Navbar />
       <Container>
-      <ChinChart />
+        <ChinChart />
         <TopChart />
-        
-
-        <CoinsList/>
-  
+        <CoinsList />
       </Container>
-      </>
-    )
-  }
-  
-  export default Coinspage
+    </>
+  );
+}
+
+export default Coinspage;

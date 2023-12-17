@@ -25,17 +25,19 @@ ChartJS.register(
 const BarChart = (props) => {
   const [todayDate, setTodayDate] = useState(new Date());
   const BardataPoints = [props.volumedata];
+  const barDateCount = props.volumedata.length;
 
-  const BarDateLabels = [];
-  const BarFullDateLabels = [];
-  const BarStartDate = new Date();
-  BarStartDate.setDate(BarStartDate.getDate() - 29); // this calculates today and goes minus 29 days
-  let BarcurrentDate = new Date(BarStartDate);
+  const fullDateLabels = [];
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - barDateCount);
+  let currentDate = new Date(startDate);
 
-  while (BarcurrentDate <= new Date()) {
-    BarDateLabels.push(BarcurrentDate.getDate()); // shows full date for X-axis
-    BarFullDateLabels.push(BarcurrentDate.toISOString().split("T")[0]); // shows full date for tooltips
-    BarcurrentDate.setDate(BarcurrentDate.getDate() + 1); // this increments date by 1 day, so every bar is 1 day
+  const dateLabels = [];
+  for (let i = 0; i < barDateCount; i++) {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + i);
+    fullDateLabels.push(date.toISOString().split("T")[0]);
+    dateLabels.push(date.getDate());
   }
 
   const BarfullData = [];
@@ -47,7 +49,7 @@ const BarChart = (props) => {
   }
 
   const Bardata = {
-    labels: BarDateLabels,
+    labels: dateLabels,
     datasets: [
       {
         data: props.volumedata,
@@ -81,7 +83,7 @@ const BarChart = (props) => {
     plugins: {
       tooltip: {
         callbacks: {
-          title: (tooltipItem) => BarFullDateLabels[tooltipItem[0].dataIndex],
+          title: (tooltipItem) => fullDateLabels[tooltipItem[0].dataIndex],
           label: (context) =>
             `Volume: ${props.currencyIcon} ${props.volumedata[
               context.dataIndex
