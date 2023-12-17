@@ -7,6 +7,7 @@ const initialState = {
   volumeData: [],
   error: false,
   isLoading: false,
+  timeframe: "30",
 };
 
 function bitcoinChartDataReducer(state = initialState, action) {
@@ -22,6 +23,7 @@ function bitcoinChartDataReducer(state = initialState, action) {
         ...state,
         priceData: action.payload.prices,
         volumeData: action.payload.volumes,
+        timeframe: action.payload.timeframedata,
         isLoading: false,
       };
     case GET_BTC_DATA_ERROR:

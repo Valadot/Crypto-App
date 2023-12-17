@@ -25,16 +25,20 @@ ChartJS.register(
 
 const LineChart = (props) => {
   const [todayDate, setTodayDate] = useState(new Date());
-  const dateLabels = [];
+
+  const pricesCount = props.pricedata.length;
+
   const fullDateLabels = [];
   const startDate = new Date();
-  startDate.setDate(startDate.getDate() - 29);
+  startDate.setDate(startDate.getDate() - pricesCount);
   let currentDate = new Date(startDate);
 
-  while (currentDate <= new Date()) {
-    dateLabels.push(currentDate.getDate());
-    fullDateLabels.push(currentDate.toISOString().split("T")[0]);
-    currentDate.setDate(currentDate.getDate() + 1);
+  const dateLabels = [];
+  for (let i = 0; i < pricesCount; i++) {
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + i);
+    fullDateLabels.push(date.toISOString().split("T")[0]);
+    dateLabels.push(date.getDate());
   }
 
   const data = {
@@ -136,8 +140,8 @@ const LineChart = (props) => {
   };
 
   useEffect(() => {
-    props.getBitcoinData();
-  }, [props.currency]);
+    props.getBitcoinData(props.timeframe);
+  }, [props.currency, props.timeframe]);
 
   return (
     <ChartWrapper>
@@ -157,6 +161,7 @@ const LineChart = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+  timeframe: state.bitcoinChartData.timeframe,
   coinlist: state.coinlist.data,
   pricedata: state.bitcoinChartData.priceData,
   isLoading: state.bitcoinChartData.isLoading,

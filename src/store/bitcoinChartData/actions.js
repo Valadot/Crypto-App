@@ -6,7 +6,7 @@ import {
   GET_BTC_DATA_ERROR,
 } from "./bitcoinChartDataReducer";
 
-export const getBitcoinData = () => async (dispatch, getState) => {
+export const getBitcoinData = (timeframe) => async (dispatch, getState) => {
   const state = getState();
   const currency = state.currency.currency;
   try {
@@ -15,14 +15,17 @@ export const getBitcoinData = () => async (dispatch, getState) => {
     });
 
     const { data } = await axios(
-      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency}&days=30&interval=daily`
+      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency}&days=${timeframe}&interval=daily`
     );
-
     const priceData = data.prices.map((price) => price[1]);
     const volumeData = data.total_volumes.map((volume) => volume[1]);
     dispatch({
       type: GET_BTC_DATA_SUCCESS,
-      payload: { prices: priceData, volumes: volumeData },
+      payload: {
+        prices: priceData,
+        volumes: volumeData,
+        timeframedata: timeframe,
+      },
     });
   } catch (err) {
     dispatch({

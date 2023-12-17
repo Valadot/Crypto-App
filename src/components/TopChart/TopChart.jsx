@@ -16,6 +16,7 @@ import { Container, Headline, Wrapper } from "./TopChart.styles";
 
 import LineChart from "../Linechart/LineChart";
 import BarChart from "../BarChart/BarChart";
+import BTCTimeFrameChart from "../BTCTimeFrameChart/BTCTimeFrameChart";
 
 ChartJS.register(
   LineElement,
@@ -54,6 +55,7 @@ const TopChart = () => {
           <LineChart />
           <BarChart />
         </Container>
+        <BTCTimeFrameChart />
       </>
     );
   }
@@ -82,6 +84,7 @@ const TopChart = () => {
           </Wrapper>
         </Slider>
       </Container>
+      <BTCTimeFrameChart />
     </>
   );
 };
