@@ -13,6 +13,7 @@ function App(props) {
     componentBackground: "#2C2F36",
     pageBackground: "#1F2128",
     copyBackground: "rgba(22, 20, 20, 0.8)",
+    chartColor: "rgb(33 114 229)",
   };
 
   const lightTheme = {
@@ -21,6 +22,7 @@ function App(props) {
     componentBackground: "#FFFFFF",
     pageBackground: "#FCFCFC",
     copyBackground: "rgba(216, 216, 216, 0.8)",
+    chartColor: "rgb(26, 215, 97)",
   };
 
   const router = createBrowserRouter([
