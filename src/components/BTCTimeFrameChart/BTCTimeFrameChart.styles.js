@@ -46,7 +46,7 @@ export const TimeFrame = styled.button`
   padding: 0.3rem 1.2rem;
   background-color: ${(props) =>
     props.clicked
-      ? "rgb(33 114 229)"
+      ? props.theme.background.chartColor
       : props.theme.background.componentBackground};
   color: ${(props) => props.theme.background.secondary};
   border-radius: 50vw;
