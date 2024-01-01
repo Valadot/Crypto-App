@@ -74,6 +74,7 @@ export const CoinInfo = styled.div`
   background-color: ${(props) => props.theme.background.primary};
   padding: 0 6rem;
   height: 295px;
+  width: 100%;
 
   border-radius: 12px;
   gap: 1rem;

@@ -9,43 +9,40 @@ import {
 import { getBitcoinData } from "../../store/bitcoinChartData/actions";
 
 const BTCTimeFrameChart = (props) => {
-  const [clickedButton, setClickedButton] = useState("");
-  console.log(props.timeframe);
-
   return (
     <Container>
       <TimeFrameWrapper>
         <TimeFrame
           value="6"
-          clicked={props.timeframe === "6"}
+          $clicked={props.timeframe === "6"}
           onClick={(e) => props.getBitcoinData(e.currentTarget.value)}
         >
           <p>1w</p>
         </TimeFrame>
         <TimeFrame
           value="29"
-          clicked={props.timeframe === "29"}
+          $clicked={props.timeframe === "29"}
           onClick={(e) => props.getBitcoinData(e.currentTarget.value)}
         >
           <p>1m</p>
         </TimeFrame>
         <TimeFrame
           value="89"
-          clicked={props.timeframe === "89"}
+          $clicked={props.timeframe === "89"}
           onClick={(e) => props.getBitcoinData(e.currentTarget.value)}
         >
           <p>3m</p>
         </TimeFrame>
         <TimeFrame
           value="179"
-          clicked={props.timeframe === "179"}
+          $clicked={props.timeframe === "179"}
           onClick={(e) => props.getBitcoinData(e.currentTarget.value)}
         >
           <p>6m</p>
         </TimeFrame>
         <TimeFrame
           value="364"
-          clicked={props.timeframe === "364"}
+          $clicked={props.timeframe === "364"}
           onClick={(e) => props.getBitcoinData(e.currentTarget.value)}
         >
           <p>1y</p>
