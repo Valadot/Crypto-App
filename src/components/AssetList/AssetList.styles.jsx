@@ -112,6 +112,7 @@ export const InnerBar = styled.div`
   width: ${(props) => `${props.$marketData}%`};
   background-color: white;
   height: 20px;
+  padding-left: 20px;
   border-radius: 50vw;
 `;
 

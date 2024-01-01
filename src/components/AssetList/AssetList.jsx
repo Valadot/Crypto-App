@@ -59,10 +59,11 @@ const AssetList = ({
           json.market_data.current_price[correctedCurrency];
 
         noDupps[key].priceChange24h =
-          json.market_data.price_change_24h_in_currency.usd;
+          json.market_data.price_change_24h_in_currency[currency.toLowerCase()];
 
         noDupps[key].marketCapVsVolume = (
-          json.market_data.market_cap.usd / json.market_data.total_volume.usd
+          json.market_data.market_cap[currency.toLowerCase()] /
+          json.market_data.total_volume[currency.toLowerCase()]
         ).toFixed(0);
 
         noDupps[key].circSupplyVsMaxSuply = (
@@ -82,17 +83,19 @@ const AssetList = ({
         return {
           ...coin,
           assetName: json.id,
-          total: coin.amount * json.market_data.current_price.usd,
+          total:
+            coin.amount *
+            json.market_data.current_price[currency.toLowerCase()],
           currentPrice: noDupps[coin.assetName].currentPrice,
           priceChange24h: noDupps[coin.assetName].priceChange24h,
           marketCapVsVolume: noDupps[coin.assetName].marketCapVsVolume,
           circSupplyVsMaxSuply: noDupps[coin.assetName].circSupplyVsMaxSuply,
           previousPriceChange:
             ((noDupps[coin.assetName].currentPrice -
-              json.market_data.current_price.usd) /
+              json.market_data.current_price[currency.toLowerCase()]) /
               noDupps[coin.assetName].currentPrice) *
             100,
-          previousPrice: json.market_data.current_price.usd,
+          previousPrice: json.market_data.current_price[currency.toLowerCase()],
         };
       })
     );
@@ -102,6 +105,8 @@ const AssetList = ({
     setIsLoading(false);
   }
 
+  console.log(currency.toLowerCase());
+  console.log(newPortfolio);
   function formatDate(inputDate) {
     const [day, month, year] = inputDate.split("-");
     const formattedDate = `${month}.${day}.${year}`;
@@ -134,7 +139,7 @@ const AssetList = ({
   return (
     <>
       {isLoading ? (
-        <div>Loding...</div>
+        <div>Loading Portfolio...</div>
       ) : (
         newPortfolio.map((asset) => (
           <List key={uuid()}>
@@ -164,7 +169,7 @@ const AssetList = ({
                 <div>
                   Price change 24h:{" "}
                   <GreenText>
-                    {formatPriceChange(asset.priceChange24h)}
+                    {currencyIcon} {formatPriceChange(asset.priceChange24h)}
                   </GreenText>
                 </div>
                 <MarketData>
@@ -176,10 +181,19 @@ const AssetList = ({
                 </MarketData>
                 <MarketData>
                   Circ / Total Sup:{" "}
-                  <GreenText>{asset.circSupplyVsMaxSuply}%</GreenText>
+                  <GreenText>
+                    {asset.circSupplyVsMaxSuply !== "Infinity"
+                      ? asset.circSupplyVsMaxSuply
+                      : 100}
+                    %
+                  </GreenText>
                   <OuterBar>
                     <InnerBar
-                      $marketData={asset.circSupplyVsMaxSuply}
+                      $marketData={
+                        asset.circSupplyVsMaxSuply !== "Infinity"
+                          ? asset.circSupplyVsMaxSuply
+                          : 100
+                      }
                     ></InnerBar>
                   </OuterBar>
                 </MarketData>
@@ -238,7 +252,9 @@ const AssetList = ({
                     />
                   )}
                   <PriceChange color={asset.previousPriceChange}>
-                    {formatPriceChange(asset.previousPriceChange)}%
+                    {asset.previousPriceChange === 0
+                      ? "-"
+                      : `${formatPriceChange(asset.previousPriceChange)}%`}
                   </PriceChange>
                 </ProfitWrapper>
                 <div>
