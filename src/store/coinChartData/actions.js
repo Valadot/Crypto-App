@@ -16,7 +16,7 @@ export const getChartData = (timeframe) => async (dispatch, getState) => {
     });
 
     const { data } = await axios(
-      `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency.toLowerCase()}&days=${timeframe}&interval=daily`
+      `https://pro-api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=${currency.toLowerCase()}&days=${timeframe}&interval=daily&x_cg_pro_api_key=CG-3yjcmqqZJ3KvtjTrAKb8ptkD`
     );
 
     const pricedata = data.prices.map((price) => price[1]);

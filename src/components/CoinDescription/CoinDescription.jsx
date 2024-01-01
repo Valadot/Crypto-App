@@ -44,6 +44,7 @@ import { formatNumber } from "../../utils/formatNumber/formatNumber";
 import TimeFrameRadioButtons from "../TimeFrameRadioButtons/TimeFrameRadioButtons";
 import CoinChart from "../CoinChart/CoinChart";
 import { getCoinData } from "../../store/coindata/actions";
+import { getChartData } from "../../store/coinChartData/actions";
 
 const CoinDescription = (props) => {
   const [copied, setCopied] = useState(false);
@@ -102,7 +103,16 @@ const CoinDescription = (props) => {
   };
 
   useEffect(() => {
-    props.getCoinData(id);
+    const fetchData = async () => {
+      try {
+        await props.getCoinData(id);
+        await props.getChartData("30");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, [props.currency, id]);
 
   return (
@@ -477,6 +487,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getCoinData,
+  getChartData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoinDescription);

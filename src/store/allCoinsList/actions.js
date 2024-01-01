@@ -12,7 +12,9 @@ export const getAllCoins = () => async (dispatch, getState) => {
       type: GET_ALL_COINS_PENDING,
     });
 
-    const { data } = await axios(`https://api.coingecko.com/api/v3/coins/list`);
+    const { data } = await axios(
+      `https://pro-api.coingecko.com/api/v3/coins/list/?&x_cg_pro_api_key=CG-3yjcmqqZJ3KvtjTrAKb8ptkD`
+    );
     dispatch({
       type: GET_ALL_COINS_SUCCESS,
       payload: data,

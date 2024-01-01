@@ -15,7 +15,7 @@ export const getCoinData = (coin) => async (dispatch, getState) => {
     });
 
     const { data } = await axios(
-      `https://api.coingecko.com/api/v3/coins/${coin}?localization=false&market_data=true`
+      `https://pro-api.coingecko.com/api/v3/coins/${coin}?localization=false&market_data=true&x_cg_pro_api_key=CG-3yjcmqqZJ3KvtjTrAKb8ptkD`
     );
     dispatch({
       type: GET_COIN_DATA_SUCCESS,

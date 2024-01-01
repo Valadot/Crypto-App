@@ -51,7 +51,7 @@ const AssetList = ({
     const pricedCoinsObject = await Promise.all(
       Object.keys(noDupps).map(async (key) => {
         const data = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${key}`
+          `https://pro-api.coingecko.com/api/v3/coins/${key}?&x_cg_pro_api_key=CG-3yjcmqqZJ3KvtjTrAKb8ptkD`
         );
 
         const json = await data.json();
@@ -75,9 +75,10 @@ const AssetList = ({
     const newPortfolio = await Promise.all(
       assets.map(async (coin) => {
         const data = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${coin.assetName}/history?date=${coin.purchaseDate}`
+          `https://pro-api.coingecko.com/api/v3/coins/${coin.assetName}/history?date=${coin.purchaseDate}?&x_cg_pro_api_key=CG-3yjcmqqZJ3KvtjTrAKb8ptkD`
         );
         const json = await data.json();
+        console.log(json);
         return {
           ...coin,
           assetName: json.id,

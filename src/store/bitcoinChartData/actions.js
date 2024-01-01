@@ -15,7 +15,7 @@ export const getBitcoinData = (timeframe) => async (dispatch, getState) => {
     });
 
     const { data } = await axios(
-      `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency}&days=${timeframe}&interval=daily`
+      `https://pro-api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currency}&days=${timeframe}&interval=daily&x_cg_pro_api_key=CG-3yjcmqqZJ3KvtjTrAKb8ptkD`
     );
     const priceData = data.prices.map((price) => price[1]);
     const volumeData = data.total_volumes.map((volume) => volume[1]);
