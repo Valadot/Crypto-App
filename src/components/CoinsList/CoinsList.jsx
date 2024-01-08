@@ -106,6 +106,7 @@ const CoinsList = (props) => {
                       <StyledLink to={`/coin/${props.coinlist[rowIndex].id}`}>
                         <CoinImage
                           src={props.coinlist[rowIndex].image}
+                          alt="Icon of the Coin"
                         ></CoinImage>
                         {cellData} (
                         {props.coinlist[rowIndex].symbol.toUpperCase()})

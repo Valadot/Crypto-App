@@ -93,11 +93,6 @@ export const Dot = styled.div`
   }
 `;
 
-export const Caret = styled.img`
-  width: 20px;
-  height: 20px;
-`;
-
 export const Exchanges = styled.div`
   @media ${devices.laptop} {
     display: none;

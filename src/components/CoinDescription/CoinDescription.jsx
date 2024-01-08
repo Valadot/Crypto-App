@@ -124,7 +124,10 @@ const CoinDescription = (props) => {
             <CoinDiv>
               <CoinInfo>
                 <CoinIconWrapper>
-                  <CoinIcon src={coindata.image["small"]} />
+                  <CoinIcon
+                    src={coindata.image["small"]}
+                    alt="Icon of the Coin"
+                  />
                 </CoinIconWrapper>
                 <div>
                   {coindata.name} ({coindata.symbol.toUpperCase()})
