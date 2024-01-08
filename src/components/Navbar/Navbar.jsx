@@ -100,6 +100,7 @@ const Navbar = (props) => {
                 ? MagnyfingGlassLight
                 : MagnyfingGlassDark
             }
+            alt="Icon of a magnifying glass"
           ></img>
           <SearchInput
             onChange={handleChange}
@@ -140,6 +141,7 @@ const Navbar = (props) => {
           <img
             style={{ width: "25px" }}
             src={props.colormode === "dark" ? LightTheme : DarkTheme}
+            alt="Icon of the themechanger"
           ></img>
         </ThemeChangeWrapper>
       </RightNavbar>

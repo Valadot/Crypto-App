@@ -74,7 +74,11 @@ const ChinChart = (props) => {
           </div>
           <div>
             <CoinStatWrapper>
-              <img style={{ width: "15px" }} src={BitcoinLogo} alt="" />
+              <img
+                style={{ width: "15px" }}
+                src={BitcoinLogo}
+                alt="Icon of Bitcoin"
+              />
               {props.globalmarketdata.data.market_cap_percentage["btc"].toFixed(
                 0
               )}
@@ -90,7 +94,11 @@ const ChinChart = (props) => {
           </div>
           <EthStats>
             <CoinStatWrapper>
-              <img style={{ width: "15px" }} src={EthLogo} alt="" />
+              <img
+                style={{ width: "15px" }}
+                src={EthLogo}
+                alt="Icon of Ethereum"
+              />
               {props.globalmarketdata.data.market_cap_percentage["eth"].toFixed(
                 0
               )}
