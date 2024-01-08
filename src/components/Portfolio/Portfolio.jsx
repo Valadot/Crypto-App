@@ -142,6 +142,7 @@ const Portfolio = (props) => {
                     {props.coindata.image && (
                       <img
                         src={asset.assetName && props.coindata.image.small}
+                        alt="Icon of the Coin"
                       ></img>
                     )}
                   </CoinImage>
