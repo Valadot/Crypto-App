@@ -151,6 +151,10 @@ export const SearchInput = styled.input`
   }
 `;
 
+export const CoinGecko = styled.div`
+  font-size: 10px;
+`;
+
 export const FilteredDropdown = styled.div`
   position: absolute;
   padding-left: 1rem;

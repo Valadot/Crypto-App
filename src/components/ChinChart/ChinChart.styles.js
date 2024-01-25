@@ -120,3 +120,13 @@ export const EthStats = styled.div`
     display: none;
   }
 `;
+
+export const CoinGecko = styled.div`
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+
+  a {
+    color: blue;
+  }
+`;

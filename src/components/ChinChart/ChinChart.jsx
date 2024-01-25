@@ -13,6 +13,7 @@ import {
   Coins,
   GlobalCap,
   EthStats,
+  CoinGecko,
 } from "./ChinChart.styles";
 import BitcoinLogo from "../../assets/bitcoin-logo.svg";
 import EthLogo from "../../assets/eth-logo.svg";
@@ -24,97 +25,112 @@ const ChinChart = (props) => {
     props.getGlobalMarketData();
   }, []);
   return (
-    <Container>
-      {props.globalmarketdata && (
-        <>
-          <Coins>
-            Coins {props.globalmarketdata.data.active_cryptocurrencies}
-          </Coins>
-          <Exchanges>Exchanges {props.globalmarketdata.data.markets}</Exchanges>
-          <GlobalCap>
-            <Dot></Dot>
-            {props.currencyIcon}{" "}
-            {formatNumber(
-              props.globalmarketdata.data.total_market_cap[
-                props.currency.toLowerCase()
-              ]
-            )}
-            {props.globalmarketdata.data.market_cap_change_percentage_24h_usd <
-            0 ? (
-              <FontAwesomeIcon
-                icon={faCaretDown}
-                style={{ color: "#FE1040" }}
-              />
-            ) : (
-              <FontAwesomeIcon icon={faCaretUp} style={{ color: "#00FC2A" }} />
-            )}
-          </GlobalCap>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Dot></Dot>
-            {props.currencyIcon}{" "}
-            {formatNumber(
-              props.globalmarketdata.data.total_volume[
-                props.currency.toLowerCase()
-              ]
-            )}
-            <OuterBar>
-              <InnerBar
-                $highernum={
-                  props.globalmarketdata.data.total_market_cap[
-                    props.currency.toLowerCase()
-                  ]
-                }
-                $lowernum={
-                  props.globalmarketdata.data.total_volume[
-                    props.currency.toLowerCase()
-                  ]
-                }
-              ></InnerBar>
-            </OuterBar>
-          </div>
-          <div>
-            <CoinStatWrapper>
-              <img
-                style={{ width: "15px" }}
-                src={BitcoinLogo}
-                alt="Icon of Bitcoin"
-              />
-              {props.globalmarketdata.data.market_cap_percentage["btc"].toFixed(
-                0
+    <>
+      <Container>
+        {props.globalmarketdata && (
+          <>
+            <Coins>
+              Coins {props.globalmarketdata.data.active_cryptocurrencies}
+            </Coins>
+            <Exchanges>
+              Exchanges {props.globalmarketdata.data.markets}
+            </Exchanges>
+            <GlobalCap>
+              <Dot></Dot>
+              {props.currencyIcon}{" "}
+              {formatNumber(
+                props.globalmarketdata.data.total_market_cap[
+                  props.currency.toLowerCase()
+                ]
               )}
-              %
-              <OuterBar>
-                <InnerBarCap
-                  $cap={
-                    props.globalmarketdata.data.market_cap_percentage["btc"]
-                  }
-                ></InnerBarCap>
-              </OuterBar>
-            </CoinStatWrapper>
-          </div>
-          <EthStats>
-            <CoinStatWrapper>
-              <img
-                style={{ width: "15px" }}
-                src={EthLogo}
-                alt="Icon of Ethereum"
-              />
-              {props.globalmarketdata.data.market_cap_percentage["eth"].toFixed(
-                0
+              {props.globalmarketdata.data
+                .market_cap_change_percentage_24h_usd < 0 ? (
+                <FontAwesomeIcon
+                  icon={faCaretDown}
+                  style={{ color: "#FE1040" }}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faCaretUp}
+                  style={{ color: "#00FC2A" }}
+                />
               )}
-              %
+            </GlobalCap>
+            <div
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <Dot></Dot>
+              {props.currencyIcon}{" "}
+              {formatNumber(
+                props.globalmarketdata.data.total_volume[
+                  props.currency.toLowerCase()
+                ]
+              )}
               <OuterBar>
-                <InnerBarCap
-                  $cap={
-                    props.globalmarketdata.data.market_cap_percentage["eth"]
+                <InnerBar
+                  $highernum={
+                    props.globalmarketdata.data.total_market_cap[
+                      props.currency.toLowerCase()
+                    ]
                   }
-                ></InnerBarCap>
+                  $lowernum={
+                    props.globalmarketdata.data.total_volume[
+                      props.currency.toLowerCase()
+                    ]
+                  }
+                ></InnerBar>
               </OuterBar>
-            </CoinStatWrapper>
-          </EthStats>
-        </>
-      )}
-    </Container>
+            </div>
+            <div>
+              <CoinStatWrapper>
+                <img
+                  style={{ width: "15px" }}
+                  src={BitcoinLogo}
+                  alt="Icon of Bitcoin"
+                />
+                {props.globalmarketdata.data.market_cap_percentage[
+                  "btc"
+                ].toFixed(0)}
+                %
+                <OuterBar>
+                  <InnerBarCap
+                    $cap={
+                      props.globalmarketdata.data.market_cap_percentage["btc"]
+                    }
+                  ></InnerBarCap>
+                </OuterBar>
+              </CoinStatWrapper>
+            </div>
+            <EthStats>
+              <CoinStatWrapper>
+                <img
+                  style={{ width: "15px" }}
+                  src={EthLogo}
+                  alt="Icon of Ethereum"
+                />
+                {props.globalmarketdata.data.market_cap_percentage[
+                  "eth"
+                ].toFixed(0)}
+                %
+                <OuterBar>
+                  <InnerBarCap
+                    $cap={
+                      props.globalmarketdata.data.market_cap_percentage["eth"]
+                    }
+                  ></InnerBarCap>
+                </OuterBar>
+              </CoinStatWrapper>
+            </EthStats>
+          </>
+        )}
+      </Container>
+      <CoinGecko>
+        <p>
+          Data provided by{" "}
+          <a href="https://www.coingecko.com/">Coingecko API</a>
+        </p>
+      </CoinGecko>
+    </>
   );
 };
 

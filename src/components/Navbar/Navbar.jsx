@@ -18,6 +18,7 @@ import {
   MobileNavLinkWrapper,
   Overlay,
   MobileThemechange,
+  CoinGecko,
 } from "./Navbar.styles";
 import DarkTheme from "../../assets/dark-theme.svg";
 import LightTheme from "../../assets/light-theme.svg";
@@ -121,6 +122,7 @@ const Navbar = (props) => {
             </FilteredDropdown>
           )}
         </SearchWrapper>
+
         <CurrencyChangeWrapper>
           <CurrencySymbol currency={currencyLogo(props.currency)} />
           <CurrencyChanger
@@ -151,7 +153,6 @@ const Navbar = (props) => {
           size="xl"
           style={{ color: props.colormode === "dark" ? "#ffffff" : "#000000" }}
         />
-
         {openHambugerMenu && (
           <Overlay>
             <MobileNavLinkWrapper>
