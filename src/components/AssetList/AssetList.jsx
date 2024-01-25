@@ -145,7 +145,7 @@ const AssetList = ({
           <List key={uuid()}>
             <CoinData>
               <CoinImage>
-                <img src={asset.image}></img>
+                <img src={asset.image} alt="Icon of the Coin"></img>
               </CoinImage>
               {asset.assetName}
               <div>
