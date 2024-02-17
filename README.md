@@ -12,6 +12,11 @@
 </p>
 
 
+### Link to the App
+
+<h3>Click on this Link to see the Page for yourself!</h3>
+
+[App Link](https://crypto-app-valadots-projects.vercel.app/)
 
 This Crypto Tracker is a Single Page Application that provides an analysis of the cryptocurrencies market. Offering information about all the cryptocurrencies, their prices, display information through graphs, and information about any specific coin. It also has a portfolio page where you can track the amount of any crypto coin that you own and see insights into the current price, price changes, circulation supply, and maximum supply for each coin.
 
